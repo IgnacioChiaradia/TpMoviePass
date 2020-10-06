@@ -44,7 +44,7 @@
             $this->RetrieveData();
             
             foreach($this->cinemaList as $key => $cinema){
-                if($cinema->getCode() == $newCinema->getCode()){
+                if($cinema->getName() == $newCinema->getName()){
                     $this->cinemaList[$key] = $newCinema;
                 }
             }
@@ -58,7 +58,7 @@
             $cinemaSearch = 0;
 
             foreach($this->cinemaList as $cinema){
-                if($cinema->getCode() == $nameCinema){
+                if($cinema->getName() == $nameCinema){
                     $cinemaSearch = $cinema;
                 }
             }

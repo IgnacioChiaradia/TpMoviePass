@@ -1,11 +1,6 @@
 [
     {
         "idCinema": 1,
-        "name": "asd",
-        "adress": "asd"
-    },
-    {
-        "idCinema": 2,
         "name": "Ambassador",
         "adress": "Luro 3050"
     }

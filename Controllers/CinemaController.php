@@ -26,6 +26,11 @@
             if($cinemaSearch){
                 require_once(VIEWS_PATH."update-cinema.php");                
             }else{
+                ?>
+                    <script> 
+                        alert('El cine que busca no se encuentra registrado, intente de nuevo');
+                    </script>
+                <?php 
                 $this->listCinema();   
             }
         }
@@ -65,9 +70,21 @@
 
         public function removeCinema($id)
         {
-            $this->cinemaDAO->remove($id);
+            $this->cinemaDAOJson->remove($id);
 
             $this->listCinema();
+        }
+
+        //seguir luego
+        public function cinemaExists($cinemaList)
+        {
+            $cinemaSearch = 0;     foreach($cinemaList as $cinema){
+                if($cinema->getName() == $nameCinema){
+                    $cinemaSearch = $cinema;
+                }
+            }
+
+            return $cinemaSearch;            
         }
     }
 ?>

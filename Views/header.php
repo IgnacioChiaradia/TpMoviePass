@@ -9,6 +9,6 @@
      <link rel="stylesheet" href="<?php echo CSS_PATH;?>estilos.css">
      <link href="<?php echo CSS_PATH;?>bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
 
-     <title>Template Base</title>
+     <title>Movie Pass</title>
 </head>
 <body>
