@@ -7,6 +7,7 @@ include('nav.php');
                <h2 class="mb-4">Editar cine</h2>
 
                <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/updateCinema" method="POST">
+                    <input type="hidden" name="idCinema" value="<?php echo $cinemaSearch->getIdCinema(); ?>">
                     <div class="row">
                          <div class="col-lg-3">
                               <div class="form-group">

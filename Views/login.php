@@ -4,7 +4,7 @@
           <header class="text-center">
                <h2>Bienvenido a Movie Pass</h2>
           </header>
-          <form action="" method="" class="login-form bg-dark-alpha p-5 text-white">
+          <form action="<?php FRONT_ROOT ?>Home/addCineView" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                <div class="form-group">
                     <label for="">User Name</label>
                     <input type="text" name="" class="form-control form-control-lg" placeholder="Ingresar usuario">

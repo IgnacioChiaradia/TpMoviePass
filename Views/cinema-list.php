@@ -25,10 +25,11 @@ include('nav.php');
                </div>
           </form>
      </section>
-
      <section id="eliminar">
           <div class="container">
-               
+               <?php if(isset($message)){ ?>
+                              <label for=""> <strong> <?php echo $message ?> </strong> </label>
+                         <?php } ?>
                <form action="<?php echo FRONT_ROOT ?>Cinema/ShowUpdateCinemaView" method="POST" class="form-inline bg-light-alpha p-3">
                     <div class="form-group text-white">
                          <label for="">Ingrese nombre del cine a editar</label>

@@ -8,7 +8,7 @@
     {
         private $cinemaList = array();
 
-        public function Add($cinema)
+        public function add($cinema)
         {
             $this->RetrieveData();
 
@@ -19,7 +19,7 @@
             $this->SaveData();
         }
 
-        public function GetAll()
+        public function getAll()
         {
             $this->RetrieveData();
 
@@ -39,31 +39,17 @@
             $this->SaveData();                        
         }
 
-        public function update(Cinema $newCinema)
+        public function update($idCinema, Cinema $newCinema)
         {
             $this->RetrieveData();
-            
+
             foreach($this->cinemaList as $key => $cinema){
-                if($cinema->getName() == $newCinema->getName()){
+                if($cinema->getIdCinema() == $idCinema){
                     $this->cinemaList[$key] = $newCinema;
                 }
             }
 
             $this->SaveData();                        
-        }
-
-        public function getCinemaByName($nameCinema)
-        {
-            $this->RetrieveData();
-            $cinemaSearch = 0;
-
-            foreach($this->cinemaList as $cinema){
-                if($cinema->getName() == $nameCinema){
-                    $cinemaSearch = $cinema;
-                }
-            }
-
-            return $cinemaSearch;            
         }
 
         private function SaveData()

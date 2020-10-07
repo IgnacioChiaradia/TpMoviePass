@@ -10,7 +10,7 @@
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/addCineView">Agregar</a>
           </li>
           <li class="nav-item">
-               <a class="nav-link" href="">Logout</a>
+               <a class="nav-link" href="#">Logout</a>
           </li>
      </ul>
 </nav>
