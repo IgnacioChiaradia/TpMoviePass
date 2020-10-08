@@ -2,16 +2,11 @@
     {
         "idCinema": "1",
         "name": "Ambassador",
-        "adress": "Luro 3060"
+        "adress": "Luro 5060"
     },
     {
-        "idCinema": 2,
-        "name": "Cines Aldrey",
-        "adress": "Paseo Aldrey"
-    },
-    {
-        "idCinema": 3,
-        "name": "Cines del paseo",
+        "idCinema": "3",
+        "name": "Cines del Paseo",
         "adress": "Diagonal Pueyrredon 3058"
     }
 ]

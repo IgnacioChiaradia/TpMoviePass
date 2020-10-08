@@ -74,9 +74,14 @@
             $cinema->setName($name);
             $cinema->setAdress($adress);
 
-            $this->cinemaDAOJson->update($id, $cinema);
-
-            $this->listCinema();            
+            if($this->cinemaExistsUpdate($cinema)){
+                $message = "Los datos del cine a agregar ya existen en otro cine !";
+            }else{
+                $message = "El cine se ha editado correctamente !!!";
+                $this->cinemaDAOJson->update($cinema);
+            }
+            
+            $this->listCinema($message);            
         }
 
         public function getCinemaByName($nameCinema){
@@ -93,42 +98,24 @@
             return $cinemaSearch; 
         }
 
-        /*public function getIdCinemaByName($nameCinema){
-
-            $idCinema = 1;
-            $cinemaList = $this->cinemaDAOJson->getAll();
-
-            foreach($cinemaList as $cinema){
-                if($cinema->getName() == $nameCinema){
-                    $idCinema = $cinema->getIdCinema();
-                }
-            }
-
-            return $idCinema; 
-        }*/
-
-        /*public function getCinemaById()
-        {
-            $idCinema = $this->getIdCinemaByName($nameCinema);
-
-            $cinemaList = $this->cinemaDAOJson->getAll();
-            $cinemaSearch = 0;
-
-            foreach($cinemaList as $cinema){
-                if($cinema->getIdCinema() == $idCinema){
-                    $cinemaSearch = $cinema;
-                }
-            }
-
-            return $cinemaSearch;            
-        }*/
-
         public function cinemaExists($cinemaToSearch)
         {
             $cinemaList = $this->cinemaDAOJson->getAll();
             $flag = 0;    
             foreach($cinemaList as $cinema){
                 if($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAdress() == $cinemaToSearch->getAdress()){
+                    $flag = 1;
+                }
+            }
+            return $flag;            
+        }
+
+        public function cinemaExistsUpdate($cinemaToSearch)
+        {
+            $cinemaList = $this->cinemaDAOJson->getAll();
+            $flag = 0;    
+            foreach($cinemaList as $cinema){
+                if(($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAdress() == $cinemaToSearch->getAdress()) && $cinema->getIdCinema() != $cinemaToSearch->getIdCinema()){
                     $flag = 1;
                 }
             }

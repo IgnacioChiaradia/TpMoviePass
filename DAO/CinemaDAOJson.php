@@ -39,12 +39,12 @@
             $this->SaveData();                        
         }
 
-        public function update($idCinema, Cinema $newCinema)
+        public function update(Cinema $newCinema)
         {
             $this->RetrieveData();
 
             foreach($this->cinemaList as $key => $cinema){
-                if($cinema->getIdCinema() == $idCinema){
+                if($cinema->getIdCinema() == $newCinema->getIdCinema()){
                     $this->cinemaList[$key] = $newCinema;
                 }
             }
