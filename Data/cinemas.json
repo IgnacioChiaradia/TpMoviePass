@@ -1,12 +1,17 @@
 [
     {
-        "idCinema": "1",
-        "name": "Ambassador",
-        "adress": "Luro 5060"
-    },
-    {
-        "idCinema": "3",
+        "idCinema": 3,
         "name": "Cines del Paseo",
         "adress": "Diagonal Pueyrredon 3058"
+    },
+    {
+        "idCinema": 4,
+        "name": "Cines Aldrey",
+        "adress": "Paseo Aldrey"
+    },
+    {
+        "idCinema": 5,
+        "name": "Ambassador",
+        "adress": "Cordoba 5060"
     }
 ]
