@@ -5,7 +5,7 @@ include('nav.php');
      <section id="listado" class="mb-5">
           <form action="<?php echo FRONT_ROOT ?>Cinema/removeCinema" method="POST">
                <div class="container">
-                    <h2 class="mb-4">Lista de cines</h2>
+                    <h2 class="mb-4 text-white">Lista de cines</h2>
                     <table class="table bg-light-alpha">
                          <thead>
                               <th>Nombre</th>

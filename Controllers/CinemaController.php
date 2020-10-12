@@ -3,7 +3,6 @@
 
     use DAO\CinemaDAOJson as CinemaDAOJson;
     use Models\Cinema as Cinema;
-    use Controllers\HomeController as HomeController;
 
     class CinemaController
     {
@@ -14,6 +13,16 @@
         {
             $this->cinemaDAOJson = new CinemaDAOJson();
         }
+
+        public function listCineView($message = "")
+        {
+            require_once(VIEWS_PATH."cinema-list.php");
+        }
+
+        public function addCineView($message = "")
+        {
+            require_once(VIEWS_PATH."cinema-add.php");
+        }   
 
         public function ShowListCinemaView($listCinema, $message = '')
         {
@@ -36,8 +45,7 @@
                 $this->cinemaDAOJson->add($cinema);
             }            
 
-            $homeController = new HomeController();
-            $homeController->addCineView($message);                        
+            $this->addCineView($message);                        
         }
         
         public function listCinema($message = '')
