@@ -14,6 +14,11 @@
             $this->cinemaDAOJson = new CinemaDAOJson();
         }
 
+        public function introView()
+        {
+            require_once(VIEWS_PATH."introMoviePass.php");
+        }
+
         public function listCineView($message = "")
         {
             require_once(VIEWS_PATH."cinema-list.php");
