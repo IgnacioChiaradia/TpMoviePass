@@ -9,6 +9,9 @@
      <link rel="stylesheet" href="<?php echo CSS_PATH;?>estilos.css">
      <link href="<?php echo CSS_PATH;?>bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
 
+     <!-- Scripts -->
+     <script src="<?php echo JS_PATH;?>ourscripts.js"></script>
+
      <title>Movie Pass</title>
 </head>
 <body>

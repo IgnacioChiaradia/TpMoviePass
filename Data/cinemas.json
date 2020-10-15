@@ -1,10 +1,5 @@
 [
     {
-        "idCinema": 3,
-        "name": "Cines del Paseo",
-        "adress": "Diagonal Pueyrredon 3058"
-    },
-    {
         "idCinema": 4,
         "name": "Cines Aldrey",
         "adress": "Paseo Aldrey"
