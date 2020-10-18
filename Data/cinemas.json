@@ -1,12 +1,12 @@
 [
     {
-        "idCinema": 4,
-        "name": "Cines Aldrey",
-        "adress": "Paseo Aldrey"
-    },
-    {
         "idCinema": 5,
         "name": "Ambassador",
         "adress": "Cordoba 5060"
+    },
+    {
+        "idCinema": 6,
+        "name": "Cines Aldrey",
+        "adress": "av independencia 1010"
     }
 ]

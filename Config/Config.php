@@ -7,6 +7,8 @@ define("VIEWS_PATH", "Views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "layout/css/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "layout/js/");
 define("IMG_PATH", VIEWS_PATH . "layout/img/");
+
+define('TMDB_KEY', '6fef728cda826ca3e07c760bb8960523');
 ?>
 
 

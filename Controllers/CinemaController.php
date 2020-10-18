@@ -33,6 +33,7 @@
         {
             //$listCinema = $cinemaList; // no hace falta asignar la variable a otra variable en este ambito ya que lo trae del otro metodo
             require_once(VIEWS_PATH."cinema-list.php");
+
         }
         
         public function addCinema($name, $adress)
@@ -66,6 +67,7 @@
             $this->cinemaDAOJson->remove($id);
 
             $this->listCinema();
+            require_once(VIEWS_PATH."cinema-list.php");
         }
 
         /*public function ShowUpdateCinemaView($nameCinema)

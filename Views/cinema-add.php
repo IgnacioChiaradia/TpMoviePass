@@ -1,12 +1,9 @@
-<?php
-include('nav.php');
-?>
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
                <h2 class="mb-4 text-white">Agregar cine</h2>
                <?php if(isset($message)){ ?>
-                    <label for=""> <strong> <?php echo $message ?> </strong> </label>
+                    <label class="text-white" for=""> <strong> <?php echo $message ?> </strong> </label>
                <?php } ?>
                <label for=""></label>
                <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/addCinema" method="POST">

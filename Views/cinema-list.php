@@ -1,6 +1,3 @@
-<?php
-include('nav.php');
-?>
 <main class="py-5">
      <section id="listado" class="mb-5">
           <form action="<?php echo FRONT_ROOT ?>Cinema/removeCinema" method="POST">
@@ -24,7 +21,7 @@ include('nav.php');
                          </tbody>
                     </table>
                <?php if(isset($message)){ ?>
-                              <label for=""> <strong> <?php echo $message ?> </strong> </label>
+                              <label class="text-white" for=""> <strong> <?php echo $message ?> </strong> </label>
                          <?php } ?>
                </div>
           </form>
