@@ -20,7 +20,8 @@
 
         public function listMovies($message = '')
         {
-            $movieList = $this->movieDAOJson->getMoviesApi();
+            $this->movieDAOJson->getMoviesApi();
+            $movieList = $this->movieDAOJson->getAll();
 
             $this->moviesView($movieList,$message); 
         }

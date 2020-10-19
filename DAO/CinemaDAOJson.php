@@ -2,13 +2,14 @@
     namespace DAO;
 
     use DAO\IDAOJson as IDAOJson;
+    use DAO\ICinemaDAOJson as ICinemaDAOJson;
     use Models\Cinema as Cinema;
 
-    class CinemaDAOJson implements IDAOJson
+    class CinemaDAOJson implements IDAOJson, ICinemaDAOJson 
     {
         private $cinemaList = array();
 
-        public function add($cinema)
+        public function add(Cinema $cinema)
         {
             $this->RetrieveData();
 

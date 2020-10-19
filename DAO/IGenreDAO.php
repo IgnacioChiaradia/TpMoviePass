@@ -1,7 +1,7 @@
 <?php
     namespace DAO;
 
-    interface IGenreDAO
+    interface IGenreDAOJson
     {
         function getAll();
     }

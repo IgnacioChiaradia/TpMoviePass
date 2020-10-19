@@ -10,20 +10,47 @@
 
         public function getMoviesApi()
         {
-        	$this->movieList = file_get_contents('https://api.themoviedb.org/3/movie/now_playing?api_key=' . TMDB_KEY . '&language=en-US&page=1');
+            $this->RetrieveData();
 
-			$movieListArray = ($this->movieList) ? json_decode($this->movieList, true) : array();
+        	$movieListJson = file_get_contents('https://api.themoviedb.org/3/movie/now_playing?api_key=' . TMDB_KEY . '&language=en-US&page=1');
+
+			$movieListApi = ($movieListJson) ? json_decode($movieListJson, true) : array();
+
+            /*echo '<pre>';
+            var_dump($movieListApi["results"]);
+            echo '<pre>';
+            die();*/
+
+            foreach ($movieListApi["results"] as $movie) {
+                array_push($this->movieList, $movie);
+            }           
 
 			/*echo '<pre>';
-			var_dump($movieListArray);
+			var_dump($this->movieList);
 			echo '<pre>';
+
 
 			/*die();*/
 
-			return $movieListArray;
+            $this->SaveData();
+
+            echo '<pre>';
+            var_dump($this->movieList);
+            echo '<pre>';
+            die();
+
+			//return $movieListArray;
         }
 
-        public function add($object){
+        public function add(Movie $movie){
+
+            $this->RetrieveData();
+
+            //$movie->setIdMovie($this->GetNextId()); 
+            
+            array_push($this->movieList, $movie);
+
+            $this->SaveData();
 
         }
 
@@ -44,9 +71,21 @@
 
             foreach($this->movieList as $movie)
             {
-                $valuesArray["idmovie"] = $movie->getIdmovie();
-                $valuesArray["name"] = $movie->getName();
-                $valuesArray["adress"] = $movie->getAdress();
+                echo '<pre>';
+                var_dump($movie);
+                echo '<pre>';
+                die();
+                //$valuesArray["id"] = $movie->getIdmovie();
+                $valuesArray["title"] = $movie->getTitle();
+                $valuesArray["poster_path"] = $movie->getPosterPath();
+                $valuesArray["overview"] = $movie->getOverview();
+                $valuesArray["release_date"] = $movie->getReleaseDate();
+                $valuesArray["genre_ids"] = $movie->getGenreIds();
+                $valuesArray["original_language"] = $movie->getOrigialLanguage();
+                $valuesArray["vote_counts"] = $movie->getVoteCounts();
+                $valuesArray["popularity"] = $movie->getPopularity();
+                $valuesArray["runtime"] = $movie->getRuntime();
+                $valuesArray["vote_average"] = $movie->getVoteAverage();
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -68,10 +107,18 @@
 
                 foreach($arrayToDecode as $valuesArray)
                 {
-                    $movie = new Cinema();
-                    $movie->setIdCinema($valuesArray["idCinema"]);
-                    $movie->setName($valuesArray["name"]);
-                    $movie->setAdress($valuesArray["adress"]);
+                    $movie = new Movie();
+                    //$movie->setIdCinema($valuesArray["id"]);
+                    $movie->setTitle($valuesArray["title"]);
+                    $movie->setPosterPath($valuesArray["poster_path"]);
+                    $movie->setOverview($valuesArray["overview"]);
+                    $movie->setReleaseDate($valuesArray["release_date"]);
+                    $movie->setGenreIds($valuesArray["genre_ids"]);
+                    $movie->setOriginalLanguage($valuesArray["original_language"]);
+                    $movie->setVoteCounts($valuesArray["vote_counts"]);
+                    $movie->setPopularity($valuesArray["popularity"]);
+                    $movie->setRuntime($valuesArray["runtime"]);
+                    $movie->setVoteAverage($valuesArray["vote_average"]);
 
                     array_push($this->movieList, $movie);
                 }

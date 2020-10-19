@@ -3,7 +3,6 @@
 
     interface IDAOJson
     {
-        function add($object);
         function getAll();
         function remove($id);
     }

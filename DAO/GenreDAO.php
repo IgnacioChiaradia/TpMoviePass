@@ -1,10 +1,10 @@
 <?php
     namespace DAO;
 
-    use DAO\IGenreDAO as IGenreDAO;
+    use DAO\IGenreDAOJson as IGenreDAOJson;
     use Models\Genre as Genre;
 
-    class GenreDAO implements IGenreDAO
+    class GenreDAO implements IGenreDAOJson
     {
         private $genreList = array();
 

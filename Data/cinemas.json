@@ -1,12 +1,17 @@
 [
     {
-        "idCinema": 5,
+        "idCinema": 6,
+        "name": "Cines Aldrey",
+        "adress": "av independencia 1010"
+    },
+    {
+        "idCinema": 7,
         "name": "Ambassador",
         "adress": "Cordoba 5060"
     },
     {
-        "idCinema": 6,
-        "name": "Cines Aldrey",
-        "adress": "av independencia 1010"
+        "idCinema": 8,
+        "name": "Cines del Paseo",
+        "adress": "Diagonal Pueyrredon 3058"
     }
 ]

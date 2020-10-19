@@ -12,7 +12,9 @@ class Movie{
 	private $genre_ids;
 	private $original_language;
 	private $vote_counts;
+	private $popularity;
 	private $runtime; // tiempo de duracion
+	private $vote_average;
 
 	public function getId_movie(){
 		return $this->id_movie;
@@ -30,11 +32,11 @@ class Movie{
 		$this->title = $title;
 	}
 
-	public function getPoster_path(){
+	public function getPosterPath(){
 		return $this->poster_path;
 	}
 
-	public function setPoster_path($poster_path){
+	public function setPosterPath($poster_path){
 		$this->poster_path = $poster_path;
 	}
 
@@ -46,36 +48,44 @@ class Movie{
 		$this->overview = $overview;
 	}
 
-	public function getRelease_date(){
+	public function getReleaseDate(){
 		return $this->release_date;
 	}
 
-	public function setRelease_date($release_date){
+	public function setReleaseDate($release_date){
 		$this->release_date = $release_date;
 	}
 
-	public function getGenre_ids(){
+	public function getGenreIds(){
 		return $this->genre_ids;
 	}
 
-	public function setGenre_ids($genre_ids){
+	public function setGenreIds($genre_ids){
 		$this->genre_ids = $genre_ids;
 	}
 
-	public function getOriginal_language(){
+	public function getOriginalLanguage(){
 		return $this->original_language;
 	}
 
-	public function setOriginal_language($original_language){
+	public function setOriginalLanguage($original_language){
 		$this->original_language = $original_language;
 	}
 
-	public function getVote_counts(){
+	public function getVoteCounts(){
 		return $this->vote_counts;
 	}
 
-	public function setVote_counts($vote_counts){
+	public function setVoteCounts($vote_counts){
 		$this->vote_counts = $vote_counts;
+	}
+
+	public function getPopularity(){
+		return $this->popularity;
+	}
+
+	public function setPopularity($popularity){
+		$this->popularity = $popularity;
 	}
 
 	public function getRuntime(){
@@ -84,6 +94,14 @@ class Movie{
 
 	public function setRuntime($runtime){
 		$this->runtime = $runtime;
+	}
+
+	public function getVoteAverage(){
+		return $this->vote_average;
+	}
+
+	public function setVoteAverage($vote_average){
+		$this->vote_average = $vote_average;
 	}
 }
 
