@@ -18,9 +18,14 @@
             require_once(VIEWS_PATH."movieList.php");
         }
 
+        public function renewJsonMovies(){
+            $this->movieDAOJson->getMoviesApi();
+
+            $this->listMovies($message = 'La lista de peliculas se ha actualizado correctamente');
+        }
+
         public function listMovies($message = '')
         {
-            $this->movieDAOJson->getMoviesApi();
             $movieList = $this->movieDAOJson->getAll();
 
             $this->moviesView($movieList,$message); 

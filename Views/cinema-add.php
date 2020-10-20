@@ -20,6 +20,18 @@
                                    <input type="Text" name="adress" value="" class="form-control" placeholder="Direccion" required>
                               </div>
                          </div>
+                         <div class="col-lg-3">
+                              <div class="form-group">
+                                   <label for="">Valor de entrada</label>
+                                   <input type="number" name="ticket_value" value="" class="form-control" placeholder="Valor de entrada" required>
+                              </div>
+                         </div>
+                         <div class="col-lg-3">
+                              <div class="form-group">
+                                   <label for="">Capacidad total</label>
+                                   <input type="number" name="total_capacity" value="" class="form-control" placeholder="Capacidad total" required>
+                              </div>
+                         </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
                </form>

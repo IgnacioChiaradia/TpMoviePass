@@ -5,9 +5,10 @@ namespace Models;
 class Movie{
 
 	private $id_movie;
+	//private $id_api_movie;
 	private $title;
 	private $poster_path;
-	private $overview;
+	private $overview;	//descripcion
 	private $release_date; // fecha de estreno
 	private $genre_ids;
 	private $original_language;
@@ -16,13 +17,21 @@ class Movie{
 	private $runtime; // tiempo de duracion
 	private $vote_average;
 
-	public function getId_movie(){
+	public function getIdMovie(){
 		return $this->id_movie;
 	}
 
-	public function setId_movie($id_movie){
+	public function setIdMovie($id_movie){
 		$this->id_movie = $id_movie;
 	}
+
+	/*public function getIdApiMovie(){
+		return $this->id_api_movie;
+	}
+
+	public function setIdApiMovie($id_api_movie){
+		$this->id_api_movie = $id_api_movie;
+	}*/
 
 	public function getTitle(){
 		return $this->title;

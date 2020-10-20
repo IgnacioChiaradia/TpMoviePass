@@ -1,17 +1,16 @@
 [
     {
-        "idCinema": 6,
+        "idCinema": 2,
         "name": "Cines Aldrey",
-        "adress": "av independencia 1010"
+        "adress": "Sarmiento 2685",
+        "ticket_value": "1000",
+        "total_capacity": "120"
     },
     {
-        "idCinema": 7,
-        "name": "Ambassador",
-        "adress": "Cordoba 5060"
-    },
-    {
-        "idCinema": 8,
+        "idCinema": 3,
         "name": "Cines del Paseo",
-        "adress": "Diagonal Pueyrredon 3058"
+        "adress": "Diagonal Pueyrredon 3058",
+        "ticket_value": "200",
+        "total_capacity": "200"
     }
 ]

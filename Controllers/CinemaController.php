@@ -36,15 +36,17 @@
 
         }
         
-        public function addCinema($name, $adress)
+        public function addCinema($name, $adress, $ticket_value, $total_capacity)
         {
             $cinema = new Cinema();
             $message = '';
             
             $cinema->setName($name);
             $cinema->setAdress($adress);
+            $cinema->setTicketValue($ticket_value);
+            $cinema->setTotalCapacity($total_capacity);
 
-            if($this->cinemaExists($cinema)){
+            if($this->cinemaExists($cinema)){ // se verifica si el nombre y la direccion ya existen
                 $message = "El cine que se quiere agregar ya existe";
             }else{
                 $message = "El cine se ha agregado correctamente !!!";
@@ -57,6 +59,11 @@
         public function listCinema($message = '')
         {
             $listCinema = $this->cinemaDAOJson->getAll();
+
+            if(!$listCinema) 
+            {
+                $message = 'No se encuentran cines registrados';
+            }
             
             $this->ShowListCinemaView($listCinema,$message); 
             //echo 'termina la ejecucion del metodo';
@@ -96,13 +103,15 @@
         }
 
 
-        public function updateCinema($id, $name, $adress)
+        public function updateCinema($id, $name, $adress, $ticket_value, $total_capacity)
         {
             $cinema = new Cinema();
 
             $cinema->setIdCinema((int)$id);
             $cinema->setName($name);
             $cinema->setAdress($adress);
+            $cinema->setTicketValue($ticket_value);
+            $cinema->setTotalCapacity($total_capacity);
 
             if($this->cinemaExistsUpdate($cinema)){
                 $message = "Los datos del cine a agregar ya existen en otro cine !";

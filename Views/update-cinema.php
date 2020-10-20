@@ -1,7 +1,7 @@
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Editar cine</h2>
+               <h2 class="mb-4 text-white">Editar cine</h2>
 
                <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/updateCinema" method="POST">
                     <input type="hidden" name="idCinema" value="<?php echo $cinemaSearch->getIdCinema(); ?>">
@@ -16,6 +16,18 @@
                               <div class="form-group">
                                    <label for="">Direccion</label>
                                    <input type="Text" name="adress" value="<?php echo $cinemaSearch->getAdress(); ?>" class="form-control" placeholder="Direccion" required>
+                              </div>
+                         </div>
+                         <div class="col-lg-3">
+                              <div class="form-group">
+                                   <label for="">Valor ticket</label>
+                                   <input type="number" name="ticket_value" value="<?php echo $cinemaSearch->getTicketValue(); ?>" class="form-control" placeholder="Valor ticket" required>
+                              </div>
+                         </div>
+                         <div class="col-lg-3">
+                              <div class="form-group">
+                                   <label for="">Capacidad total</label>
+                                   <input type="number" name="total_capacity" value="<?php echo $cinemaSearch->getTotalCapacity(); ?>" class="form-control" placeholder="Capacidad total" required>
                               </div>
                          </div>
                     </div>

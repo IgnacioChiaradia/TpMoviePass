@@ -7,6 +7,9 @@
                          <thead>
                               <th>Nombre</th>
                               <th>Direccion</th>
+                              <th>Valor ticket</th>
+                              <th>Capacidad total</th>
+                              <th>Salones</th>
                               <th colspan="2">Acciones</th>
                          </thead>
                          <tbody>
@@ -14,6 +17,9 @@
                                    <tr>
                                         <td><?php echo $cinema->getName(); ?></td>
                                         <td><?php echo $cinema->getAdress(); ?></td>
+                                        <td><?php echo $cinema->getTicketValue(); ?></td>
+                                        <td><?php echo $cinema->getTotalCapacity(); ?></td>
+                                        <td><button type="submit" name="button_saloon" value="" class="btn btn-dark">Salon</button> </td>
                                         <td> <button type="submit" name="button_delete" value="<?php echo $cinema->getIdCinema(); ?>" class="btn btn-danger">Borrar</button> </td>
                                         <td><a class="btn btn-info" href="<?php echo FRONT_ROOT ?>Cinema/ShowUpdateCinemaView/?id=<?php echo $cinema->getIdCinema(); ?>"> Editar</a></td>
                                    </tr>

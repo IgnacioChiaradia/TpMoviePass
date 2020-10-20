@@ -62,6 +62,8 @@
                 $valuesArray["idCinema"] = $cinema->getIdCinema();
                 $valuesArray["name"] = $cinema->getName();
                 $valuesArray["adress"] = $cinema->getAdress();
+                $valuesArray["ticket_value"] = $cinema->getTicketValue();
+                $valuesArray["total_capacity"] = $cinema->getTotalCapacity();
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -87,6 +89,8 @@
                     $cinema->setIdCinema($valuesArray["idCinema"]);
                     $cinema->setName($valuesArray["name"]);
                     $cinema->setAdress($valuesArray["adress"]);
+                    $cinema->setTicketValue($valuesArray["ticket_value"]);
+                    $cinema->setTotalCapacity($valuesArray["total_capacity"]);
 
                     array_push($this->cinemaList, $cinema);
                 }
