@@ -13,22 +13,22 @@
             $this->movieDAOJson = new movieDAOJson();
         }
 
-        public function moviesView($movieList,$message = '')
+        public function MoviesView($movieList,$message = '')
         {
             require_once(VIEWS_PATH."movieList.php");
         }
 
-        public function renewJsonMovies(){
-            $this->movieDAOJson->getMoviesApi();
+        public function RenewJsonMovies(){
+            $this->movieDAOJson->GetMoviesApi();
 
             $this->listMovies($message = 'La lista de peliculas se ha actualizado correctamente');
         }
 
-        public function listMovies($message = '')
+        public function ListMovies($message = '')
         {
             $movieList = $this->movieDAOJson->getAll();
 
-            $this->moviesView($movieList,$message); 
+            $this->MoviesView($movieList,$message); 
         }
 
         

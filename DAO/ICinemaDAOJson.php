@@ -5,7 +5,7 @@
 
     interface ICinemaDAOJson
     {
-        function add(Cinema $cinema);
-        function update(Cinema $cinema);
+        function Add(Cinema $cinema);
+        function Update(Cinema $cinema);
     }
 ?>

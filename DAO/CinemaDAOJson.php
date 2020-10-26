@@ -1,46 +1,61 @@
 <?php
     namespace DAO;
 
-    use DAO\IDAOJson as IDAOJson;
+    use DAO\IDAO as IDAO;
     use DAO\ICinemaDAOJson as ICinemaDAOJson;
     use Models\Cinema as Cinema;
 
-    class CinemaDAOJson implements IDAOJson, ICinemaDAOJson 
+    class CinemaDAOJson implements IDAO, ICinemaDAOJson 
     {
         private $cinemaList = array();
 
-        public function add(Cinema $cinema)
+        public function Add(Cinema $cinema)
         {
             $this->RetrieveData();
 
-            $cinema->setIdCinema($this->GetNextId()); 
+            $cinema->setIdCinema($this->GetNextId());
+            $cinema->setState(true); 
             
             array_push($this->cinemaList, $cinema);
 
             $this->SaveData();
         }
 
-        public function getAll()
+        public function GetAll()
         {
             $this->RetrieveData();
 
             return $this->cinemaList;
         }
 
-        public function remove($id)
+        public function Remove($id)
         {
             $this->RetrieveData();
 
             foreach($this->cinemaList as $key => $cinema){
                 if($cinema->getIdCinema() == $id){
-                    unset($this->cinemaList[$key]);
+                    $this->cinemaList[$key]->setState(false);
                 }
             }
 
             $this->SaveData();                        
         }
 
-        public function update(Cinema $newCinema)
+        public function Enable($id)
+        {
+            $this->RetrieveData();
+
+            foreach($this->cinemaList as $key => $cinema){
+                if($cinema->getIdCinema() == $id){
+                    $this->cinemaList[$key]->setState(true);
+                }
+            }
+
+            $this->SaveData();                        
+        }
+
+
+        public function Update(Cinema $newCinema)
         {
             $this->RetrieveData();
 
@@ -60,9 +75,9 @@
             foreach($this->cinemaList as $cinema)
             {
                 $valuesArray["idCinema"] = $cinema->getIdCinema();
+                $valuesArray["state"] = $cinema->getState();
                 $valuesArray["name"] = $cinema->getName();
                 $valuesArray["adress"] = $cinema->getAdress();
-                $valuesArray["ticket_value"] = $cinema->getTicketValue();
                 $valuesArray["total_capacity"] = $cinema->getTotalCapacity();
 
                 array_push($arrayToEncode, $valuesArray);
@@ -87,9 +102,9 @@
                 {
                     $cinema = new Cinema();
                     $cinema->setIdCinema($valuesArray["idCinema"]);
+                    $cinema->setState($valuesArray["state"]);
                     $cinema->setName($valuesArray["name"]);
                     $cinema->setAdress($valuesArray["adress"]);
-                    $cinema->setTicketValue($valuesArray["ticket_value"]);
                     $cinema->setTotalCapacity($valuesArray["total_capacity"]);
 
                     array_push($this->cinemaList, $cinema);

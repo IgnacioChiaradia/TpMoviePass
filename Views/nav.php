@@ -13,9 +13,9 @@
 <div id="sidebar" class="sidebar">
   <a href="#" class="boton-cerrar" onclick="ocultar()">&times;</a>
     <ul class="menu">
-      <li><a href="<?php echo FRONT_ROOT ?>Cinema/addCineView">Agregar cine</a></li>
-      <li><a href="<?php echo FRONT_ROOT ?>Cinema/listCinema">Listar cines</a></li>
-      <li><a href="<?php echo FRONT_ROOT ?>Movie/listMovies">Lista de peliculas</a></li>
+      <li><a href="<?php echo FRONT_ROOT ?>Cinema/AddCineView">Agregar cine</a></li>
+      <li><a href="<?php echo FRONT_ROOT ?>Cinema/ListCinema">Listar cines</a></li>
+      <li><a href="<?php echo FRONT_ROOT ?>Movie/ListMovies">Lista de peliculas</a></li>
       <li><a href="#">Logout</a></li>
     </ul>
   </div>

@@ -7,7 +7,7 @@
         <option selected="" disabled="" value="">Seleccione el genero</option>                           
     </select>
   </label>               
-  <a class="btn btn-info mb-2" href="<?php echo FRONT_ROOT ?>Movie/renewJsonMovies">Renovar lista peliculas</a>
+  <a class="btn btn-info mb-2" href="<?php echo FRONT_ROOT ?>Movie/RenewJsonMovies">Renovar lista peliculas</a>
   <?php foreach ($movieList as $movie) { ?>
     <div class="col-md-12">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative color-pelis">

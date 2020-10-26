@@ -3,7 +3,7 @@
           <div class="container">
                <h2 class="mb-4 text-white">Editar cine</h2>
 
-               <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/updateCinema" method="POST">
+               <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/UpdateCinema" method="POST">
                     <input type="hidden" name="idCinema" value="<?php echo $cinemaSearch->getIdCinema(); ?>">
                     <div class="row">
                          <div class="col-lg-3">
@@ -16,12 +16,6 @@
                               <div class="form-group">
                                    <label for="">Direccion</label>
                                    <input type="Text" name="adress" value="<?php echo $cinemaSearch->getAdress(); ?>" class="form-control" placeholder="Direccion" required>
-                              </div>
-                         </div>
-                         <div class="col-lg-3">
-                              <div class="form-group">
-                                   <label for="">Valor ticket</label>
-                                   <input type="number" name="ticket_value" value="<?php echo $cinemaSearch->getTicketValue(); ?>" class="form-control" placeholder="Valor ticket" required>
                               </div>
                          </div>
                          <div class="col-lg-3">

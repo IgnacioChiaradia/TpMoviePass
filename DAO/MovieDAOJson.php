@@ -1,17 +1,17 @@
 <?php
     namespace DAO;
 
-    use DAO\IDAOJson as IDAOJson;
+    use DAO\IDAO as IDAO;
     use Models\Movie as Movie;
 
-    class MovieDAOJson implements IDAOJson
+    class MovieDAOJson implements IDAO
     {
         private $movieList = array();
 
-        public function getMoviesApi()
+        public function GetMoviesApi()
         {
 
-            $this->destroyJson();
+            $this->DestroyJson();
 
         	$movieListJson = file_get_contents('https://api.themoviedb.org/3/movie/now_playing?api_key=' . TMDB_KEY . '&language=es-MX&page=1');
 
@@ -43,7 +43,7 @@
 
         }
 
-        public function add(Movie $movie){
+        public function Add(Movie $movie){
 
             $this->RetrieveData();
 
@@ -55,18 +55,18 @@
 
         }
 
-        public function remove($id){
+        public function Remove($id){
 
         }
 
-        public function getAll()
+        public function GetAll()
         {
             $this->RetrieveData();
 
             return $this->movieList;
         }
 
-        private function destroyJson()
+        private function DestroyJson()
         {
             file_put_contents('Data/movies.json', $jsonContent = array());
         }

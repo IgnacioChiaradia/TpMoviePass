@@ -6,7 +6,7 @@
                     <label class="text-white" for=""> <strong> <?php echo $message ?> </strong> </label>
                <?php } ?>
                <label for=""></label>
-               <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/addCinema" method="POST">
+               <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/AddCinema" method="POST">
                     <div class="row font-weight-bold">
                          <div class="col-lg-3">
                               <div class="form-group">
@@ -18,12 +18,6 @@
                               <div class="form-group">
                                    <label for="">Direccion</label>
                                    <input type="Text" name="adress" value="" class="form-control" placeholder="Direccion" required>
-                              </div>
-                         </div>
-                         <div class="col-lg-3">
-                              <div class="form-group">
-                                   <label for="">Valor de entrada</label>
-                                   <input type="number" name="ticket_value" value="" class="form-control" placeholder="Valor de entrada" required>
                               </div>
                          </div>
                          <div class="col-lg-3">
