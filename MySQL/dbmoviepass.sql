@@ -53,7 +53,7 @@ CREATE TABLE cinemas
   CONSTRAINT uniq_address UNIQUE (address)
 );
 
-  CREATE TABLE movie_theater
+  CREATE TABLE movie_theaters
   (
     id_movie_theater INT AUTO_INCREMENT,
     name VARCHAR (50),
@@ -76,5 +76,5 @@ CREATE TABLE functions
         hour TIME,
         
         CONSTRAINT pk_id_function PRIMARY KEY (id_function),
-        CONSTRAINT pk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theater (movie_theater) ON DELETE CASCADE
+        CONSTRAINT pk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theaters (id_movie_theater) ON DELETE CASCADE
 );

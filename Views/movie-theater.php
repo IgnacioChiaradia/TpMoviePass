@@ -13,7 +13,7 @@
                          <tbody>
                               <tr>
                                    <td><?php echo 'asd';//echo $cinema->getName(); ?></td>
-                                   <td><?php echo 'asd';//echo $cinema->getAdress(); ?></td>
+                                   <td><?php echo 'asd';//echo $cinema->getaddress(); ?></td>
                                    <td><?php echo 'asd';//echo $cinema->getTotalCapacity(); ?></td>
                               </tr>
                          </tbody>

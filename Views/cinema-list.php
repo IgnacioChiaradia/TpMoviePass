@@ -15,16 +15,18 @@
                               <th colspan="2">Acciones</th>
                          </thead>
                          <tbody>
-                              <?php foreach ($listCinema[0] as $cinema) { ?>
+                              <?php foreach ($listCinema as $cinema) { 
+                                   if($cinema->getState()){  ?>
                                    <tr>
                                         <td><?php echo $cinema->getName(); ?></td>
-                                        <td><?php echo $cinema->getAdress(); ?></td>
+                                        <td><?php echo $cinema->getaddress(); ?></td>
                                         <td><?php echo $cinema->getTotalCapacity(); ?></td>
                                         <td><a type="submit" name="button_saloon" value="" class="btn btn-dark" href="<?php echo FRONT_ROOT ?>MovieTheater/ShowMovieTheaterView/?id=<?php echo $cinema->getIdCinema(); ?>">Salon</a> </td>
                                         <td> <button type="submit" name="button_delete" value="<?php echo $cinema->getIdCinema(); ?>" class="btn btn-danger">Dar de baja</button> </td>
                                         <td><a class="btn btn-info" href="<?php echo FRONT_ROOT ?>Cinema/ShowUpdateCinemaView/?id=<?php echo $cinema->getIdCinema(); ?>"> Editar</a></td>
                                    </tr>
-                              <?php } ?>
+                              <?php }
+                              } ?>
                          </tbody>
                     </table>
                </div>
@@ -40,14 +42,16 @@
                               <th>Accion</th>
                          </thead>
                          <tbody>
-                              <?php foreach ($listCinema[1] as $cinema) { ?>
+                              <?php foreach ($listCinema as $cinema) { 
+                                   if(!$cinema->getState()){  ?>
                                    <tr>
                                         <td><?php echo $cinema->getName(); ?></td>
-                                        <td><?php echo $cinema->getAdress(); ?></td>
+                                        <td><?php echo $cinema->getaddress(); ?></td>
                                         <td><?php echo $cinema->getTotalCapacity(); ?></td>
                                         <td> <button type="submit" name="button_delete" value="<?php echo $cinema->getIdCinema(); ?>" class="btn btn-success">Alta</button> </td>
                                    </tr>
-                              <?php } ?>
+                              <?php }
+                              } ?>
                          </tbody>
                     </table>
                </div>

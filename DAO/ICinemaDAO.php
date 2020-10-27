@@ -3,7 +3,7 @@
 
     use Models\Cinema as Cinema;
 
-    interface ICinemaDAOJson
+    interface ICinemaDAO
     {
         function Add(Cinema $cinema);
         function Update(Cinema $cinema);

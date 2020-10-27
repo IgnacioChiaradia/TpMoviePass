@@ -6,7 +6,7 @@ class MovieTheater{
 
 	private $id_movie_theater;
 	private $name;
-	private $capacity;
+	private $current_capacity;
 	private $quantity_tickets;
 	private $price;
 	private $total_capacity;
@@ -31,14 +31,14 @@ class MovieTheater{
 		$this->name = $name;
 	}
 
-	public function getCapacity()
+	public function getCurrentCapacity()
 	{
-		return $this->capacity;
+		return $this->current_capacity;
 	}
 
-	public function setCapacity($capacity)
+	public function setCurrentCapacity($current_capacity)
 	{
-		$this->capacity = $capacity;
+		$this->current_capacity = $current_capacity;
 	}
 
 	public function getQuantityTickets()

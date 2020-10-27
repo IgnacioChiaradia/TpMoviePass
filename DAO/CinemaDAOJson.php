@@ -2,10 +2,10 @@
     namespace DAO;
 
     use DAO\IDAO as IDAO;
-    use DAO\ICinemaDAOJson as ICinemaDAOJson;
+    use DAO\ICinemaDAO as ICinemaDAO;
     use Models\Cinema as Cinema;
 
-    class CinemaDAOJson implements IDAO, ICinemaDAOJson 
+    class CinemaDAOJson implements IDAO, ICinemaDAO 
     {
         private $cinemaList = array();
 
@@ -77,7 +77,7 @@
                 $valuesArray["idCinema"] = $cinema->getIdCinema();
                 $valuesArray["state"] = $cinema->getState();
                 $valuesArray["name"] = $cinema->getName();
-                $valuesArray["adress"] = $cinema->getAdress();
+                $valuesArray["address"] = $cinema->getaddress();
                 $valuesArray["total_capacity"] = $cinema->getTotalCapacity();
 
                 array_push($arrayToEncode, $valuesArray);
@@ -104,7 +104,7 @@
                     $cinema->setIdCinema($valuesArray["idCinema"]);
                     $cinema->setState($valuesArray["state"]);
                     $cinema->setName($valuesArray["name"]);
-                    $cinema->setAdress($valuesArray["adress"]);
+                    $cinema->setaddress($valuesArray["address"]);
                     $cinema->setTotalCapacity($valuesArray["total_capacity"]);
 
                     array_push($this->cinemaList, $cinema);

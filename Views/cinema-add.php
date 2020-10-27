@@ -17,7 +17,7 @@
                          <div class="col-lg-3">
                               <div class="form-group">
                                    <label for="">Direccion</label>
-                                   <input type="Text" name="adress" value="" class="form-control" placeholder="Direccion" required>
+                                   <input type="Text" name="address" value="" class="form-control" placeholder="Direccion" required>
                               </div>
                          </div>
                          <div class="col-lg-3">

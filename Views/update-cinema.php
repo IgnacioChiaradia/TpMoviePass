@@ -15,7 +15,7 @@
                          <div class="col-lg-3">
                               <div class="form-group">
                                    <label for="">Direccion</label>
-                                   <input type="Text" name="adress" value="<?php echo $cinemaSearch->getAdress(); ?>" class="form-control" placeholder="Direccion" required>
+                                   <input type="Text" name="address" value="<?php echo $cinemaSearch->getaddress(); ?>" class="form-control" placeholder="Direccion" required>
                               </div>
                          </div>
                          <div class="col-lg-3">
