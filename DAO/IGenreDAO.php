@@ -1,7 +1,9 @@
 <?php
     namespace DAO;
 
-    interface IGenreDAOJson
+    use Models\Genre as Genre;
+
+    interface IGenreDAO
     {
         function getAll();
     }

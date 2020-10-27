@@ -1,39 +1,57 @@
 <?php
     namespace DAO;
 
-    use DAO\IGenreDAOJson as IGenreDAOJson;
+    use \Exception as Exception;
+    use \PDOException as PDOException;
+    use DAO\ICinemaDAO as ICinemaDAO;
+    use DAO\IDAO as IDAO;
     use Models\Genre as Genre;
+    use DAO\Connection as Connection;
 
-    class GenreDAO implements IGenreDAOJson
+    class GenreDAO implements ICinemaDAO, IDAO
     {
-        private $genreList = array();
+        private $connection;
+        private $tableName = "genres";
 
-        public function getAll()
+        public function Add(Genre $genre)
         {
-            $this->RetrieveData();
+            $query = "INSERT INTO ".$this->tableName." (idGenre, name) VALUES (:idGenre, :name);";
+        	try
+            {
+                $parameters["idGenre"] = $genre->getIDGenre();
+                $parameters["name"] = $genre->getName();
 
-            return $this->genreList;
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+            	throw $ex;
+            }
+
         }
 
-        private function RetrieveData()
-        {
-            $this->genreList = array();
-
-            if(file_exists('Data/genre.json'))
-            {
-                $jsonContent = file_get_contents('Data/genre.json');
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray)
-                {
-                    $genre = new Genre();
-                    $genre->setIdGenre($valuesArray["idGenre"]);
-                    $genre->setName($valuesArray["name"]);
-
-                    array_push($this->genreList, $genre);
-                }
-            }
+        public function getGenresApi(){
+        
+            $json = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=' . TMDB_KEY . '&language=es-MX&page=1');
+            
+            $jsonArray = json_decode($json, true);
+            $arrayJsonData = $jsonArray["genres"];
+            $genres = array();
+    
+            for($i=0;$i<count($arrayJsonData); $i++){
+                $jsonData = $arrayJsonData[$i];
+                $id = $jsonData["idGenre"];
+                $name = $jsonData["name"];
+    
+                $genre = new Genre();
+                $genre->setIDGenre($idGenre);
+                $genre->setName($name);
+    
+                array_push($genres,$genre);
+            }        
+            return $genres;
         }
 
         private function GetNextId()
