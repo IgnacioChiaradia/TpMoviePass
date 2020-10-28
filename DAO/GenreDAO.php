@@ -15,10 +15,9 @@
 
         public function Add(Genre $genre)
         {
-            $query = "INSERT INTO ".$this->tableName." (idGenre, name) VALUES (:idGenre, :name);";
+            $query = "INSERT INTO ".$this->tableName." (name) VALUES (:name);";
         	try
             {
-                $parameters["idGenre"] = $genre->getIDGenre();
                 $parameters["name"] = $genre->getName();
 
                 $this->connection = Connection::GetInstance();
