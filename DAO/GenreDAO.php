@@ -53,17 +53,5 @@
             }        
             return $genres;
         }
-
-        private function GetNextId()
-        {
-            $id = 0;
-
-            foreach($this->genreList as $genre)
-            {
-                $id = ($genre->getIdGenre() > $id) ? $genre->getIdGenre() : $id;
-            }
-
-            return $id + 1;
-        }
     }
 ?>
