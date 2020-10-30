@@ -4,8 +4,15 @@
   <?php } ?>
   <label class="col-lg-3 mb-2">
     <select name="career" class="form-control form-control-ml">
-        <option selected="" disabled="" value="">Seleccione el genero</option>                           
+        <option selected="" value="">Seleccione el genero</option>
+        <?php foreach ($genreList as $genre){ ?>
+          <option value="<?php echo($genre->getIDGenre()); ?>"> <?php echo ($genre->getName()); ?></option>
+        <?php } ?>
+                                   
     </select>
+
+    
+
   </label>               
   <a class="btn btn-info mb-2" href="<?php echo FRONT_ROOT ?>Movie/RenewJsonMovies">Renovar lista peliculas</a>
   <?php foreach ($movieList as $movie) { ?>
