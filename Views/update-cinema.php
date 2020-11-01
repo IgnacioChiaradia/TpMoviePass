@@ -18,12 +18,6 @@
                                    <input type="Text" name="address" value="<?php echo $cinemaSearch->getaddress(); ?>" class="form-control" placeholder="Direccion" required>
                               </div>
                          </div>
-                         <div class="col-lg-3">
-                              <div class="form-group">
-                                   <label for="">Capacidad total</label>
-                                   <input type="number" name="total_capacity" value="<?php echo $cinemaSearch->getTotalCapacity(); ?>" class="form-control" placeholder="Capacidad total" required>
-                              </div>
-                         </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Editar</button>
                </form>

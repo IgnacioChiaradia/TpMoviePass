@@ -28,6 +28,7 @@
         {
             $movieList = $this->movieDAOJson->getAll();
 
+
             $this->MoviesView($movieList,$message); 
         }
 

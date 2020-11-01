@@ -15,13 +15,12 @@
 
         public function Add(Cinema $cinema)
         {
-            $query = "INSERT INTO ".$this->tableName." (state, name, address, total_capacity) VALUES (:state, :name, :address, :total_capacity);";
+            $query = "INSERT INTO ".$this->tableName." (state, name, address) VALUES (:state, :name, :address);";
         	try
             {
                 $parameters["state"] = true;
                 $parameters["name"] = $cinema->getName();
-                $parameters["address"] = $cinema->getaddress();
-                $parameters["total_capacity"] = $cinema->getTotalCapacity();
+                $parameters["address"] = $cinema->getAddress();
 
                 $this->connection = Connection::GetInstance();
 
@@ -99,14 +98,13 @@
 
         public function Update(Cinema $newCinema)
         {
-            $query = "UPDATE ".$this->tableName." SET name = :name, address = :address, total_capacity = :total_capacity WHERE id_cinema = :id_cinema";
+            $query = "UPDATE ".$this->tableName." SET name = :name, address = :address WHERE id_cinema = :id_cinema";
         	try
             {
             	$parameters["id_cinema"] = $newCinema->getIdCinema();  
 
                 $parameters["name"] = $newCinema->getName();
                 $parameters["address"] = $newCinema->getAddress();
-                $parameters["total_capacity"] = $newCinema->getTotalCapacity();
 
                 $this->connection = Connection::GetInstance();
 
@@ -120,7 +118,7 @@
             return $rowCount;
         }
 
-        /*public function GetCinemaById($idCinema)
+        public function GetCinemaById($idCinema)
         {
         	$sql = "SELECT * FROM " . $this->tableName . " WHERE id_cinema = :id_cinema";
 		    $result = array();
@@ -141,7 +139,7 @@
 		    }
 
 		    return $result;
-        }*/
+        }
 
         protected function mapear($value) {
 		    $value = is_array($value) ? $value : [];
@@ -152,8 +150,7 @@
             $cinema->setIdCinema($p["id_cinema"]);
             $cinema->setState($p["state"]);
             $cinema->setName($p["name"]);
-            $cinema->setaddress($p["address"]);
-            $cinema->setTotalCapacity($p["total_capacity"]);
+            $cinema->setAddress($p["address"]);
 
 		      return $cinema;
 		    }, $value);
