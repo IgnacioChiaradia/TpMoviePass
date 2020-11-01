@@ -10,8 +10,8 @@
             53
         ],
         "original_language": "en",
-        "vote_count": 23,
-        "popularity": 2627.575,
+        "vote_count": 28,
+        "popularity": 2498.29,
         "runtime": 98,
         "vote_average": 4.2
     },
@@ -27,10 +27,10 @@
             53
         ],
         "original_language": "en",
-        "vote_count": 193,
-        "popularity": 1993.358,
+        "vote_count": 198,
+        "popularity": 1850.564,
         "runtime": 114,
-        "vote_average": 5.5
+        "vote_average": 5.4
     },
     {
         "id": 635302,
@@ -39,18 +39,37 @@
         "overview": "Enmu, liberado recientemente de las c\u00e9lulas de Muzan, se propone atacar un misterioso tren en movimiento. En el curso del ataque, el demonio consume muchos pasajeros. Tanjiro Kamado viene al rescate, pero este tren en movimiento lleva m\u00e1s de un demonio desagradable para luchar.",
         "release_date": "2020-10-16",
         "genre_ids": [
-            28,
-            12,
             16,
-            18,
+            28,
+            36,
+            12,
             14,
-            36
+            18
         ],
         "original_language": "ja",
-        "vote_count": 18,
-        "popularity": 1447.764,
+        "vote_count": 20,
+        "popularity": 1191.536,
         "runtime": 117,
         "vote_average": 7.5
+    },
+    {
+        "id": 531219,
+        "title": "Las brujas",
+        "poster_path": "\/81EQbcDaayfXEUoRpSmplwftOVQ.jpg",
+        "overview": "Cuenta la conmovedora historia de un peque\u00f1o hu\u00e9rfano (Bruno) que, a finales de 1967, se va a vivir con su querida abuela (Spencer) a Demopolis, un pueblo de Alabama. El ni\u00f1o y su abuela tienen extra\u00f1os encuentros con algunas brujas aparentemente glamurosas pero absolutamente diab\u00f3licas, as\u00ed que ella decide quitarse de en medio y llevarse al chico a un hotel de lujo en la costa. Por desgracia, llegan exactamente al mismo tiempo que la Gran Bruja (Hathaway) que ha reunido a sus compinches de todo el planeta -que van de inc\u00f3gnito- para llevar a cabo sus horribles planes. Adaptaci\u00f3n del libro \"Las brujas\" de Roald Dahl.",
+        "release_date": "2020-10-26",
+        "genre_ids": [
+            12,
+            35,
+            14,
+            27,
+            10751
+        ],
+        "original_language": "en",
+        "vote_count": 275,
+        "popularity": 1136.702,
+        "runtime": 106,
+        "vote_average": 7.3
     },
     {
         "id": 590223,
@@ -65,29 +84,10 @@
             878
         ],
         "original_language": "en",
-        "vote_count": 183,
-        "popularity": 885.491,
+        "vote_count": 188,
+        "popularity": 800.945,
         "runtime": 109,
-        "vote_average": 7.6
-    },
-    {
-        "id": 531219,
-        "title": "Las brujas",
-        "poster_path": "\/81EQbcDaayfXEUoRpSmplwftOVQ.jpg",
-        "overview": "Cuenta la conmovedora historia de un peque\u00f1o hu\u00e9rfano (Bruno) que, a finales de 1967, se va a vivir con su querida abuela (Spencer) a Demopolis, un pueblo de Alabama. El ni\u00f1o y su abuela tienen extra\u00f1os encuentros con algunas brujas aparentemente glamurosas pero absolutamente diab\u00f3licas, as\u00ed que ella decide quitarse de en medio y llevarse al chico a un hotel de lujo en la costa. Por desgracia, llegan exactamente al mismo tiempo que la Gran Bruja (Hathaway) que ha reunido a sus compinches de todo el planeta -que van de inc\u00f3gnito- para llevar a cabo sus horribles planes. Adaptaci\u00f3n del libro \"Las brujas\" de Roald Dahl.",
-        "release_date": "2020-10-26",
-        "genre_ids": [
-            14,
-            10751,
-            12,
-            35,
-            27
-        ],
-        "original_language": "en",
-        "vote_count": 233,
-        "popularity": 811.93,
-        "runtime": 106,
-        "vote_average": 7.2
+        "vote_average": 7.7
     },
     {
         "id": 337401,
@@ -102,8 +102,8 @@
             14
         ],
         "original_language": "en",
-        "vote_count": 2643,
-        "popularity": 707.528,
+        "vote_count": 2656,
+        "popularity": 660.915,
         "runtime": 115,
         "vote_average": 7.3
     },
@@ -120,8 +120,8 @@
             53
         ],
         "original_language": "en",
-        "vote_count": 323,
-        "popularity": 686.782,
+        "vote_count": 324,
+        "popularity": 652.48,
         "runtime": 106,
         "vote_average": 5.9
     },
@@ -136,10 +136,25 @@
             10749
         ],
         "original_language": "en",
-        "vote_count": 880,
-        "popularity": 683.025,
+        "vote_count": 964,
+        "popularity": 630.178,
         "runtime": 105,
-        "vote_average": 7.1
+        "vote_average": 7.2
+    },
+    {
+        "id": 694919,
+        "title": "Money Plane",
+        "poster_path": "\/v0BiswYPEZzZTYazvwktPTOTMpP.jpg",
+        "overview": "",
+        "release_date": "2020-09-29",
+        "genre_ids": [
+            28
+        ],
+        "original_language": "en",
+        "vote_count": 154,
+        "popularity": 627.319,
+        "runtime": 82,
+        "vote_average": 5.9
     },
     {
         "id": 539885,
@@ -154,25 +169,10 @@
             53
         ],
         "original_language": "en",
-        "vote_count": 539,
-        "popularity": 680.597,
+        "vote_count": 541,
+        "popularity": 621.144,
         "runtime": 96,
         "vote_average": 5.8
-    },
-    {
-        "id": 694919,
-        "title": "Money Plane",
-        "poster_path": "\/v0BiswYPEZzZTYazvwktPTOTMpP.jpg",
-        "overview": "",
-        "release_date": "2020-09-29",
-        "genre_ids": [
-            28
-        ],
-        "original_language": "en",
-        "vote_count": 153,
-        "popularity": 665.685,
-        "runtime": 82,
-        "vote_average": 5.9
     },
     {
         "id": 581392,
@@ -186,8 +186,8 @@
             53
         ],
         "original_language": "ko",
-        "vote_count": 670,
-        "popularity": 654.696,
+        "vote_count": 673,
+        "popularity": 609.078,
         "runtime": 114,
         "vote_average": 7
     },
@@ -202,42 +202,24 @@
         ],
         "original_language": "en",
         "vote_count": 54,
-        "popularity": 551,
+        "popularity": 507.147,
         "runtime": 98,
         "vote_average": 6.3
     },
     {
-        "id": 592350,
-        "title": "My Hero Academia: El despertar de los h\u00e9roes",
-        "poster_path": "\/2KavuY24PpXBMQ2efbOknKaeYS.jpg",
-        "overview": "Un nuevo villano, llamado Nine, est\u00e1 buscando a Tomura Shigaraki. Para ello, decide atacar la isla de Nabut\u014d. Segunda pel\u00edcula de la serie anime \"My Hero Academia\".",
-        "release_date": "2019-12-20",
+        "id": 748224,
+        "title": "Reaptown",
+        "poster_path": "\/zamW7KUYYtAdxMtTuCzukRjHTPO.jpg",
+        "overview": "",
+        "release_date": "2020-09-28",
         "genre_ids": [
-            28,
-            16
-        ],
-        "original_language": "ja",
-        "vote_count": 451,
-        "popularity": 380.657,
-        "runtime": 104,
-        "vote_average": 8.6
-    },
-    {
-        "id": 425001,
-        "title": "Una guerra con mi abuelo",
-        "poster_path": "\/9UQxxaJMZODEIh5zh7sm0ag75EY.jpg",
-        "overview": "s una comedia familiar de \u00e9sas simplonas y simp\u00e1ticas que m\u00e1s o menos siempre funcionan y que a todos agradan, muy en la l\u00ednea de los \u00faltimos trabajo de De Niro, que parece ser que atraviesa serias dificultades teniendo en cuenta el elevado tren de vida que lleva.",
-        "release_date": "2020-08-27",
-        "genre_ids": [
-            35,
-            18,
-            10751
+            27
         ],
         "original_language": "en",
-        "vote_count": 92,
-        "popularity": 312.614,
-        "runtime": 94,
-        "vote_average": 6.2
+        "vote_count": 2,
+        "popularity": 320.802,
+        "runtime": 77,
+        "vote_average": 6
     },
     {
         "id": 446893,
@@ -254,10 +236,45 @@
             10751
         ],
         "original_language": "en",
-        "vote_count": 1237,
-        "popularity": 309.004,
+        "vote_count": 1239,
+        "popularity": 295.08,
         "runtime": 91,
         "vote_average": 7.6
+    },
+    {
+        "id": 425001,
+        "title": "Una guerra con mi abuelo",
+        "poster_path": "\/9UQxxaJMZODEIh5zh7sm0ag75EY.jpg",
+        "overview": "s una comedia familiar de \u00e9sas simplonas y simp\u00e1ticas que m\u00e1s o menos siempre funcionan y que a todos agradan, muy en la l\u00ednea de los \u00faltimos trabajo de De Niro, que parece ser que atraviesa serias dificultades teniendo en cuenta el elevado tren de vida que lleva.",
+        "release_date": "2020-08-27",
+        "genre_ids": [
+            35,
+            18,
+            10751
+        ],
+        "original_language": "en",
+        "vote_count": 92,
+        "popularity": 289.645,
+        "runtime": 94,
+        "vote_average": 6.2
+    },
+    {
+        "id": 560050,
+        "title": "M\u00e1s all\u00e1 de la Luna",
+        "poster_path": "\/3U7mXO9gs3iCm73mXHB0cfj6PDE.jpg",
+        "overview": "Una ni\u00f1a inteligente, decidida y enamorada de la ciencia construye un cohete para viajar a la Luna y demostrar la existencia de una legendaria diosa. All\u00ed la peque\u00f1a, de nombre Fei Fei, se ver\u00e1 envuelta en una inesperada aventura y descubrir\u00e1 un enigm\u00e1tico mundo de criaturas fant\u00e1sticas.",
+        "release_date": "2020-10-16",
+        "genre_ids": [
+            16,
+            12,
+            10751,
+            14
+        ],
+        "original_language": "en",
+        "vote_count": 140,
+        "popularity": 285.965,
+        "runtime": 100,
+        "vote_average": 8.1
     },
     {
         "id": 726739,
@@ -270,10 +287,10 @@
             35
         ],
         "original_language": "en",
-        "vote_count": 86,
-        "popularity": 300.777,
+        "vote_count": 87,
+        "popularity": 279.312,
         "runtime": 84,
-        "vote_average": 6.6
+        "vote_average": 6.5
     },
     {
         "id": 505379,
@@ -282,31 +299,16 @@
         "overview": "Una joven contrae matrimonio con un arist\u00f3crata y se traslada a vivir a su mansi\u00f3n, de nombre Manderley, situada en Cornualles. Sin embargo, ah\u00ed contin\u00faa presente la sombra de Rebeca, la anterior mujer del millonario, fallecida en extra\u00f1as circunstancias.",
         "release_date": "2020-10-16",
         "genre_ids": [
-            10749,
             18,
             9648,
-            53
+            53,
+            10749
         ],
         "original_language": "en",
-        "vote_count": 210,
-        "popularity": 245.727,
+        "vote_count": 224,
+        "popularity": 260.631,
         "runtime": 121,
         "vote_average": 6.4
-    },
-    {
-        "id": 748224,
-        "title": "Reaptown",
-        "poster_path": "\/zamW7KUYYtAdxMtTuCzukRjHTPO.jpg",
-        "overview": "",
-        "release_date": "2020-09-28",
-        "genre_ids": [
-            27
-        ],
-        "original_language": "en",
-        "vote_count": 2,
-        "popularity": 229.144,
-        "runtime": 77,
-        "vote_average": 6
     },
     {
         "id": 531876,
@@ -321,8 +323,8 @@
             28
         ],
         "original_language": "en",
-        "vote_count": 407,
-        "popularity": 222.535,
+        "vote_count": 408,
+        "popularity": 206.775,
         "runtime": 123,
         "vote_average": 6.7
     },
@@ -340,7 +342,7 @@
         ],
         "original_language": "en",
         "vote_count": 38,
-        "popularity": 213.239,
+        "popularity": 205.061,
         "runtime": 97,
         "vote_average": 7.1
     }

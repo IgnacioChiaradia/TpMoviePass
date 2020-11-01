@@ -14,7 +14,7 @@
             return $this->idGenre;
         }
 
-        public function setIDGenre(){
+        public function setIDGenre($idGenre){
             $this->idGenre = $idGenre;
         }
 
@@ -22,7 +22,7 @@
             return $this->name;
         }
 
-        public function setName(){
+        public function setName($name){
             $this->name = $name;
         }
     }
