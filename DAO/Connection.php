@@ -11,7 +11,8 @@
         private $pdoStatement = null;
         private static $instance = null;
 
-        public function __construct() {
+        public function __construct()
+        {
              try {
                   $this->pdo = new \PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
                   $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -20,11 +21,13 @@
              }
         }
 
-        public function GetPdo(){
-            return $this->pdo;
+        public function GetPdo() // SINGLETON
+        {
+          return $this->pdo;
         }
 
-        public static function GetInstance(){ // SINGLETON
+        public static function GetInstance()
+        {
 
             if(self::$instance == null)
                self::$instance = new Connection();
@@ -32,7 +35,8 @@
             return self::$instance;
         }
 
-        public function Execute($query, $parameters = array()) {
+        public function Execute($query, $parameters = array())
+        {
 
              try {
 

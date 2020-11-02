@@ -14,10 +14,11 @@
 
         public function Add(Genre $genre)
         {
-            $query = "INSERT INTO " . $this->tableName . "(name) VALUES (:name);";
+            $query = "INSERT INTO ".$this->tableName." (id_genre, genre_name) VALUES (:id_genre, :genre_name);";
         	try
             {
-                $parameters["name"] = $genre->getName();
+                $parameters["id_genre"] = $genre->getIDGenre();
+                $parameters["genre_name"] = $genre->getName();
 
                 $this->connection = Connection::GetInstance();
 
@@ -30,10 +31,81 @@
 
         }
 
-        public function Remove($id){}
-        public function GetAll(){}
+        public function Remove($id)
+        {
 
-        public function getGenresApi(){
+        }
+
+
+        public function GetAll()
+        {
+            $sql = "SELECT * FROM " .$this->tableName;
+		    $result = array();
+
+		    try {
+		      $this->connection = Connection::getInstance();
+		      $resultSet = $this->connection->execute($sql);
+
+		      if(!empty($resultSet))
+		      {
+		        $result = $this->mapear($resultSet);
+                
+                if(!is_array($result))
+                    $result = array($result); // hago esto para que cuando devuelva un solo valor de la base lo convierta en array para no tener problemas al querer recorrer la variable con un foreach
+		      }
+		  	}
+		    catch(Exception $ex){
+		       throw $ex;
+		    }
+		    return $result;
+        }
+
+        public function getGenresApi()
+        {
+
+        	$genreList = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=' . TMDB_KEY . '&language=es-MX');
+
+            $genreListApi = ($genreList) ? json_decode($genreList, true) : array();
+            
+            /*echo '<pre>';
+            var_dump($genreListApi);
+            echo '<pre>';
+            die();*/
+
+            foreach ($genreListApi as $genres) {
+
+                foreach ($genres as $genre) {
+
+                    //var_dump($genre);
+                    //die();
+
+                    $newGenre = new Genre();
+                    $newGenre->setIDGenre($genre["id"]);
+                    $newGenre->setName($genre["name"]);
+
+                    $this->Add($newGenre);
+                }
+            }
+        }
+
+
+        protected function mapear($value)
+        {
+		    $value = is_array($value) ? $value : [];
+
+		    $resp = array_map(function($p){
+
+		    $genre = new Genre();
+            $genre->setIDGenre($p["id_genre"]);
+            $genre->setName($p["genre_name"]);
+
+		      return $genre;
+		    }, $value);
+		    return count($resp) > 1 ? $resp : $resp[0];
+		}
+
+        /*public function getGenresApi()
+        {
         
             $json = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=' . TMDB_KEY . '&language=es-MX');
             $jsonArray = json_decode($json, true);
@@ -52,6 +124,6 @@
                 array_push($genreList,$genre);
             }        
             return $genreList;
-        }
+        }*/
     }
 ?>

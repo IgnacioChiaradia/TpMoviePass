@@ -6,7 +6,7 @@ USE dbmoviepass;
 CREATE TABLE genres
 (
   id_genre INT,
-  description VARCHAR (300),
+  genre_name VARCHAR (300),
 
   CONSTRAINT pk_id_genre PRIMARY KEY (id_genre)
 );

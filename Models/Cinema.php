@@ -9,28 +9,34 @@ class Cinema{
     private $name;
     private $address;
 
-    public function getIdCinema(){
+	public function getIdCinema()
+	{
 		return $this->idCinema;
 	}
 
-	public function setIdCinema($idCinema){
+	public function setIdCinema($idCinema)
+	{
 		$this->idCinema = $idCinema;
 	}
 
-	public function getState(){
+	public function getState()
+	{
 		return $this->state;
 	}
 
-	public function setState($state){
+	public function setState($state)
+	{
 		$this->state = $state;
 	}
 
 
-	public function getName(){
+	public function getName()
+	{
 		return $this->name;
 	}
 
-	public function setName($name){
+	public function setName($name)
+	{
 		$this->name = $name;
 	}
 

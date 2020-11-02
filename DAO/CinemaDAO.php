@@ -142,7 +142,8 @@
 		    return $result;
         }
 
-        protected function mapear($value) {
+        protected function mapear($value)
+        {
 		    $value = is_array($value) ? $value : [];
 
 		    $resp = array_map(function($p){
@@ -156,7 +157,7 @@
 		      return $cinema;
 		    }, $value);
 		    return count($resp) > 1 ? $resp : $resp[0];
-		  }
+		}
     }
 
 ?>
