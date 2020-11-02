@@ -60,7 +60,7 @@
 		    return $result;
         }
 
-        public function getGenresApi()
+        public function GetGenresApi()
         {
 
         	$genreList = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=' . TMDB_KEY . '&language=es-MX');
