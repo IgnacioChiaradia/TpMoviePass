@@ -38,14 +38,13 @@
 
         }
 
-        public function AddCinema($name, $address, $total_capacity)
+        public function AddCinema($name, $address)
         {
             $cinema = new Cinema();
             $message = '';
 
             $cinema->setName($name);
-            $cinema->setaddress($address);
-            $cinema->setTotalCapacity($total_capacity);
+            $cinema->setAddress($address);
 
             if($this->CinemaExists($cinema)){ // se verifica si el nombre y la direccion ya existen
                 $message = "El cine que se quiere agregar ya existe";
@@ -61,9 +60,6 @@
         {
 
             $listCinema = $this->cinemaDAO->GetAll();
-
-            //if(!is_array($listCinema))
-             //$listCinema = array($listCinema); // hago esto para que cuando devuelva un solo valor de la base lo convierta en array para no tener problemas en el cinema-list al mostrar la informacion con un foreach
 
             if(!$listCinema)
             {
@@ -93,7 +89,7 @@
         public function ShowUpdateCinemaView()
         {
             $idCinema = $_GET['id'];
-            $cinemaSearch = $this->GetCinemaById($idCinema);
+            $cinemaSearch = $this->cinemaDAO->GetCinemaById($idCinema);
 
             if($cinemaSearch){
                 require_once(VIEWS_PATH."update-cinema.php");
@@ -104,42 +100,30 @@
         }
 
 
-        public function UpdateCinema($id, $name, $address, $total_capacity)
+        public function UpdateCinema($id, $name, $address)
         {
             $cinema = new Cinema();
 
             $cinema->setIdCinema((int)$id);
             $cinema->setState(true);
             $cinema->setName($name);
-            $cinema->setaddress($address);
-            $cinema->setTotalCapacity($total_capacity);
+            $cinema->setAddress($address);
 
             if($this->CinemaExistsUpdate($cinema)){
                 $message = "Los datos del cine a agregar ya existen en otro cine !";
             }else{
-                $message = "El cine se ha editado correctamente !!!";
-                $this->cinemaDAO->Update($cinema);
-            }
-
-            $this->ListCinema($message);
-        }
-
-        public function GetCinemaById($idCinema)
-        {
-
-            $cinemaList = $this->cinemaDAO->GetAll();
-            //var_dump($cinemaList);
-            //if(!is_array($cinemaList))
-             //$cinemaList = array($cinemaList);
-            $cinemaSearch = 0;
-
-            foreach($cinemaList as $cinema){
-                if($cinema->GetIdCinema() == $idCinema){
-                    $cinemaSearch = $cinema;
+                $rowCount = $this->cinemaDAO->Update($cinema);
+                if($rowCount > 0)
+                {
+                    $message = "El cine se ha editado correctamente !!!";
+                }
+                else
+                {
+                    $message = "El cine no se ha editado";
                 }
             }
 
-            return $cinemaSearch;
+            $this->ListCinema($message);
         }
 
         public function CinemaExists($cinemaToSearch)
@@ -147,7 +131,7 @@
             $cinemaList = $this->cinemaDAO->GetAll();
             //$flag = 0;
             foreach($cinemaList as $cinema){
-                if($cinema->getName() == $cinemaToSearch->getName() || $cinema->getaddress() == $cinemaToSearch->getaddress()){
+                if($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAddress() == $cinemaToSearch->getaddress()){
                     return 1;
                     //$flag = 1;
                     //break;
@@ -161,7 +145,7 @@
             $cinemaList = $this->cinemaDAO->GetAll();
             //$flag = 0;
             foreach($cinemaList as $cinema){
-                if(($cinema->getName() == $cinemaToSearch->getName() || $cinema->getaddress() == $cinemaToSearch->getaddress()) && $cinema->getIdCinema() != $cinemaToSearch->getIdCinema()){
+                if(($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAddress() == $cinemaToSearch->getAddress()) && $cinema->getIdCinema() != $cinemaToSearch->getIdCinema()){
                     return 1;
                     //$flag = 1;
                     //break;

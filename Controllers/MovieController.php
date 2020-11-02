@@ -37,8 +37,8 @@
 
             $genreList = $this->genreDAO->getAll();
 
-            $this->MoviesView($movieList, $genreList, $message); 
+            $this->MoviesView($movieList, $genreList, $message);
         }
-        
+
     }
 ?>

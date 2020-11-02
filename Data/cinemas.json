@@ -3,21 +3,18 @@
         "idCinema": 3,
         "state": false,
         "name": "Ambassador",
-        "address": "Cordoba 5060",
-        "total_capacity": "200"
+        "address": "Cordoba 5060"
     },
     {
         "idCinema": 4,
         "state": true,
         "name": "Cines Aldrey",
-        "address": "Sarmiento 2685",
-        "total_capacity": "1000"
+        "address": "Sarmiento 2685"
     },
     {
         "idCinema": 6,
         "state": true,
-        "name": "Cine del Paseo",
-        "address": "Diagonal Pueyrredon 3058",
-        "total_capacity": "123"
+        "name": "Cines del Paseo",
+        "address": "Diagonal Pueyrredon 3058"
     }
 ]

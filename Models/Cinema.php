@@ -8,8 +8,6 @@ class Cinema{
     private $state;
     private $name;
     private $address;
-    private $total_capacity;
-    private $movie_theater_list = array ();
 
 	public function getIdCinema()
 	{
@@ -42,34 +40,12 @@ class Cinema{
 		$this->name = $name;
 	}
 
-	public function getaddress()
-	{
+	public function getAddress(){
 		return $this->address;
 	}
 
-	public function setaddress($address)
-	{
+	public function setAddress($address){
 		$this->address = $address;
-	}
-
-	public function getTotalCapacity()
-	{
-		return $this->total_capacity;
-	}
-
-	public function setTotalCapacity($total_capacity)
-	{
-		$this->total_capacity = $total_capacity;
-	}
-
-	public function getMovieTheaterList()
-	{
-		return $this->movie_theater_list;
-	}
-
-	public function setMovieTheaterList($movie_theater_list)
-	{
-		$this->movie_theater_list = $movie_theater_list;
 	}
 }
 

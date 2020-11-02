@@ -2,23 +2,35 @@
 
 namespace Models;
 
+use Models\Cinema as Cinema;
+
 class MovieTheater{
 
 	private $id_movie_theater;
+	private $state;
 	private $name;
 	private $current_capacity;
-	private $quantity_tickets;
 	private $price;
 	private $total_capacity;
+	private $cinema;
+	//private $functions_list = array();
 
-	public function getIDMovieTheater()
+	public function getIdMovieTheater()
 	{
 		return $this->id_movie_theater;
 	}
 
-	public function setIDMovieTheater($id_movie_theater)
+	public function setIdMovieTheater($id_movie_theater)
 	{
 		$this->id_movie_theater = $id_movie_theater;
+	}
+
+	public function getState(){
+		return $this->state;
+	}
+
+	public function setState($state){
+		$this->state = $state;
 	}
 
 	public function getName()
@@ -41,16 +53,6 @@ class MovieTheater{
 		$this->current_capacity = $current_capacity;
 	}
 
-	public function getQuantityTickets()
-	{
-		return $this->quantity_tickets;
-	}
-
-	public function setQuantityTickets($quantity_tickets)
-	{
-		$this->quantity_tickets = $quantity_tickets;
-	}
-
 	public function getPrice()
 	{
 		return $this->price;
@@ -70,6 +72,26 @@ class MovieTheater{
 	{
 		$this->total_capacity = $total_capacity;
     }
+
+    public function getCinema()
+	{
+		return $this->cinema;
+	}
+
+	public function setCinema(Cinema $cinema)
+	{
+		$this->cinema = $cinema;
+    }
+
+    /*public function getFunctionsList()
+	{
+		return $this->functions_list;
+	}
+
+	public function setFunctionsList($functions_list)
+	{
+		$this->functions_list = $functions_list;
+    }*/
 }
 
 ?>

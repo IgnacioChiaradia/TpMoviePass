@@ -46,7 +46,6 @@ CREATE TABLE cinemas
   state BOOLEAN,
   name VARCHAR (50), 
   address VARCHAR (50),
-  total_capacity INT,
 
   CONSTRAINT pk_id_cinema PRIMARY KEY (id_cinema),
   CONSTRAINT uniq_name UNIQUE (name),
@@ -56,10 +55,10 @@ CREATE TABLE cinemas
   CREATE TABLE movie_theaters
   (
     id_movie_theater INT AUTO_INCREMENT,
+    state BOOLEAN,
     name VARCHAR (50),
     current_capacity INT, /*capacidad actual*/
     price INT, /*valor de la entrada*/
-    quantity_tickets INT, /*cantidad de tickets vendidos*/
     total_capacity INT,
 
     id_cinema INT,
@@ -71,10 +70,11 @@ CREATE TABLE cinemas
 CREATE TABLE functions
       (
         id_function INT AUTO_INCREMENT,
-        id_movie_theater INT,
         day DATE,
         hour TIME,
         
+        id_movie_theater INT,
+        
         CONSTRAINT pk_id_function PRIMARY KEY (id_function),
-        CONSTRAINT pk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theaters (id_movie_theater) ON DELETE CASCADE
+        CONSTRAINT fk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theaters (id_movie_theater) ON DELETE CASCADE
 );

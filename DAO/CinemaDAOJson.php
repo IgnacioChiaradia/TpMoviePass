@@ -59,13 +59,31 @@
         {
             $this->RetrieveData();
 
+            $flag = 0;
             foreach($this->cinemaList as $key => $cinema){
                 if($cinema->getIdCinema() == $newCinema->getIdCinema()){
                     $this->cinemaList[$key] = $newCinema;
+                    $flag = 1;
                 }
             }
 
-            $this->SaveData();                        
+            $this->SaveData();
+            return $flag;                        
+        }
+
+        public function GetCinemaById($id){
+            $this->RetrieveData();
+
+            $cinemaSearch = null;
+            foreach($this->cinemaList as $cinema) 
+            {
+                if($id == $cinema->getIdCinema()) 
+                {
+                    $cinemaSearch = $cinema;
+                }
+            }
+
+            return $cinemaSearch;
         }
 
         private function SaveData()
@@ -78,7 +96,6 @@
                 $valuesArray["state"] = $cinema->getState();
                 $valuesArray["name"] = $cinema->getName();
                 $valuesArray["address"] = $cinema->getaddress();
-                $valuesArray["total_capacity"] = $cinema->getTotalCapacity();
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -105,7 +122,6 @@
                     $cinema->setState($valuesArray["state"]);
                     $cinema->setName($valuesArray["name"]);
                     $cinema->setaddress($valuesArray["address"]);
-                    $cinema->setTotalCapacity($valuesArray["total_capacity"]);
 
                     array_push($this->cinemaList, $cinema);
                 }
