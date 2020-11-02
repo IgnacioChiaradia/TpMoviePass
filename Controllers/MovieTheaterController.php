@@ -21,12 +21,28 @@
         {
             $idCinema = $_GET['id'];
             $cinemaSearch = $this->cinemaDAO->GetCinemaById($idCinema);
-            $movieTheaterList = $this->movieTheaterDAO->GetMovieTheatersByIdCinema($idCinema);
 
-            if(!is_array($movieTheaterList))
-                    $movieTheaterList = array($movieTheaterList);
+            // hago esto para que el usuario no pueda modificar el cine estando dado de baja (ya que podria ingresar la url para entrar a la sala)
+            if($cinemaSearch->getState()){ 
 
-            require_once(VIEWS_PATH."movie-theater.php");
+                $movieTheaterList = $this->movieTheaterDAO->GetMovieTheatersByIdCinema($idCinema);
+
+                if(!is_array($movieTheaterList))
+                        $movieTheaterList = array($movieTheaterList);
+
+                require_once(VIEWS_PATH."movie-theater.php");
+            }
+            else
+            {
+                $listCinema = $this->cinemaDAO->GetAll();
+
+                if(!$listCinema)
+                {
+                    $message = 'No se encuentran cines registrados';
+                }
+
+                require_once(VIEWS_PATH."cinema-list.php");
+            }
         }
 
         public function ShowMovieTheaterViewAbm($message = "", $id_cinema)
@@ -46,7 +62,7 @@
 
             $movieTheater->setState(true);
             $movieTheater->setName($name);
-            $movieTheater->setCurrentCapacity($total_capacity); // cantidad de entradas vendidas
+            $movieTheater->setCurrentCapacity($total_capacity);
             $movieTheater->setPrice($price);
             $movieTheater->setTotalCapacity($total_capacity);
 

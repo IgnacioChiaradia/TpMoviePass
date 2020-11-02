@@ -3,17 +3,17 @@
 
     use \Exception as Exception;
     use \PDOException as PDOException;
-    use DAO\ICinemaDAO as ICinemaDAO;
+    use DAO\IFunctionDAO as IFunctionDAO;
     use DAO\IDAO as IDAO;
-    use Models\Cinema as Cinema;
+    //use Models\Function as Function;
     use DAO\Connection as Connection;
 
-    class CinemaDAO implements ICinemaDAO, IDAO
+    class FunctionDAO implements IFunctionDAO, IDAO
     {
         private $connection;
-        private $tableName = "cinemas";
+        private $tableName = "functions";
 
-        public function Add(Cinema $cinema)
+        public function Add(Function $function)
         {
             $query = "INSERT INTO ".$this->tableName." (state, name, address) VALUES (:state, :name, :address);";
         	try
@@ -97,7 +97,7 @@
             return $rowCount;
         }
 
-        public function Update(Cinema $newCinema)
+        public function Update(Function $newFunction)
         {
             $query = "UPDATE ".$this->tableName." SET name = :name, address = :address WHERE id_cinema = :id_cinema";
         	try
@@ -119,7 +119,7 @@
             return $rowCount;
         }
 
-        public function GetCinemaById($idCinema)
+        public function GetCinemaById($idFunction)
         {
         	$sql = "SELECT * FROM " . $this->tableName . " WHERE id_cinema = :id_cinema";
 		    $result = array();

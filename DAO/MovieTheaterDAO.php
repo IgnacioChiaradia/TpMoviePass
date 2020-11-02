@@ -156,6 +156,29 @@
             return $result;
         }
 
+        public function GetMovieTheaterByName($movieTheaterName)
+        {
+            $sql = "SELECT * FROM " . $this->tableName . " WHERE name = :name";
+            $result = null;
+
+            try {
+                    $parameters["name"] = $movieTheaterName;
+
+                    $this->connection = Connection::getInstance();
+                    $resultSet = $this->connection->Execute($sql,$parameters);
+
+                    if(!empty($resultSet))
+                    {
+                      $result = $this->mapear($resultSet);
+                    }
+            }
+            catch(Exception $ex){
+               throw $ex;
+            }
+
+            return $result;
+        }
+
         public function GetMovieTheatersByIdCinema($id_cinema)
         {
             $query ="select movie_theaters.*
@@ -186,6 +209,7 @@
         public function GetCinemaById($idCinema)
         {
             $sql = "SELECT * FROM cinemas WHERE id_cinema = :id_cinema";
+            $cinema = null;
 
             try {
                     $parameters["id_cinema"] = $idCinema;
