@@ -38,12 +38,13 @@
                 $newMovie->setRuntime($movieData["runtime"]); //aqui le asigno el tiempo con la segunda request
                 $newMovie->setVoteAverage($movie["vote_average"]);
 
-                $this->add($newMovie);
+                $this->Add($newMovie);
             }
 
         }
 
-        public function Add(Movie $movie){
+        public function Add(Movie $movie)
+        {
 
             $this->RetrieveData();
 
@@ -55,7 +56,8 @@
 
         }
 
-        public function Remove($id){
+        public function Remove($id)
+        {
 
         }
 

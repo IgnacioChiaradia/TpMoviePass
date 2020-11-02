@@ -124,7 +124,8 @@
             $this->ListCinema($message);
         }
 
-        public function GetCinemaById($idCinema){
+        public function GetCinemaById($idCinema)
+        {
 
             $cinemaList = $this->cinemaDAO->GetAll();
             //var_dump($cinemaList);

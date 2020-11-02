@@ -6,23 +6,28 @@
         private $idGenre;
         private $name;
 
-        public function __construct(){
+        public function __construct()
+        {
 
         }
 
-        public function getIDGenre(){
+        public function getIDGenre()
+        {
             return $this->idGenre;
         }
 
-        public function setIDGenre($idGenre){
+        public function setIDGenre($idGenre)
+        {
             $this->idGenre = $idGenre;
         }
 
-        public function getName(){
+        public function getName()
+        {
             return $this->name;
         }
 
-        public function setName($name){
+        public function setName($name)
+        {
             $this->name = $name;
         }
     }
