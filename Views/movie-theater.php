@@ -79,6 +79,19 @@
                     </table>
                </div>
           </form>
+          <form action="<?php echo FRONT_ROOT ?>Function/AddFunctionView" method="POST">
+               <div class="container">
+                    <h3 class="mb-4 text-white">Ingrese el nombre de la sala en la que quiere ingresar una funcion</h3>
+                    <div class="col-lg-3">
+                         <div class="form-group">
+                              <input type="text" name="name" value="" class="form-control" placeholder="Nombre de sala" required>
+
+                              <input type="hidden" name="id_cinema" value="<?php echo $cinemaSearch->getIdCinema(); ?>">
+                         <input type="submit" name="button" value="Agregar funcion" class="btn btn-primary">
+                         </div>
+                    </div>
+               </div>
+          </form>
           <form action="<?php echo FRONT_ROOT ?>MovieTheater/EnableMovieTheater" method="POST">
                <div class="container">
                     <h2 class="mb-4 text-white">Lista de salas inactivas</h2>

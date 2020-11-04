@@ -17,7 +17,7 @@ CREATE TABLE movies
   title VARCHAR(100),
   poster_path VARCHAR(100),
   overview VARCHAR(300),
-  release_data DATE,
+  release_date DATE,
   genre_ids VARCHAR(50),
   original_language VARCHAR(30),
   vote_count INT,

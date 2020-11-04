@@ -13,7 +13,6 @@ class MovieTheater{
 	private $price;
 	private $total_capacity;
 	private $cinema;
-	//private $functions_list = array();
 
 	public function getIdMovieTheater()
 	{
@@ -83,15 +82,6 @@ class MovieTheater{
 		$this->cinema = $cinema;
     }
 
-    /*public function getFunctionsList()
-	{
-		return $this->functions_list;
-	}
-
-	public function setFunctionsList($functions_list)
-	{
-		$this->functions_list = $functions_list;
-    }*/
 }
 
 ?>

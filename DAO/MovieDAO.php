@@ -33,7 +33,8 @@
                 $newMovie->setPosterPath($movie["poster_path"]);
                 $newMovie->setOverview($movie["overview"]);
                 $newMovie->setReleaseDate($movie["release_date"]);
-                $newMovie->setGenreIds($movie["genre_ids"]);
+                //$newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
+                $newMovie->setGenreIds(0);
                 $newMovie->setOriginalLanguage($movie["original_language"]);
                 $newMovie->setVoteCounts($movie["vote_count"]);
                 $newMovie->setPopularity($movie["popularity"]);

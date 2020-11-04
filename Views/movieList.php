@@ -4,7 +4,7 @@
   <?php } ?>
   <label class="col-lg-3 mb-2">
     <select name="career" class="form-control form-control-ml">
-        <option selected="" value="">Seleccione el genero</option>
+        <option selected="" value="" disabled="">Seleccione el genero</option>
         <?php foreach ($genreList as $genre){ ?>
           <option name="movieGenre" value="<?php echo($genre->getIDGenre()); ?>"> <?php echo ($genre->getName()); ?></option>
         <?php } ?>
