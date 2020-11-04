@@ -24,7 +24,7 @@
             require_once(VIEWS_PATH."movieList.php");
         }
 
-        public function RenewJsonMovies()
+        public function RenewMovies()
         {
             $this->movieDAO->GetMoviesApi();
 
