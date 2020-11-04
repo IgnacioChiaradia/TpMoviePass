@@ -31,8 +31,8 @@
                 $newMovie->setPosterPath($movie["poster_path"]);
                 $newMovie->setOverview($movie["overview"]);
                 $newMovie->setReleaseDate($movie["release_date"]);
-                //$newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
-                $newMovie->setGenreIds(0);
+                $newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
+                //$newMovie->setGenreIds(0);
                 $newMovie->setOriginalLanguage($movie["original_language"]);
                 $newMovie->setVoteCounts($movie["vote_count"]);
                 $newMovie->setPopularity($movie["popularity"]);
@@ -104,6 +104,30 @@
 		    }
 		    return $result;
         }
+
+        public function GetMovieById($idMovie)
+        {
+            $sql = "SELECT * FROM " . $this->tableName . " WHERE id_movie = :id_movie";
+            $result = null;
+
+            try {
+                    $parameters["id_movie"] = $idMovie;
+
+                    $this->connection = Connection::getInstance();
+                    $resultSet = $this->connection->Execute($sql,$parameters);
+
+                    if(!empty($resultSet))
+                    {
+                      $result = $this->mapear($resultSet);
+                    }
+            }
+            catch(Exception $ex){
+               throw $ex;
+            }
+
+            return $result;
+        }
+
 
         protected function mapear($value)
         {

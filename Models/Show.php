@@ -4,19 +4,19 @@ namespace Models;
 
 use Models\MovieTheater as MovieTheater;
 
-class Function
+class Show
 {
-	private $id_function;
+	private $id_show;
 	private $day;
 	private $time;
 	private $movie_theater;
 
-	public function getId_function(){
-		return $this->id_function;
+	public function getIdShow(){
+		return $this->id_show;
 	}
 
-	public function setId_function($id_function){
-		$this->id_function = $id_function;
+	public function setIdShow($id_show){
+		$this->id_show = $id_show;
 	}
 
 	public function getDay(){

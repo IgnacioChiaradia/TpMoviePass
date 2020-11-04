@@ -79,7 +79,7 @@
                     </table>
                </div>
           </form>
-          <form action="<?php echo FRONT_ROOT ?>Function/AddFunctionView" method="POST">
+          <form action="<?php echo FRONT_ROOT ?>Show/DisplayShowView" method="POST">
                <div class="container">
                     <h3 class="mb-4 text-white">Ingrese el nombre de la sala en la que quiere ingresar una funcion</h3>
                     <div class="col-lg-3">

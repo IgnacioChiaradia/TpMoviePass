@@ -67,14 +67,14 @@ CREATE TABLE cinemas
     CONSTRAINT fk_id_cinema FOREIGN KEY (id_cinema) REFERENCES cinemas (id_cinema) ON DELETE CASCADE
 );
 
-CREATE TABLE functions
+CREATE TABLE shows
       (
-        id_function INT AUTO_INCREMENT,
+        id_show INT AUTO_INCREMENT,
         day DATE,
         hour TIME,
         
         id_movie_theater INT,
         
-        CONSTRAINT pk_id_function PRIMARY KEY (id_function),
+        CONSTRAINT pk_id_show PRIMARY KEY (id_show),
         CONSTRAINT fk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theaters (id_movie_theater) ON DELETE CASCADE
 );

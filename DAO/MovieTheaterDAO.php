@@ -250,7 +250,7 @@
             $movieTheater->setPrice($p["price"]);
             $movieTheater->setTotalCapacity($p["total_capacity"]);
 
-            $cinema = new Cinema();
+            //$cinemaSearch = new Cinema();
             $cinemaSearch = $this->GetCinemaById($p["id_cinema"]);
 
             $movieTheater->setCinema($cinemaSearch);
