@@ -17,6 +17,7 @@ class Movie
 	private $popularity;
 	private $runtime; // tiempo de duracion
 	private $vote_average;
+	private $is_active;
 
 	public function getIdMovie()
 	{
@@ -135,6 +136,17 @@ class Movie
 	{
 		$this->vote_average = $vote_average;
 	}
+
+	public function getIsActive()
+	{
+		return $this->is_active;
+	}
+
+	public function setIsActive($is_active)
+	{
+		$this->is_active = $is_active;
+	}
+
 }
 
 

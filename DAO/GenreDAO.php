@@ -36,6 +36,22 @@
 
         }
 
+        public function getGenreByID ($genre)
+        {
+            try {
+                $query = "SELECT * FROM " . $this->tableName . "WHERE id_genre = " . $genre->getIDGenre() . ";";
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+
+                foreach ($resultSet as $row) {
+                    $genero->setIDGenre($row["id_genre"]);
+                    $genero->setName($row["genre_name"]);
+                }
+                    return $genero->getName();
+                } catch (Exception $ex) {
+                    throw $ex;
+            }
+        }
 
         public function GetAll()
         {
@@ -66,18 +82,10 @@
         	$genreList = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=' . TMDB_KEY . '&language=es-MX');
 
             $genreListApi = ($genreList) ? json_decode($genreList, true) : array();
-            
-            /*echo '<pre>';
-            var_dump($genreListApi);
-            echo '<pre>';
-            die();*/
 
             foreach ($genreListApi as $genres) {
 
                 foreach ($genres as $genre) {
-
-                    //var_dump($genre);
-                    //die();
 
                     $newGenre = new Genre();
                     $newGenre->setIDGenre($genre["id"]);

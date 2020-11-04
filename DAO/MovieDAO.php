@@ -3,6 +3,8 @@
 
     use DAO\IDAO as IDAO;
     use Models\Movie as Movie;
+    use Models\Genre as Genre;
+    use Models\MovieXGenre as MovieXGenre;
     use \Exception as Exception;
     use \PDOException as PDOException;
     use DAO\Connection as Connection;
@@ -38,9 +40,86 @@
                 $newMovie->setRuntime($movieData["runtime"]);
                 $newMovie->setVoteAverage($movie["vote_average"]);
 
-                $this->Add($newMovie);
+                if ($this->Add($newMovie))
+                {
+                    $this->AddMovieGenre($newMovie);
+                }
+
+                
+            }
+            return $this->GetAll();
+        }
+
+        public function GetAllGenres()
+        {
+            $sql = "SELECT * FROM genres";
+		    $genreList = array();
+
+		    try {
+		      $this->connection = Connection::getInstance();
+              $resultSet = $this->connection->execute($sql);
+              $genre = new Genre();
+
+		      if(!empty($resultSet))
+		      {
+                if(!is_array($resultSet))
+                    $resultSet = array($resultSet);
+
+                    foreach ($resultSet as $result)
+                    {
+                        $genre->setIDGenre($result["id_genre"]);
+                        $genre->setName($result["genre_name"]);
+
+                        array_push($genreList, $genre);
+                    }
+              }
+              
+		  	}
+		    catch(Exception $ex){
+		       throw $ex;
+		    }
+		    return $genreList;
+        }
+
+        public function AddMovieGenre (Movie $movie)
+        {
+
+            $genreListByMovie = $movie->getGenreIds();  
+            $genreList = $this->GetAllGenres();
+            $newMovieGenre = new MovieXGenre();
+
+            /*echo "<pre>";
+            var_dump ($genreListByMovie);
+            echo "<pre>";
+            die();*/
+
+            foreach ($genreListByMovie as $key => $genre)
+            {
+                if ($genre){
+                    $query = "INSERT INTO movies_x_genres (id_movie, id_genre) VALUES (:id_movie, :id_genre);";
+
+                    try
+                    {
+
+                        $parameters = array();
+
+                        $parameters["id_movie"] = $movie->getIdMovie();
+                        $parameters["id_genre"] = $genre;
+
+                        $this->connection = Connection::GetInstance();
+
+                        $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
+                        
+                    }
+                    catch(Exception $ex)
+                    {
+                        throw $ex;
+                    }
+                }
             }
         }
+
+         
 
         public function Add(Movie $movie)
         {
@@ -66,14 +145,45 @@
 
                 $this->connection = Connection::GetInstance();
 
-                $this->connection->ExecuteNonQuery($query, $parameters);
+                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
+                
             }
             catch(Exception $ex)
             {
             	throw $ex;
             }
-
+            return $rowCount;
         }
+
+        /*public function Update(Movie $movie)
+        {
+
+            $query = "UPDATE ".$this->tableName." SET title = :title, poster_path = :poster_path, overview = :overview, release_date = :release_date, genre_ids = :genre_ids, original_language = :original_language, vote_count = :vote_count, popularity = :popularity, runtime = :runtime, vote_average = :vote_average WHERE id_movie = :id_movie";
+
+            $parameters["id_movie"] = $movie->getIdMovie();
+            $parameters["title"] = $movie->getTitle();
+            $parameters["poster_path"] = $movie->getPosterPath();
+            $parameters["overview"] = $movie->getOverview();
+            $parameters["release_date"] = $movie->getReleaseDate();
+            $parameters["genre_ids"] = $movie->getGenreIds();
+            $parameters["original_language"] = $movie->getOriginalLanguage();
+            $parameters["vote_count"] = $movie->getVoteCounts();
+            $parameters["popularity"] = $movie->getPopularity();
+            $parameters["runtime"] = $movie->getRuntime();
+            $parameters["vote_average"] = $movie->getVoteAverage();
+
+            try {
+
+                $this->connection = Connection::getInstance();
+                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+            return $rowCount;
+        }*/
 
         public function Remove($id)
         {
@@ -116,7 +226,7 @@
             $movie->setPosterPath($p["poster_path"]);
             $movie->setOverview($p["overview"]);
             $movie->setReleaseDate($p["release_date"]);
-            $movie->setGenreIds($p["genre_ids"]);
+            $movie->setGenreIds($p["genre_ids"]); 
             $movie->setOriginalLanguage($p["original_language"]);
             $movie->setVoteCounts($p["vote_count"]);
             $movie->setPopularity($p["popularity"]);

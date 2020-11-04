@@ -30,11 +30,11 @@ CREATE TABLE movies
 
 CREATE TABLE movies_x_genres
 (
-  id_movies_x_genre INT,
+  id_movie_x_genre INT AUTO_INCREMENT,
   id_movie INT,
   id_genre INT,
 
-  CONSTRAINT pk_id_movies_x_genre PRIMARY KEY (id_movies_x_genre),
+  CONSTRAINT pk_id_movie_x_genre PRIMARY KEY (id_movie_x_genre),
   CONSTRAINT fk_id_movie_movie_x_genre FOREIGN KEY (id_movie) REFERENCES movies(id_movie),
   CONSTRAINT fk_id_genre_movie_x_genre FOREIGN KEY (id_genre) REFERENCES genres(id_genre)
 );
