@@ -252,3 +252,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /************************   FIN PELICULAS   **********************/
+
+p.recorta-texto {
+      width: 300px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+}

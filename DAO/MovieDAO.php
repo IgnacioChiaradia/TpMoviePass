@@ -44,9 +44,7 @@
                 if ($this->Add($newMovie))
                 {
                     $this->AddMovieGenre($newMovie);
-                }
-
-                
+                }                
             }
             return $this->GetAll();
         }

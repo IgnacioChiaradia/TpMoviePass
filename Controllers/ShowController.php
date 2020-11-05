@@ -19,10 +19,10 @@
 
         public function __construct()
         {
-            //$this->showDAO = new showDAO();
+            $this->showDAO = new ShowDAO();
             $this->cinemaDAO = new CinemaDAO();
-            $this->movieTheaterDAO = new movieTheaterDAO();
-            $this->movieDAO = new movieDAO();
+            $this->movieTheaterDAO = new MovieTheaterDAO();
+            $this->movieDAO = new MovieDAO();
         }
 
         public function DisplayShowView($movieTheaterName, $idCinema)
@@ -30,8 +30,13 @@
 
             $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterByName($movieTheaterName);
 
-            if($movieTheaterSearch)
+            if($movieTheaterSearch && $movieTheaterSearch->getState())
             {
+                $showsOfMovieTheater = $this->showDAO->GetAllShowsByMovieTheater($movieTheaterSearch);
+                
+                if(!is_array($showsOfMovieTheater))
+                    $showsOfMovieTheater = array($showsOfMovieTheater);
+                
                 $movieList = $this->movieDAO->GetAll();
                 require_once(VIEWS_PATH."show-view.php");
             }
@@ -39,7 +44,7 @@
             {
                 $cinemaSearch = $this->cinemaDAO->GetCinemaById($idCinema);
                 $movieTheaterList = $this->movieTheaterDAO->GetMovieTheatersByIdCinema($idCinema);
-                $message = 'El nombre de la sala es incorrecto';
+                $message = 'El nombre de la sala es incorrecto o la sala buscada esta dada de baja';
 
                 if(!is_array($movieTheaterList))
                         $movieTheaterList = array($movieTheaterList);
@@ -49,10 +54,18 @@
             
         }
 
-        public function AddShow($idMovie, $date, $time, $idMovieTheater)
+        public function DisplayShowViewAfterAction($idMovieTheater, $showsOfMovieTheater, $message = "")
+        {
+            $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);
+
+            $movieList = $this->movieDAO->GetAll();
+            require_once(VIEWS_PATH."show-view.php");
+        }
+
+        public function AddShow($idMovie, $date, $hour, $idMovieTheater)
         {
 
-            $movieSearch = $this->movieDAO()->GetMovieById($idMovie);
+            $movieSearch = $this->movieDAO->GetMovieById($idMovie);
             $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);
 
             if($movieSearch)
@@ -60,10 +73,17 @@
                 if($movieTheaterSearch)
                 {
                     $newShow = new Show();
+                    $newShow->setState(true);
                     $newShow->setMovie($movieSearch);
-                    $newShow->setDate($date);
-                    $newShow->setTime($time);
+                    $newShow->setDay($date);
+                    $newShow->setHour($hour);
                     $newShow->setMovieTheater($movieTheaterSearch);
+
+                    $this->showDAO->Add($newShow);
+
+                    $message = 'Se ha creado una nueva sala';
+
+                    $this->GetAllShowsByIdMovieTheater($idMovieTheater, $message);
                 }
                 else
                 {
@@ -74,10 +94,23 @@
             {
                 $message = 'La pelicula selecionada no ha sido encontrada';
             }
+        }
 
-            
+        public function GetAllShowsByIdMovieTheater($idMovieTheater, $message = "")
+        {
+            $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);
+            $showsOfMovieTheater = array();
 
-           
+            if($movieTheaterSearch)
+            {
+                $showsOfMovieTheater = $this->showDAO->GetAllShowsByMovieTheater($movieTheaterSearch);
+            }
+            else
+            {
+                $message = "hubo un error al buscar las funciones";
+            }
+
+            $this->DisplayShowViewAfterAction($idMovieTheater, $showsOfMovieTheater, $message);
         }
 
         public function BackToMovieTheaterView($id_cinema)

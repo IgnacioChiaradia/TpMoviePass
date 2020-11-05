@@ -70,11 +70,14 @@ CREATE TABLE cinemas
 CREATE TABLE shows
       (
         id_show INT AUTO_INCREMENT,
+        state BOOLEAN,
         day DATE,
         hour TIME,
         
+        id_movie INT,
         id_movie_theater INT,
         
         CONSTRAINT pk_id_show PRIMARY KEY (id_show),
+        CONSTRAINT fk_id_movie FOREIGN KEY (id_movie) REFERENCES movies (id_movie) ON DELETE CASCADE,
         CONSTRAINT fk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theaters (id_movie_theater) ON DELETE CASCADE
 );

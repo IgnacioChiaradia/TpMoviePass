@@ -14,8 +14,8 @@
 
         public function __construct()
         {
-            //$this->movieDAOJson = new movieDAOJson();
-            $this->movieDAO = new movieDAO();
+            //$this->movieDAOJson = new MovieDAOJson();
+            $this->movieDAO = new MovieDAO();
             $this->genreDAO = new GenreDAO();
         }
 
