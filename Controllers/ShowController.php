@@ -34,8 +34,13 @@
             {
                 $showsOfMovieTheater = $this->showDAO->GetAllShowsByMovieTheater($movieTheaterSearch);
                 
-                if(!is_array($showsOfMovieTheater))
-                    $showsOfMovieTheater = array($showsOfMovieTheater);
+                //aqui seteo la funcion por completo
+                $showsOfMovieTheater = $this->SetCompleteShows($showsOfMovieTheater);
+
+                /*echo '<pre>';
+                var_dump($showsOfMovieTheater);
+                echo '<pre>';
+                die();*/
                 
                 $movieList = $this->movieDAO->GetAll();
                 require_once(VIEWS_PATH."show-view.php");
@@ -56,7 +61,7 @@
 
         public function DisplayShowViewAfterAction($idMovieTheater, $showsOfMovieTheater, $message = "")
         {
-            $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);
+            $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);                
 
             $movieList = $this->movieDAO->GetAll();
             require_once(VIEWS_PATH."show-view.php");
@@ -82,8 +87,6 @@
                     $this->showDAO->Add($newShow);
 
                     $message = 'Se ha creado una nueva sala';
-
-                    $this->GetAllShowsByIdMovieTheater($idMovieTheater, $message);
                 }
                 else
                 {
@@ -94,6 +97,7 @@
             {
                 $message = 'La pelicula selecionada no ha sido encontrada';
             }
+            $this->GetAllShowsByIdMovieTheater($idMovieTheater, $message);
         }
 
         public function GetAllShowsByIdMovieTheater($idMovieTheater, $message = "")
@@ -104,6 +108,7 @@
             if($movieTheaterSearch)
             {
                 $showsOfMovieTheater = $this->showDAO->GetAllShowsByMovieTheater($movieTheaterSearch);
+                $showsOfMovieTheater = $this->SetCompleteShows($showsOfMovieTheater);
             }
             else
             {
@@ -111,6 +116,27 @@
             }
 
             $this->DisplayShowViewAfterAction($idMovieTheater, $showsOfMovieTheater, $message);
+        }
+
+        public function SetCompleteShows($showsOfMovieTheater)
+        {
+             if(!is_array($showsOfMovieTheater))
+                    $showsOfMovieTheater = array($showsOfMovieTheater);
+
+            foreach ($showsOfMovieTheater as $show)
+                {                    
+                    /*mediante el id de la movie que cargue en el mapear busco la movie y la seteo en el 
+                    show(funcion)*/
+                    $show->setMovie($this->movieDAO->GetMovieById($show->getMovie()->getIdMovie()));
+
+                    /*mediante el id de la movieTheater que cargue en el mapear busco la movieTheater y la seteo en el show(funcion)*/
+                    $show->setMovieTheater($this->movieTheaterDAO->GetMovieTheaterById($show->GetMovieTheater()->getIdMovieTheater()));
+
+                    //seteo el cine de la sala
+                    $show->getMovieTheater()->setCinema($this->cinemaDAO->GetCinemaById($show->getMovieTheater()->getCinema()->getIdCinema()));
+                }
+
+            return $showsOfMovieTheater;
         }
 
         public function BackToMovieTheaterView($id_cinema)

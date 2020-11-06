@@ -250,21 +250,13 @@
             $movieTheater->setPrice($p["price"]);
             $movieTheater->setTotalCapacity($p["total_capacity"]);
 
-            //$cinemaSearch = new Cinema();
+            /*$cinemaSearch = new Cinema();
             $cinemaSearch = $this->GetCinemaById($p["id_cinema"]);
+            $movieTheater->setCinema($cinemaSearch);*/
 
+            $cinemaSearch = new Cinema();
+            $cinemaSearch->setIdCinema($p["id_cinema"]);
             $movieTheater->setCinema($cinemaSearch);
-
-            /*$cinema->setIdCinema($cinemaSearch->getCinemaId());
-            $cinema->setState($cinemaSearch->getState());
-            $cinema->setName($cinemaSearch->getName());
-            $cinema->setAddress($cinemaSearch->getAddress());*/
-
-            //$movieTheater->setCinema($cinemaSearch);
-
-            /*$cinema = new Cinema();
-            $cinema->setIdCinema($p["id_cinema"]);
-            $movieTheater->setCinema($cinema);*/
 
 		      return $movieTheater;
 		    }, $value);

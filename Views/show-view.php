@@ -1,4 +1,15 @@
+<?php 
+
+/* echo '<pre>';
+                var_dump($showsOfMovieTheater);
+                echo '<pre>';
+                die();*/
+
+ ?>
 <div class="container">
+	<?php if(isset($message)){ ?>
+                    <label class="text-white" for=""> <strong> <?php echo $message ?> </strong> </label>
+               <?php } ?>
 	<form action="<?php echo FRONT_ROOT ?>Show/AddShow" method="POST" class="p-3 mb-1 bg-dark rounded">
 		<div class="form-group">
 		    <label for="select-cinema" class="text-light"> Seleccionar pelicula: </label>
