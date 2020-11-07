@@ -18,7 +18,7 @@
 
         public function IntroView()
         {
-            require_once(VIEWS_PATH."introMoviePass.php");
+            require_once(VIEWS_PATH."intro-moviepass.php");
         }
 
         public function ListCineView($message = "")

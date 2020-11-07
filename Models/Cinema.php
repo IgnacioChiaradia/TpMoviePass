@@ -2,7 +2,8 @@
 
 namespace Models;
 
-class Cinema{
+class Cinema
+{
 
     private $idCinema;
     private $state;
@@ -29,7 +30,6 @@ class Cinema{
 		$this->state = $state;
 	}
 
-
 	public function getName()
 	{
 		return $this->name;
@@ -48,5 +48,4 @@ class Cinema{
 		$this->address = $address;
 	}
 }
-
 ?>

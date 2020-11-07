@@ -3,24 +3,27 @@
           <div class="text-white ml-3 mb-1" for=""> <strong> <?php echo $message ?> </strong> </div>
   <?php } ?>
   <label class="col-lg-3 mb-2">
+  <form action="<?php echo FRONT_ROOT ?>Movie/FilterMoviesByGenre" method="POST">
     <select name="career" class="form-control form-control-ml">
         <option selected="" value="" disabled="">Seleccione el genero</option>
         <?php foreach ($genreList as $genre){ ?>
           <option name="movieGenre" value="<?php echo($genre->getIDGenre()); ?>"> <?php echo ($genre->getName()); ?></option>
-        <?php } ?>
-                                   
+        <?php } ?>                    
     </select>
-
+    <button class="btn btn-primary btn-block btn-lg mt-4" name="button" type="submit">Filtrar por genero</button>
+</form>
   
 
     
 
   </label>               
   <!--<a class="btn btn-info mb-2" href="<?php echo FRONT_ROOT ?>Movie/RenewMovies">Renovar lista peliculas</a> -->
+
   <?php foreach ($movieList as $movie) { ?>
+    <form action="<?php echo FRONT_ROOT ?>Movie/ChangeMovieState" method="POST">
     <div class="col-md-12">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative color-pelis">
-
+        
         <div class="col p-4 d-flex flex-column position-static text-white">
           <strong class="d-inline-block mb-2 text-primary"> Dia de estreno: <?php echo ($movie->getReleaseDate());?></strong>
           <h3 class="mb-0">Titulo: <?php echo ($movie->getTitle());?> </h3>
@@ -28,7 +31,17 @@
           <p class="card-text mb-auto"><strong>Descripcion:</strong> <?php echo ($movie->getOverview());?></p>
           <p class="card-text mb-auto"><strong>Popularidad:</strong> <?php echo ($movie->getPopularity());?></p>
           <p class="card-text mb-auto"><strong>Duracion:</strong> <?php echo ($movie->getRuntime());?> minutos </p>
-          <!--<a href="#" class="stretched-link">Continue reading</a>-->
+          <input type="hidden" name="id_movie" value="<?php echo $movie->getIdMovie(); ?>">
+          <input type="hidden" name="is_active" value="<?php echo $movie->getIsActive(); ?>">
+          <!--<a href="#" class="stretched-link">Continue reading</a>--> 
+          <div style="width: 25%; float: right"> <?php
+          if ($movie->getIsActive()){ ?>
+            <button class="btn btn-danger btn-block btn-lg mt-1"  name="button" type="submit">Desactivar</button>
+          <?php } else { ?>
+            <button class="btn btn-primary btn-block btn-lg mt-4" name="button" type="submit">Activar</button>
+          <?php } ?> 
+          </div>
+
         </div>
 
         <div class="col-auto <!--d-none--> d-lg-block">   
@@ -37,5 +50,7 @@
 
       </div>
     </div>
+    </form>
   <?php } ?>
+
 </div>

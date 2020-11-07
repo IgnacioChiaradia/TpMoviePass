@@ -6,6 +6,7 @@
 
     class MovieXGenre
     {
+        
         private $id_movie_x_genre;
         private $movie;
         private $genre;

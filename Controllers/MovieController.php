@@ -21,7 +21,7 @@
 
         public function MoviesView($movieList, $genreList, $message = '')
         {
-            require_once(VIEWS_PATH."movieList.php");
+            require_once(VIEWS_PATH."movie-list.php");
         }
 
         public function RenewMovies()
@@ -40,6 +40,19 @@
             //$genreList = $this->genreDAO->getGenresApi(); // descomentar la primera vez para traer la lista de generos
 
             $this->MoviesView($movieList, $genreList, $message);
+        }
+
+        public function ChangeMovieState($id_movie, $is_active)
+        {
+            $this->movieDAO->changeActive($id_movie, !$is_active); // hago esto para cambiar true por false y false por true.
+
+            $this->ListMovies();
+            require_once(VIEWS_PATH."movie-list.php");
+        }
+
+        public function FilterMoviesByGenre($idGenre){
+            $movieList = $this->movieDAO->GetMoviesByGenreApi($movieGenre);
+            $this->MoviesView($movieList, $this->genreDAO->GetAll(), "");
         }
 
     }

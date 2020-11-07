@@ -10,7 +10,7 @@
 
         public function HomeView($message = "")
         {
-        	require_once(VIEWS_PATH."introMoviePass.php");
+        	require_once(VIEWS_PATH."intro-moviepass.php");
         }
     }
 ?>

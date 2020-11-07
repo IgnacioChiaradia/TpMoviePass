@@ -111,27 +111,5 @@
 		    }, $value);
 		    return count($resp) > 1 ? $resp : $resp[0];
 		}
-
-        /*public function getGenresApi()
-        {
-        
-            $json = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=' . TMDB_KEY . '&language=es-MX');
-            $jsonArray = json_decode($json, true);
-            $arrayJsonData = $jsonArray["genres"];
-            $genreList = array();
-    
-            for($i=0; $i < count($arrayJsonData); $i++){
-                $jsonData = $arrayJsonData[$i];
-                $idGenre = $jsonData["id"];
-                $name = $jsonData["name"];
-    
-                $genre = new Genre();
-                $genre->setIDGenre($idGenre);
-                $genre->setName($name);
-    
-                array_push($genreList,$genre);
-            }        
-            return $genreList;
-        }*/
     }
 ?>

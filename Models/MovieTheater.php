@@ -4,7 +4,8 @@ namespace Models;
 
 use Models\Cinema as Cinema;
 
-class MovieTheater{
+class MovieTheater
+{
 
 	private $id_movie_theater;
 	private $state;

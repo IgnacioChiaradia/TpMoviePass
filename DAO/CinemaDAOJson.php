@@ -95,7 +95,7 @@
                 $valuesArray["idCinema"] = $cinema->getIdCinema();
                 $valuesArray["state"] = $cinema->getState();
                 $valuesArray["name"] = $cinema->getName();
-                $valuesArray["address"] = $cinema->getaddress();
+                $valuesArray["address"] = $cinema->getAddress();
 
                 array_push($arrayToEncode, $valuesArray);
             }

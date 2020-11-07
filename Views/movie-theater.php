@@ -12,7 +12,7 @@
                          <tbody>
                               <tr>
                                    <td><?php echo $cinemaSearch->getName(); ?></td>
-                                   <td><?php echo $cinemaSearch->getaddress(); ?></td>
+                                   <td><?php echo $cinemaSearch->getAddress(); ?></td>
                               </tr>
                          </tbody>
                     </table>

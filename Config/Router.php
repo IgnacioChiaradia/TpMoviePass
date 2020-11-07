@@ -13,7 +13,7 @@
 
             $methodParameters = $request->getparameters();          
 
-            $controllerClassName = "Controllers\\". $controllerName;            
+            $controllerClassName = "Controllers\\". $controllerName;     
 
             $controller = new $controllerClassName;
             

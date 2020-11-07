@@ -89,11 +89,6 @@
             $genreList = $this->GetAllGenres();
             $newMovieGenre = new MovieXGenre();
 
-            /*echo "<pre>";
-            var_dump ($genreListByMovie);
-            echo "<pre>";
-            die();*/
-
             foreach ($genreListByMovie as $key => $genre)
             {
                 if ($genre){
@@ -120,12 +115,10 @@
             }
         }
 
-         
-
         public function Add(Movie $movie)
         {
-            $query = "INSERT INTO ".$this->tableName." (id_movie, title, poster_path, overview, release_date, genre_ids, original_language, vote_count, popularity, runtime, vote_average) VALUES 
-            (:id_movie, :title, :poster_path, :overview, :release_date, :genre_ids, :original_language, :vote_count, :popularity, :runtime, :vote_average);";
+            $query = "INSERT INTO ".$this->tableName." (id_movie, title, poster_path, overview, release_date, genre_ids, original_language, vote_count, popularity, runtime, 
+            vote_average, is_active) VALUES (:id_movie, :title, :poster_path, :overview, :release_date, :genre_ids, :original_language, :vote_count, :popularity, :runtime, :vote_average, :is_active);";
             
             try
             {
@@ -143,6 +136,7 @@
                 $parameters["popularity"] = $movie->getPopularity();
                 $parameters["runtime"] = $movie->getRuntime();
                 $parameters["vote_average"] = $movie->getVoteAverage();
+                $parameters["is_active"] = false;
 
                 $this->connection = Connection::GetInstance();
 
@@ -155,36 +149,6 @@
             }
             return $rowCount;
         }
-
-        /*public function Update(Movie $movie)
-        {
-
-            $query = "UPDATE ".$this->tableName." SET title = :title, poster_path = :poster_path, overview = :overview, release_date = :release_date, genre_ids = :genre_ids, original_language = :original_language, vote_count = :vote_count, popularity = :popularity, runtime = :runtime, vote_average = :vote_average WHERE id_movie = :id_movie";
-
-            $parameters["id_movie"] = $movie->getIdMovie();
-            $parameters["title"] = $movie->getTitle();
-            $parameters["poster_path"] = $movie->getPosterPath();
-            $parameters["overview"] = $movie->getOverview();
-            $parameters["release_date"] = $movie->getReleaseDate();
-            $parameters["genre_ids"] = $movie->getGenreIds();
-            $parameters["original_language"] = $movie->getOriginalLanguage();
-            $parameters["vote_count"] = $movie->getVoteCounts();
-            $parameters["popularity"] = $movie->getPopularity();
-            $parameters["runtime"] = $movie->getRuntime();
-            $parameters["vote_average"] = $movie->getVoteAverage();
-
-            try {
-
-                $this->connection = Connection::getInstance();
-                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
-
-            return $rowCount;
-        }*/
 
         public function Remove($id)
         {
@@ -206,13 +170,33 @@
 		        $result = $this->mapear($resultSet);
                 
                 if(!is_array($result))
-                    $result = array($result); // hago esto para que cuando devuelva un solo valor de la base lo convierta en array para no tener problemas al querer recorrer la variable con un foreach
+                    $result = array($result);
 		      }
 		  	}
 		    catch(Exception $ex){
 		       throw $ex;
 		    }
 		    return $result;
+        }
+
+        public function changeActive($id, $is_active)
+        {
+            $query = "UPDATE ".$this->tableName." SET is_active = :is_active WHERE id_movie = :id_movie";
+            try
+            {
+                $parameters["id_movie"] = $id;
+                $parameters["is_active"] = $is_active;
+                
+                $this->connection = Connection::GetInstance();
+
+                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+            return $rowCount; 
         }
 
         protected function mapear($value)
@@ -233,11 +217,45 @@
             $movie->setPopularity($p["popularity"]);
             $movie->setRuntime($p["runtime"]);
             $movie->setVoteAverage($p["vote_average"]);
+            $movie->setIsActive($p["is_active"]);
 
 		      return $movie;
 		    }, $value);
 		    return count($resp) > 1 ? $resp : $resp[0];
 		}
 
+        public function GetMoviesByGenreApi($idGenre){
+            $listMovies = array();
+            for($i=1; $i<=3;$i++){///traer mas de una pagina en este caso 60 peliculas
+                $movieListJson = file_get_contents('https://api.themoviedb.org/3/discover/movie?api_key=' . TMDB_KEY . '&language=es-MX&page=' . $i .'&with_genres=' . $idGenre);
+                $movieListApi = ($movieListJson) ? json_decode($movieListJson, true) : array();
+
+                foreach ($movieListApi["results"] as $movie) {
+
+                    $movieDataJson = file_get_contents('https://api.themoviedb.org/3/movie/' . $movie["id"] . '?api_key=' . TMDB_KEY . '&language=en-US');
+
+                    $movieData = ($movieDataJson) ? json_decode($movieDataJson, true) : array();
+
+                    $newMovie = new Movie();
+                    $newMovie->setIdMovie($movie["id"]);
+                    $newMovie->setTitle($movie["title"]);
+                    $newMovie->setPosterPath($movie["poster_path"]);
+                    $newMovie->setOverview($movie["overview"]);
+                    $newMovie->setReleaseDate($movie["release_date"]);
+                    //$newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
+                    $newMovie->setGenreIds(0);
+                    $newMovie->setOriginalLanguage($movie["original_language"]);
+                    $newMovie->setVoteCounts($movie["vote_count"]);
+                    $newMovie->setPopularity($movie["popularity"]);
+                    $newMovie->setRuntime($movieData["runtime"]);
+                    $newMovie->setVoteAverage($movie["vote_average"]);
+
+                    array_push($listMovies,$newMovie);
+
+                    
+                }
+            }
+            return $listMovies;
+        }
     }
 ?>
