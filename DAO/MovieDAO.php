@@ -33,8 +33,8 @@
                 $newMovie->setPosterPath($movie["poster_path"]);
                 $newMovie->setOverview($movie["overview"]);
                 $newMovie->setReleaseDate($movie["release_date"]);
-                //$newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
-                $newMovie->setGenreIds(0);
+                $newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
+                //$newMovie->setGenreIds(0);
                 $newMovie->setOriginalLanguage($movie["original_language"]);
                 $newMovie->setVoteCounts($movie["vote_count"]);
                 $newMovie->setPopularity($movie["popularity"]);
@@ -44,9 +44,7 @@
                 if ($this->Add($newMovie))
                 {
                     $this->AddMovieGenre($newMovie);
-                }
-
-                
+                } 
             }
             return $this->GetAll();
         }
@@ -197,6 +195,43 @@
             }
 
             return $rowCount; 
+        }
+
+        protected function getMovieByIdGenres($genre){
+            try{
+                $genreList= array();
+    
+                $query = "SELECT * FROM movies INNER JOIN movies_x_genres ON movies.id_movie = movies_x_genres.id_movie WHERE :id_genre = movies_x_genres.id_genre
+                group by movies.id_movie;";
+    
+                $parameters["id_genre"] = $genre->getIdGenre();
+    
+                $this->connection = Connection::getInstance();
+    
+                $result= $this->connection->execute($query, $parameters);
+                
+           
+                if($result){
+                    $mapping= $this->mapGenre($result);
+                    if(!is_array($mapping)){
+                        array_push($genreList,$mapping);
+                    }else{
+                    $genreList=$mapping;
+                    }
+                }
+    
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+    
+            if(!empty($result)){
+                return $genreList;
+            }else{
+                return null;
+            }
+            
         }
 
         protected function mapear($value)

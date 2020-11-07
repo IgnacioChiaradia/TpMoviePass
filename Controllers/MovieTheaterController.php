@@ -139,7 +139,7 @@
             $cinema->setIdCinema($id_cinema);
             $movieTheater->setCinema($cinema);
 
-            if($this->MovieTheaterExists($movieTheater, $id_cinema)){
+            if($this->MovieTheaterExistsUpdate($movieTheater, $id_cinema)){
                 $message = "Los datos de la sala a agregar ya existen en este cine !";
             }else{
                 $rowCount = $this->movieTheaterDAO->Update($movieTheater);
@@ -163,6 +163,20 @@
 
             foreach($movieTheaterList as $movieTheater){
                 if($movieTheater->getName() == $movieTheaterToSearch->getName()){
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        public function MovieTheaterExistsUpdate($movieTheaterToSearch, $id_cinema)
+        {
+            $movieTheaterList = $this->movieTheaterDAO->GetMovieTheatersByIdCinema($id_cinema);
+             if(!is_array($movieTheaterList))
+                    $movieTheaterList = array($movieTheaterList);
+
+            foreach($movieTheaterList as $movieTheater){
+                if($movieTheater->getName() == $movieTheaterToSearch->getName() && $movieTheater->getIdMovieTheater() != $movieTheaterToSearch->getIdMovieTheater()){
                     return 1;
                 }
             }
