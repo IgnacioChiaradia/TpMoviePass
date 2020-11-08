@@ -6,7 +6,7 @@
             spl_autoload_register(function($className)
 			{
                 $classPath = ucwords(str_replace("\\", "/", ROOT.$className).".php");
-                
+               
 				require_once($classPath);
 			});
         }

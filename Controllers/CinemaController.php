@@ -2,170 +2,156 @@
     namespace Controllers;
 
     use DAO\CinemaDAOJson as CinemaDAOJson;
+    use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
 
     class CinemaController
     {
-        private $cinemaDAOJson;
-        //private $listCinema; no me parece correcto utilizar un atributo extra para solo un metodo, asi que paso la vaariable por parametro a la funcion que necesito 
+        private $cinemaDAO;
+        //private $listCinema; no me parece correcto utilizar un atributo extra para solo un metodo, asi que paso la vaariable por parametro a la funcion que necesito
 
         public function __construct()
         {
-            $this->cinemaDAOJson = new CinemaDAOJson();
+            //$this->cinemaDAO = new CinemaDAOJson();
+            $this->cinemaDAO = new CinemaDAO();
         }
 
-        public function introView()
+        public function IntroView()
         {
-            require_once(VIEWS_PATH."introMoviePass.php");
+            require_once(VIEWS_PATH."intro-moviepass.php");
         }
 
-        public function listCineView($message = "")
+        public function ListCineView($message = "")
         {
             require_once(VIEWS_PATH."cinema-list.php");
         }
 
-        public function addCineView($message = "")
+        public function AddCineView($message = "")
         {
             require_once(VIEWS_PATH."cinema-add.php");
-        }   
+        }
 
         public function ShowListCinemaView($listCinema, $message = '')
         {
             //$listCinema = $cinemaList; // no hace falta asignar la variable a otra variable en este ambito ya que lo trae del otro metodo
             require_once(VIEWS_PATH."cinema-list.php");
+
         }
-        
-        public function addCinema($name, $adress)
+
+        public function AddCinema($name, $address)
         {
             $cinema = new Cinema();
             $message = '';
-            
-            $cinema->setName($name);
-            $cinema->setAdress($adress);
 
-            if($this->cinemaExists($cinema)){
+            $cinema->setName($name);
+            $cinema->setAddress($address);
+
+            if($this->CinemaExists($cinema)){ // se verifica si el nombre y la direccion ya existen
                 $message = "El cine que se quiere agregar ya existe";
             }else{
                 $message = "El cine se ha agregado correctamente !!!";
-                $this->cinemaDAOJson->add($cinema);
-            }            
+                $this->cinemaDAO->Add($cinema);
+            }
 
-            $this->addCineView($message);                        
+            $this->AddCineView($message);
         }
-        
-        public function listCinema($message = '')
+
+        public function ListCinema($message = '')
         {
-            $listCinema = $this->cinemaDAOJson->getAll();
-            
-            $this->ShowListCinemaView($listCinema,$message); 
+
+            $listCinema = $this->cinemaDAO->GetAll();
+
+            if(!$listCinema)
+            {
+                $message = 'No se encuentran cines registrados';
+            }
+
+            $this->ShowListCinemaView($listCinema,$message);
             //echo 'termina la ejecucion del metodo';
         }
-        
-        public function removeCinema($id)
-        {
-            $this->cinemaDAOJson->remove($id);
 
-            $this->listCinema();
+        public function RemoveCinema($id)
+        {
+            $this->cinemaDAO->Remove($id);
+
+            $this->ListCinema();
+            require_once(VIEWS_PATH."cinema-list.php");
         }
 
-        /*public function ShowUpdateCinemaView($nameCinema)
+         public function EnableCinema($id)
         {
-            $cinemaSearch = $this->getCinemaByName($nameCinema);
+            $this->cinemaDAO->Enable($id);
 
-            if($cinemaSearch){
-                require_once(VIEWS_PATH."update-cinema.php");                
-            }else{
-                $message = 'El cine que busca no se encuentra registrado, intente de nuevo';
-                $this->listCinema($message);   
-            }
-        }*/
+            $this->ListCinema();
+            require_once(VIEWS_PATH."cinema-list.php");
+        }
 
         public function ShowUpdateCinemaView()
         {
             $idCinema = $_GET['id'];
-            $cinemaSearch = $this->getCinemaById($idCinema);
+            $cinemaSearch = $this->cinemaDAO->GetCinemaById($idCinema);
 
             if($cinemaSearch){
-                require_once(VIEWS_PATH."update-cinema.php");                
+                require_once(VIEWS_PATH."update-cinema.php");
             }else{
                 $message = 'El cine que busca no se encuentra registrado, intente de nuevo';
-                $this->listCinema($message);   
+                $this->ListCinema($message);
             }
         }
 
 
-        public function updateCinema($id, $name, $adress)
+        public function UpdateCinema($id, $name, $address)
         {
             $cinema = new Cinema();
 
             $cinema->setIdCinema((int)$id);
+            $cinema->setState(true);
             $cinema->setName($name);
-            $cinema->setAdress($adress);
+            $cinema->setAddress($address);
 
-            if($this->cinemaExistsUpdate($cinema)){
+            if($this->CinemaExistsUpdate($cinema)){
                 $message = "Los datos del cine a agregar ya existen en otro cine !";
             }else{
-                $message = "El cine se ha editado correctamente !!!";
-                $this->cinemaDAOJson->update($cinema);
-            }
-            
-            $this->listCinema($message);            
-        }
-
-        /*public function getCinemaByName($nameCinema){
-
-            $cinemaList = $this->cinemaDAOJson->getAll();
-            $cinemaSearch = 0;
-
-            foreach($cinemaList as $cinema){
-                if($cinema->getName() == $nameCinema){
-                    $cinemaSearch = $cinema;
+                $rowCount = $this->cinemaDAO->Update($cinema);
+                if($rowCount > 0)
+                {
+                    $message = "El cine se ha editado correctamente !!!";
+                }
+                else
+                {
+                    $message = "El cine no se ha editado";
                 }
             }
 
-            return $cinemaSearch; 
-        }*/
-
-        public function getCinemaById($idCinema){
-
-            $cinemaList = $this->cinemaDAOJson->getAll();
-            $cinemaSearch = 0;
-
-            foreach($cinemaList as $cinema){
-                if($cinema->getIdCinema() == $idCinema){
-                    $cinemaSearch = $cinema;
-                }
-            }
-
-            return $cinemaSearch; 
+            $this->ListCinema($message);
         }
 
-        public function cinemaExists($cinemaToSearch)
+        public function CinemaExists($cinemaToSearch)
         {
-            $cinemaList = $this->cinemaDAOJson->getAll();
-            //$flag = 0;    
+            $cinemaList = $this->cinemaDAO->GetAll();
+            //$flag = 0;
             foreach($cinemaList as $cinema){
-                if($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAdress() == $cinemaToSearch->getAdress()){
+                if($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAddress() == $cinemaToSearch->getaddress()){
                     return 1;
                     //$flag = 1;
                     //break;
                 }
             }
-            return 0;            
+            return 0;
         }
 
-        public function cinemaExistsUpdate($cinemaToSearch)
+        public function CinemaExistsUpdate($cinemaToSearch)
         {
-            $cinemaList = $this->cinemaDAOJson->getAll();
-            //$flag = 0;    
+            $cinemaList = $this->cinemaDAO->GetAll();
+            //$flag = 0;
             foreach($cinemaList as $cinema){
-                if(($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAdress() == $cinemaToSearch->getAdress()) && $cinema->getIdCinema() != $cinemaToSearch->getIdCinema()){
+                if(($cinema->getName() == $cinemaToSearch->getName() || $cinema->getAddress() == $cinemaToSearch->getAddress()) && $cinema->getIdCinema() != $cinemaToSearch->getIdCinema()){
                     return 1;
                     //$flag = 1;
                     //break;
                 }
             }
-            return 0;            
+            return 0;
         }
     }
 ?>

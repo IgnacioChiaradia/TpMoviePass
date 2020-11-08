@@ -1,12 +1,9 @@
-<?php
-include('nav.php');
-?>
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Editar cine</h2>
+               <h2 class="mb-4 text-white">Editar cine</h2>
 
-               <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/updateCinema" method="POST">
+               <form class="bg-light-alpha p-5" action="<?php echo FRONT_ROOT ?>Cinema/UpdateCinema" method="POST">
                     <input type="hidden" name="idCinema" value="<?php echo $cinemaSearch->getIdCinema(); ?>">
                     <div class="row">
                          <div class="col-lg-3">
@@ -18,7 +15,7 @@ include('nav.php');
                          <div class="col-lg-3">
                               <div class="form-group">
                                    <label for="">Direccion</label>
-                                   <input type="Text" name="adress" value="<?php echo $cinemaSearch->getAdress(); ?>" class="form-control" placeholder="Direccion" required>
+                                   <input type="Text" name="address" value="<?php echo $cinemaSearch->getAddress(); ?>" class="form-control" placeholder="Direccion" required>
                               </div>
                          </div>
                     </div>

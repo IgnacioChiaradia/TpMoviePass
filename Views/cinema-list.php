@@ -1,31 +1,55 @@
-<?php
-include('nav.php');
-?>
 <main class="py-5">
      <section id="listado" class="mb-5">
-          <form action="<?php echo FRONT_ROOT ?>Cinema/removeCinema" method="POST">
+          <form action="<?php echo FRONT_ROOT ?>Cinema/RemoveCinema" method="POST">
                <div class="container">
+               <?php if(isset($message)){ ?>
+                    <label class="text-white" for=""> <strong> <?php echo $message ?> </strong> </label>
+               <?php } ?>
                     <h2 class="mb-4 text-white">Lista de cines</h2>
                     <table class="table bg-light-alpha">
                          <thead>
                               <th>Nombre</th>
                               <th>Direccion</th>
+                              <th>Salones</th>
                               <th colspan="2">Acciones</th>
                          </thead>
                          <tbody>
-                              <?php foreach ($listCinema as $cinema) { ?>
+                              <?php foreach ($listCinema as $cinema) { 
+                                   if($cinema->getState()){  ?>
                                    <tr>
                                         <td><?php echo $cinema->getName(); ?></td>
-                                        <td><?php echo $cinema->getAdress(); ?></td>
-                                        <td> <button type="submit" name="button_delete" value="<?php echo $cinema->getIdCinema(); ?>" class="btn btn-danger">Borrar</button> </td>
+                                        <td><?php echo $cinema->getAddress(); ?></td>
+                                        <td><a type="submit" name="button_saloon" value="" class="btn btn-dark" href="<?php echo FRONT_ROOT ?>MovieTheater/ShowMovieTheaterView/?id=<?php echo $cinema->getIdCinema(); ?>">Salon</a> </td>
+                                        <td> <button type="submit" name="button_delete" value="<?php echo $cinema->getIdCinema(); ?>" class="btn btn-danger">Dar de baja</button> </td>
                                         <td><a class="btn btn-info" href="<?php echo FRONT_ROOT ?>Cinema/ShowUpdateCinemaView/?id=<?php echo $cinema->getIdCinema(); ?>"> Editar</a></td>
                                    </tr>
-                              <?php } ?>
+                              <?php }
+                              } ?>
                          </tbody>
                     </table>
-               <?php if(isset($message)){ ?>
-                              <label for=""> <strong> <?php echo $message ?> </strong> </label>
-                         <?php } ?>
+               </div>
+          </form>
+          <form action="<?php echo FRONT_ROOT ?>Cinema/EnableCinema" method="POST">
+               <div class="container">
+                    <h2 class="mb-4 text-white">Lista de cines inactivos</h2>
+                    <table class="table bg-light-alpha">
+                         <thead>
+                              <th>Nombre</th>
+                              <th>Direccion</th>
+                              <th>Accion</th>
+                         </thead>
+                         <tbody>
+                              <?php foreach ($listCinema as $cinema) { 
+                                   if(!$cinema->getState()){  ?>
+                                   <tr>
+                                        <td><?php echo $cinema->getName(); ?></td>
+                                        <td><?php echo $cinema->getAddress(); ?></td>
+                                        <td> <button type="submit" name="button_delete" value="<?php echo $cinema->getIdCinema(); ?>" class="btn btn-success">Alta</button> </td>
+                                   </tr>
+                              <?php }
+                              } ?>
+                         </tbody>
+                    </table>
                </div>
           </form>
      </section>

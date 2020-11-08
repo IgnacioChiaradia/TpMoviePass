@@ -2,35 +2,50 @@
 
 namespace Models;
 
-class Cinema{
+class Cinema
+{
 
     private $idCinema;
+    private $state;
     private $name;
-    private $adress;
+    private $address;
 
-    public function getIdCinema(){
+	public function getIdCinema()
+	{
 		return $this->idCinema;
 	}
 
-	public function setIdCinema($idCinema){
+	public function setIdCinema($idCinema)
+	{
 		$this->idCinema = $idCinema;
 	}
 
-	public function getName(){
+	public function getState()
+	{
+		return $this->state;
+	}
+
+	public function setState($state)
+	{
+		$this->state = $state;
+	}
+
+	public function getName()
+	{
 		return $this->name;
 	}
 
-	public function setName($name){
+	public function setName($name)
+	{
 		$this->name = $name;
 	}
 
-	public function getAdress(){
-		return $this->adress;
+	public function getAddress(){
+		return $this->address;
 	}
 
-	public function setAdress($adress){
-		$this->adress = $adress;
+	public function setAddress($address){
+		$this->address = $address;
 	}
 }
-
 ?>
