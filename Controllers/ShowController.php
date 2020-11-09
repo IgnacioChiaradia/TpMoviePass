@@ -37,12 +37,18 @@
                 //aqui seteo la funcion por completo
                 $showsOfMovieTheater = $this->SetCompleteShows($showsOfMovieTheater);
 
+                if($showsOfMovieTheater)
+                {
+
+                }
+
                 /*echo '<pre>';
                 var_dump($showsOfMovieTheater);
                 echo '<pre>';
                 die();*/
                 
-                $movieList = $this->movieDAO->GetAll();
+                //$movieList = $this->movieDAO->GetAll();
+                $movieList = $this->movieDAO->GetAllActive();
                 require_once(VIEWS_PATH."show-view.php");
             }
             else
@@ -61,10 +67,17 @@
 
         public function DisplayShowViewAfterAction($idMovieTheater, $showsOfMovieTheater, $message = "")
         {
-            $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);                
+            $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);
 
-            $movieList = $this->movieDAO->GetAll();
+            $movieList = $this->movieDAO->GetAllActive();
             require_once(VIEWS_PATH."show-view.php");
+        }
+
+        public function GetAllActiveShows()
+        {
+            $showsActive = $this->showDAO->GetAllActive();
+
+            require_once(VIEWS_PATH."intro-moviepass.php");
         }
 
         public function AddShow($idMovie, $date, $hour, $idMovieTheater)
@@ -83,6 +96,8 @@
                     $newShow->setDay($date);
                     $newShow->setHour($hour);
                     $newShow->setMovieTheater($movieTheaterSearch);
+
+                    //$this->CanAddAShow($newShow);
 
                     $this->showDAO->Add($newShow);
 
@@ -138,6 +153,53 @@
 
             return $showsOfMovieTheater;
         }
+
+        //verifico que la pelicula de la funcion solo se encuentre en una sala de un cine por dia
+        //
+        public function CanAddAShow(Show $newShow)
+        {
+            //$allShows = $this->showDAO->GetAll();
+            //$allShows = $this->SetCompleteShows($allShows);
+
+            /*foreach ($allShows as $show) 
+            {
+                if($show->getMovie()->getIdMovie() == $newShow->getMovie()->getIdMovie() && $show->getDay() == $newShow->getDay())
+                {
+                    $message = "la pelicula que se quiere utilizar ya se encuentra en otra sala para el dia: " . $show->getDay();
+                }
+            }*/
+
+            $showSearch = $this->showDAO->findShowByDayAndMovie($newShow);
+
+                echo '<pre>';
+            var_dump($showSearch);
+            echo '<pre>';
+            die();
+
+        }
+
+        public function DisableShow($idShow)
+        {
+            $showSearch = $this->showDAO->GetShowById($idShow);
+            $this->SetCompleteShows($showSearch);
+
+            $this->showDAO->Disable($showSearch);
+
+            $this->GetAllShowsByIdMovieTheater($showSearch->getMovieTheater()->getIdMovieTheater(), $message = "Se ha dado de baja la funcion correctamente");
+        }
+
+        // agregar verificaciones necesarias
+        public function EnableShow($idShow)
+        {
+            //buscar sala y pasarla
+            $showSearch = $this->showDAO->GetShowById($idShow);
+            $this->SetCompleteShows($showSearch);
+
+            $this->showDAO->Enable($showSearch);
+
+            $this->GetAllShowsByIdMovieTheater($showSearch->getMovieTheater()->getIdMovieTheater(), $message = "Se ha dado de alta la funcion correctamente, si su funcion sigue dada de baja intente activar la pelicula");
+        }
+
 
         public function BackToMovieTheaterView($id_cinema)
         {

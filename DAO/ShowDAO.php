@@ -64,6 +64,30 @@
             return $result;
         }
 
+        public function GetAllActive()
+        {
+            $sql = "SELECT * FROM " .$this->tableName." WHERE ".$this->tableName.".is_active = 1";
+
+            $result = array();
+
+            try {
+              $this->connection = Connection::getInstance();
+              $resultSet = $this->connection->execute($sql);
+
+              if(!empty($resultSet))
+              {
+                $result = $this->mapear($resultSet);
+                
+                if(!is_array($result))
+                    $result = array($result);
+              }
+            }
+            catch(Exception $ex){
+               throw $ex;
+            }
+            return $result;
+        }       
+
         public function GetAllShowsByMovieTheater(MovieTheater $movieTheater)
         {
             $query ="select *
@@ -91,19 +115,122 @@
             return $result;
         }
 
-        public function Remove($id) //poner show
+        //si me devuelve el registro debere elejir otro dia para esa pelicula
+        public function findShowByDayAndMovie($newShow)
         {
 
+            //$query = "select shows.* from shows where shows.id_movie = :id_movie AND shows.day = :day;";
+
+            $query = "select s.*
+                     from shows s
+                     where s.id_movie= :id_movie AND s.day= :day;";
+
+            $result = null;
+
+            try{
+                $this->connection = Connection::GetInstance();
+
+                $parameters = array();
+                
+                $parameters['day'] = $newShow->getDay();
+                $parameters['id_movie'] = $newShow->getMovie()->getIdMovie();
+
+                var_dump($query);
+                echo '<br>';
+
+                echo ($newShow->getDay());
+                echo '<br>';
+                echo ($newShow->getMovie()->getIdMovie());
+
+                echo '<br>';
+                var_dump($parameters);
+
+                $resultSet = $this->connection->execute($query, $parameters);
+
+                //var_dump($parameters);
+                //die();
+
+
+                if(!empty($resultSet))
+                {
+                    $result = $this->mapear($resultSet);
+                }
+
+            }catch(Exception $e) {
+                throw $e;
+            }
+
+            return $result;
+        }
+
+        public function Disable(Show $show)
+        {
+            $query = "UPDATE ".$this->tableName." SET state = :state WHERE id_show = :id_show";
+            
+            try
+            {
+                $parameters["id_show"] = $show->getIdShow();
+                $parameters["state"] = false;
+
+                $this->connection = Connection::GetInstance();
+
+                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+            return $rowCount;
         }
 
         public function Enable(Show $show)
         {
+            $query = "UPDATE ".$this->tableName." SET state = :state WHERE id_show = :id_show";
+            
+            try
+            {
+                $parameters["id_show"] = $show->getIdShow();
+                $parameters["state"] = true;
 
+                $this->connection = Connection::GetInstance();
+
+                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+            return $rowCount;
         }        
 
         public function Update(Show $show)
         {
 
+        }
+
+        public function GetShowById($idShow)
+        {
+            $sql = "SELECT * FROM " . $this->tableName . " WHERE id_show = :id_show";
+            $result = null;
+
+            try {
+                    $parameters["id_show"] = $idShow;
+
+                    $this->connection = Connection::getInstance();
+                    $resultSet = $this->connection->Execute($sql,$parameters);
+
+                    if(!empty($resultSet))
+                    {
+                      $result = $this->mapear($resultSet);
+                    }
+            }
+            catch(Exception $ex){
+               throw $ex;
+            }
+
+            return $result;
         }
 
         protected function mapear($value) {
@@ -134,6 +261,9 @@
             $movieTheaterSearch = new MovieTheater();
             $movieTheaterSearch->setIdMovieTheater($p["id_movie_theater"]);
             $show->setMovieTheater($movieTheaterSearch);
+
+            //$cinemaSearch = new Cinema();
+            //$cinemaSearch->setIdCinema()
 
               return $show;
             }, $value);

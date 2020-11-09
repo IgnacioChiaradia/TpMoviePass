@@ -4,6 +4,6 @@
     interface IDAO
     {
         function GetAll();
-        function Remove($id);
+        //function Remove($id);
     }
 ?>

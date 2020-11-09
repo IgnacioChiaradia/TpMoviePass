@@ -177,6 +177,30 @@
 		    return $result;
         }
 
+        public function GetAllActive()
+        {
+            $sql = "SELECT * FROM " .$this->tableName." WHERE ".$this->tableName.".is_active = 1";
+
+            $result = array();
+
+            try {
+              $this->connection = Connection::getInstance();
+              $resultSet = $this->connection->execute($sql);
+
+              if(!empty($resultSet))
+              {
+                $result = $this->mapear($resultSet);
+                
+                if(!is_array($result))
+                    $result = array($result);
+              }
+            }
+            catch(Exception $ex){
+               throw $ex;
+            }
+            return $result;
+        }       
+
         public function changeActive($id, $is_active)
         {
             $query = "UPDATE ".$this->tableName." SET is_active = :is_active WHERE id_movie = :id_movie";
@@ -232,6 +256,30 @@
                 return null;
             }
             
+        }
+
+        // no borrar este metodo
+        public function GetMovieById($idMovie)
+        {
+            $sql = "SELECT * FROM " . $this->tableName . " WHERE id_movie = :id_movie";
+            $result = null;
+
+            try {
+                    $parameters["id_movie"] = $idMovie;
+
+                    $this->connection = Connection::getInstance();
+                    $resultSet = $this->connection->Execute($sql,$parameters);
+
+                    if(!empty($resultSet))
+                    {
+                      $result = $this->mapear($resultSet);
+                    }
+            }
+            catch(Exception $ex){
+               throw $ex;
+            }
+
+            return $result;
         }
 
         protected function mapear($value)

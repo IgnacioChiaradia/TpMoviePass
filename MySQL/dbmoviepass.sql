@@ -24,6 +24,7 @@ CREATE TABLE movies
   popularity INT,
   runtime INT,
   vote_average INT,
+  is_active BOOLEAN,
 
   CONSTRAINT pk_id_movie PRIMARY KEY (id_movie)
 );

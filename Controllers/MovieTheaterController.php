@@ -100,7 +100,7 @@
                 $movieTheaterSearch->getCinema()->getIdCinema());
         }
 
-         public function EnableMovieTheater($idMovieTheater)
+        public function EnableMovieTheater($idMovieTheater)
         {
             $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);
 
