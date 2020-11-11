@@ -37,10 +37,10 @@
                 //aqui seteo la funcion por completo
                 $showsOfMovieTheater = $this->SetCompleteShows($showsOfMovieTheater);
 
-                if($showsOfMovieTheater)
+                /*if($showsOfMovieTheater)
                 {
 
-                }
+                }*/
 
                 /*echo '<pre>';
                 var_dump($showsOfMovieTheater);
@@ -49,6 +49,10 @@
                 
                 //$movieList = $this->movieDAO->GetAll();
                 $movieList = $this->movieDAO->GetAllActive();
+                if(!$movieList)
+                {
+                    $message = 'No hay peliculas activas, dirijase a la lista de peliculas para activar las que desee';
+                }
                 require_once(VIEWS_PATH."show-view.php");
             }
             else
@@ -76,6 +80,7 @@
         public function GetAllActiveShows()
         {
             $showsActive = $this->showDAO->GetAllActive();
+            $showsActive = $this->SetCompleteShows($showsActive);
 
             require_once(VIEWS_PATH."intro-moviepass.php");
         }
@@ -94,14 +99,48 @@
                     $newShow->setState(true);
                     $newShow->setMovie($movieSearch);
                     $newShow->setDay($date);
+
+                    $hour = strtotime($hour);
+                    $hour = date('H:i', $hour);
                     $newShow->setHour($hour);
+
                     $newShow->setMovieTheater($movieTheaterSearch);
 
-                    //$this->CanAddAShow($newShow);
+                    /*echo $newShow->getHour();
+                    echo '<br>';
+                    $tiempo = strtotime($newShow->getHour());
+                    echo $tiempo;
+                    echo '<br>';
+                    $tiempoformat = date('H:i', $tiempo);
+                    echo '<br>';
+                    echo $tiempoformat;
+                    echo '<br>';*/
+                    //echo ($newShow->getMovie()->getRuntime());
+                    //die();
 
-                    $this->showDAO->Add($newShow);
+                    //$date= date('H:i'); 
+                    /*$newDate = strtotime ( '+'. $newShow->getMovie()->getRuntime() .' minute' , strtotime ($tiempoformat) ) ; 
 
-                    $message = 'Se ha creado una nueva sala';
+                    $newDate = date ( 'H:i' , $newDate); */
+
+                    //echo '<br>';
+                    //echo $newDate;
+                    //die();
+
+
+                    $movieInUse = $this->MovieIsUseInOtherMovieTheater($newShow);
+                    echo $movieInUse;
+                    //die();
+                    if(!$movieInUse)
+                    {
+                        $this->showDAO->Add($newShow);
+                        $message = 'Se ha creado una nueva funcion correctamente';
+                    }
+                    else
+                    {
+                        $message = "La pelicula ". $movieSearch->getTitle() ." ya se encuentra en otra sala para el dia: " . $date;
+                        
+                    }
                 }
                 else
                 {
@@ -155,27 +194,43 @@
         }
 
         //verifico que la pelicula de la funcion solo se encuentre en una sala de un cine por dia
-        //
-        public function CanAddAShow(Show $newShow)
+        public function MovieIsUseInOtherMovieTheater(Show $newShow)
         {
-            //$allShows = $this->showDAO->GetAll();
-            //$allShows = $this->SetCompleteShows($allShows);
+            $movieInUse = 0; // la peli NO se esta utilizando
+            // NO BORRAR, dejar por si falla el findShowByDayAndMovie
+            /*$allShows = $this->showDAO->GetAll();
+            $allShows = $this->SetCompleteShows($allShows);
 
-            /*foreach ($allShows as $show) 
+            foreach ($allShows as $show) 
             {
                 if($show->getMovie()->getIdMovie() == $newShow->getMovie()->getIdMovie() && $show->getDay() == $newShow->getDay())
                 {
-                    $message = "la pelicula que se quiere utilizar ya se encuentra en otra sala para el dia: " . $show->getDay();
+                    $flag = 0;
                 }
-            }*/
+            }
+
+            return $flag;*/
 
             $showSearch = $this->showDAO->findShowByDayAndMovie($newShow);
+            if($showSearch)
+            {
+                $showSearch = $this->SetCompleteShows($showSearch);
+                $movieInUse = 1; // la peli se esta utilizando
+            }
 
-                echo '<pre>';
-            var_dump($showSearch);
-            echo '<pre>';
-            die();
+            return $movieInUse;
+        }
 
+        public function CalculateTime(Show $newShow)
+        {
+            $time = strtotime($newShow->getHour());
+            $timeFormat = date('H:i', $time);
+            $newDate = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($timeFormat)); 
+
+            $newDate = date ('H:i', $newDate); 
+
+            //echo '<br>';
+            //echo $newDate;
         }
 
         public function DisableShow($idShow)
@@ -197,7 +252,7 @@
 
             $this->showDAO->Enable($showSearch);
 
-            $this->GetAllShowsByIdMovieTheater($showSearch->getMovieTheater()->getIdMovieTheater(), $message = "Se ha dado de alta la funcion correctamente, si su funcion sigue dada de baja intente activar la pelicula");
+            $this->GetAllShowsByIdMovieTheater($showSearch->getMovieTheater()->getIdMovieTheater(), $message = "Se ha dado de alta la funcion, si su funcion sigue dada de baja intente activar la pelicula");
         }
 
 

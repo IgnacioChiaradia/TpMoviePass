@@ -66,7 +66,11 @@
 
         public function GetAllActive()
         {
-            $sql = "SELECT * FROM " .$this->tableName." WHERE ".$this->tableName.".is_active = 1";
+            $sql = "SELECT * FROM " .$this->tableName." 
+            INNER JOIN 
+            WHERE ".$this->tableName.".is_active = 1";
+
+            //$sql = "SELECT * FROM " .$this->tableName." WHERE ".$this->tableName.".is_active = 1";
 
             $result = array();
 
@@ -121,9 +125,9 @@
 
             //$query = "select shows.* from shows where shows.id_movie = :id_movie AND shows.day = :day;";
 
-            $query = "select s.*
-                     from shows s
-                     where s.id_movie= :id_movie AND s.day= :day;";
+            $query = "select *
+                     from shows 
+                     where day = :day and id_movie = :id";
 
             $result = null;
 
@@ -132,24 +136,14 @@
 
                 $parameters = array();
                 
+                $parameters['id'] = intval($newShow->getMovie()->getIdMovie());
+
+                //$time = strtotime($newShow->getDay());
+                //$newformat = date('Y-m-d',$time);
+
                 $parameters['day'] = $newShow->getDay();
-                $parameters['id_movie'] = $newShow->getMovie()->getIdMovie();
-
-                var_dump($query);
-                echo '<br>';
-
-                echo ($newShow->getDay());
-                echo '<br>';
-                echo ($newShow->getMovie()->getIdMovie());
-
-                echo '<br>';
-                var_dump($parameters);
 
                 $resultSet = $this->connection->execute($query, $parameters);
-
-                //var_dump($parameters);
-                //die();
-
 
                 if(!empty($resultSet))
                 {

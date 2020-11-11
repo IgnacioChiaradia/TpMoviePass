@@ -18,7 +18,6 @@ CREATE TABLE movies
   poster_path VARCHAR(100),
   overview VARCHAR(300),
   release_date DATE,
-  genre_ids VARCHAR(50),
   original_language VARCHAR(30),
   vote_count INT,
   popularity INT,
@@ -82,3 +81,8 @@ CREATE TABLE shows
         CONSTRAINT fk_id_movie FOREIGN KEY (id_movie) REFERENCES movies (id_movie) ON DELETE CASCADE,
         CONSTRAINT fk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theaters (id_movie_theater) ON DELETE CASCADE
 );
+
+INSERT INTO roles (role) VALUES ('administrador'),('cliente');
+INSERT INTO users (userName, password, firstName, lastName, email, idRol) VALUES 
+('admin','admin','admin', 'admin','admin@gmail.com',1),
+('andreslerner', 'andres123','Andres', 'Lerner','andres@gmail.com',2);
