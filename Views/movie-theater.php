@@ -1,3 +1,4 @@
+<?php require_once(VIEWS_PATH."nav.php");?>
 <main class="py-5">
      <div class="container">
                <?php if(isset($message)){ ?>

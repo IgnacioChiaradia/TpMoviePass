@@ -128,10 +128,8 @@
                     //die();
 
 
-                    $movieInUse = $this->MovieIsUseInOtherMovieTheater($newShow);
-                    echo $movieInUse;
-                    //die();
-                    if(!$movieInUse)
+                    //$movieInUse = $this->MovieIsUseInOtherMovieTheater($newShow);
+                    if(!$this->MovieIsUseInOtherMovieTheater($newShow))
                     {
                         $this->showDAO->Add($newShow);
                         $message = 'Se ha creado una nueva funcion correctamente';

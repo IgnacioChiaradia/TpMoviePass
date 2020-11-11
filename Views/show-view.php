@@ -6,6 +6,7 @@
                 //die();
 
  ?>
+<?php require_once(VIEWS_PATH."nav.php");?>
 <div class="container">
 	<?php if(isset($message)){ ?>
                     <label class="text-white" for=""> <strong> <?php echo $message ?> </strong> </label>

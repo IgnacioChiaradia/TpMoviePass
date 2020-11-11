@@ -1,3 +1,4 @@
+<?php require_once(VIEWS_PATH."nav.php");?>
 <div class="container">
   <?php if(isset($message)){ ?>
           <div class="text-white ml-3 mb-1" for=""> <strong> <?php echo $message ?> </strong> </div>

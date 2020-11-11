@@ -1,3 +1,4 @@
+<?php require_once(VIEWS_PATH."nav.php");?>
 <div class="container">
      <h2 class="mb-0 text-white">Editar Sala</h2>
      <label for=""></label>
