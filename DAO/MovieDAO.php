@@ -33,8 +33,7 @@
                 $newMovie->setPosterPath($movie["poster_path"]);
                 $newMovie->setOverview($movie["overview"]);
                 $newMovie->setReleaseDate($movie["release_date"]);
-                $newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
-                //$newMovie->setGenreIds(0);
+                $newMovie->setGenreIds($movie["genre_ids"]);
                 $newMovie->setOriginalLanguage($movie["original_language"]);
                 $newMovie->setVoteCounts($movie["vote_count"]);
                 $newMovie->setPopularity($movie["popularity"]);
@@ -115,8 +114,8 @@
 
         public function Add(Movie $movie)
         {
-            $query = "INSERT INTO ".$this->tableName." (id_movie, title, poster_path, overview, release_date, genre_ids, original_language, vote_count, popularity, runtime, 
-            vote_average, is_active) VALUES (:id_movie, :title, :poster_path, :overview, :release_date, :genre_ids, :original_language, :vote_count, :popularity, :runtime, :vote_average, :is_active);";
+            $query = "INSERT INTO ".$this->tableName." (id_movie, title, poster_path, overview, release_date, original_language, vote_count, popularity, runtime, 
+            vote_average, is_active) VALUES (:id_movie, :title, :poster_path, :overview, :release_date, :original_language, :vote_count, :popularity, :runtime, :vote_average, :is_active);";
             
             try
             {
@@ -128,7 +127,6 @@
                 $parameters["poster_path"] = $movie->getPosterPath();
                 $parameters["overview"] = $movie->getOverview();
                 $parameters["release_date"] = $movie->getReleaseDate();
-                $parameters["genre_ids"] = $movie->getGenreIds();
                 $parameters["original_language"] = $movie->getOriginalLanguage();
                 $parameters["vote_count"] = $movie->getVoteCounts();
                 $parameters["popularity"] = $movie->getPopularity();
@@ -221,40 +219,33 @@
             return $rowCount; 
         }
 
-        protected function getMovieByIdGenres($genre){
+        public function getMoviesByIdGenre($genre)
+        {
             try{
-                $genreList= array();
+                $result = null;
     
-                $query = "SELECT * FROM movies INNER JOIN movies_x_genres ON movies.id_movie = movies_x_genres.id_movie WHERE :id_genre = movies_x_genres.id_genre
+                $query = "SELECT movies.* FROM movies INNER JOIN movies_x_genres ON movies.id_movie = movies_x_genres.id_movie WHERE :id_genre = movies_x_genres.id_genre
                 group by movies.id_movie;";
     
                 $parameters["id_genre"] = $genre->getIdGenre();
     
                 $this->connection = Connection::getInstance();
     
-                $result= $this->connection->execute($query, $parameters);
+                $resultSet= $this->connection->execute($query, $parameters);
                 
            
-                if($result){
-                    $mapping= $this->mapGenre($result);
-                    if(!is_array($mapping)){
-                        array_push($genreList,$mapping);
-                    }else{
-                    $genreList=$mapping;
-                    }
-                }
-    
+                if(!empty($resultSet))
+            	    {
+                      $result = $this->mapear($resultSet);
+                      if(!is_array($result))
+                        $result = array($result);
+            	    }
+		  	}
+		    catch(Exception $ex){
+		       throw $ex;
             }
-            catch(\PDOException $ex)
-            {
-                throw $ex;
-            }
-    
-            if(!empty($result)){
-                return $genreList;
-            }else{
-                return null;
-            }
+            
+            return $result;
             
         }
 
@@ -294,7 +285,6 @@
             $movie->setPosterPath($p["poster_path"]);
             $movie->setOverview($p["overview"]);
             $movie->setReleaseDate($p["release_date"]);
-            $movie->setGenreIds($p["genre_ids"]); 
             $movie->setOriginalLanguage($p["original_language"]);
             $movie->setVoteCounts($p["vote_count"]);
             $movie->setPopularity($p["popularity"]);
@@ -325,8 +315,6 @@
                     $newMovie->setPosterPath($movie["poster_path"]);
                     $newMovie->setOverview($movie["overview"]);
                     $newMovie->setReleaseDate($movie["release_date"]);
-                    //$newMovie->setGenreIds($movie["genre_ids"]); // ver como hacer que en el mapear traiga todos los generos
-                    $newMovie->setGenreIds(0);
                     $newMovie->setOriginalLanguage($movie["original_language"]);
                     $newMovie->setVoteCounts($movie["vote_count"]);
                     $newMovie->setPopularity($movie["popularity"]);

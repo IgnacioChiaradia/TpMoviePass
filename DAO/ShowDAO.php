@@ -207,7 +207,26 @@
 
         public function Update(Show $show)
         {
+            $query = "UPDATE ".$this->tableName." SET state = :state, day = :day, hour = :hour, id_movie = :id_movie, id_movie_theater = :id_movie_theater WHERE id_show = :id_show";
+        	try
+            {
+            	$parameters["id_show"] = $newShow->getIdShow();  
+                $parameters["state"] = $newShow->getState();
+                $parameters["day"] = $newShow->getDay();
+                $parameters["hour"] = $newShow->getHour();
+                $parameters["id_movie"] = $newShow->getMovie()->getIdMovie();
+                $parameters["id_movie_theater"] = $newShow->getMovieTheater()->getIdMovieTheater();
 
+                $this->connection = Connection::GetInstance();
+
+                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+            return $rowCount;
         }
 
         public function GetShowById($idShow)

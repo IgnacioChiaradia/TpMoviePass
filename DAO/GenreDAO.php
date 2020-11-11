@@ -36,21 +36,31 @@
 
         }
 
-        public function getGenreByID ($genre)
+        public function getGenreByID ($idGenre)
         {
-            try {
-                $query = "SELECT * FROM " . $this->tableName . "WHERE id_genre = " . $genre->getIDGenre() . ";";
-                $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->Execute($query);
+        
+            $sql = "SELECT * FROM " . $this->tableName . " WHERE id_genre = :id_genre";
+            $result = null;
 
-                foreach ($resultSet as $row) {
-                    $genero->setIDGenre($row["id_genre"]);
-                    $genero->setName($row["genre_name"]);
-                }
-                    return $genero->getName();
-                } catch (Exception $ex) {
-                    throw $ex;
+            
+
+            try {
+
+                    $parameters["id_genre"] = $idGenre;
+
+                    $this->connection = Connection::getInstance();
+                    $resultSet = $this->connection->Execute($sql,$parameters);
+
+                    if(!empty($resultSet))
+                    {
+                      $result = $this->mapear($resultSet);
+                    }
             }
+            catch(Exception $ex){
+               throw $ex;
+            }
+
+            return $result;
         }
 
         public function GetAll()

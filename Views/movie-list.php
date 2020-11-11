@@ -19,7 +19,9 @@
   </label>               
   <!--<a class="btn btn-info mb-2" href="<?php echo FRONT_ROOT ?>Movie/RenewMovies">Renovar lista peliculas</a> -->
 
-  <?php foreach ($movieList as $movie) { ?>
+  
+  <?php if (isset($movieList)){ 
+    foreach ($movieList as $movie) { ?>
     <form action="<?php echo FRONT_ROOT ?>Movie/ChangeMovieState" method="POST">
     <div class="col-md-12">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative color-pelis">
@@ -51,6 +53,12 @@
       </div>
     </div>
     </form>
-  <?php } ?>
+  <?php }
+  } elseif (!isset($movieList)){ ?>
+      <h3 class="mb-0 text-white mt-4 ml-2">No hay ninguna película cargada para el género seleccionado.</h3>
+  <?php
+    
+  } ?>
+          
 
 </div>

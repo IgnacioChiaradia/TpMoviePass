@@ -33,11 +33,11 @@
 
         public function ListMovies($message = '')
         {
-            $movieList = $this->movieDAO->GetAll();
-            //$movieList = $this->movieDAO->GetMoviesApi(); // descomentar la primera vez para traer la lista de peliculas
-
             $genreList = $this->genreDAO->GetAll();
             //$genreList = $this->genreDAO->getGenresApi(); // descomentar la primera vez para traer la lista de generos
+
+            $movieList = $this->movieDAO->GetAll();
+            //$movieList = $this->movieDAO->GetMoviesApi(); // descomentar la primera vez para traer la lista de peliculas
 
             $this->MoviesView($movieList, $genreList, $message);
         }
@@ -50,8 +50,10 @@
             require_once(VIEWS_PATH."movie-list.php");
         }
 
-        public function FilterMoviesByGenre($idGenre){
-            $movieList = $this->movieDAO->GetMoviesByGenreApi($movieGenre);
+        public function FilterMoviesByGenre($idGenre)
+        {
+            $genre = $this->genreDAO->getGenreById($idGenre);
+            $movieList = $this->movieDAO->getMoviesByIdGenre($genre);
             $this->MoviesView($movieList, $this->genreDAO->GetAll(), "");
         }
 
