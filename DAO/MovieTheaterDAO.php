@@ -25,7 +25,7 @@
                 $parameters["current_capacity"] = $movieTheater->getCurrentCapacity();
                 $parameters["price"] = $movieTheater->getPrice();
                 $parameters["total_capacity"] = $movieTheater->getTotalCapacity();
-                
+
                 $parameters["id_cinema"] = $movieTheater->getCinema()->getIdCinema();
 
                 $this->connection = Connection::GetInstance();
@@ -185,14 +185,14 @@
                     from movie_theaters
                     where movie_theaters.id_cinema = :id_cinema";
             $result = array();
-        
+
             try{
 
                 $this->connection = Connection::GetInstance();
 
                 $parameters['id_cinema'] = $id_cinema;
 
-                $resultSet = $this->connection->execute($query, $parameters);       
+                $resultSet = $this->connection->execute($query, $parameters);
 
                 if(!empty($resultSet))
                 {
@@ -205,6 +205,34 @@
 
             return $result;
         }
+
+				public function IsMovieTheaterInCinema($movieTheater, $idCinema)
+				{
+				    //$sql = "SELECT * FROM " . $this->tableName . " WHERE name = :name";
+
+				    $sql = "select mt.* from " . $this->tableName . " mt
+				    inner join cinemas c on c.id_cinema = mt.id_cinema
+				    where mt.id_cinema = :id_cinema and mt.id_movie_theater = :id_movie_theater_search";
+
+				    $result = null;
+				    try {
+				            $parameters["id_cinema"] = $idCinema;
+										$parameters["id_movie_theater_search"] = $movieTheater->getIdMovieTheater();
+
+				            $this->connection = Connection::getInstance();
+				            $resultSet = $this->connection->Execute($sql,$parameters);
+
+				            if(!empty($resultSet))
+				            {
+				              $result = $this->mapear($resultSet);
+				            }
+				    }
+				    catch(Exception $ex){
+				       throw $ex;
+				    }
+
+				    return $result;
+				}
 
         public function GetCinemaById($idCinema)
         {
@@ -226,7 +254,7 @@
                             $cinema->setState($value["state"]);
                             $cinema->setName($value["name"]);
                             $cinema->setAddress($value["address"]);
-                        }                    
+                        }
                     }
                 }
             catch(Exception $ex){
