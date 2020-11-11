@@ -250,13 +250,13 @@
             $movieTheater->setPrice($p["price"]);
             $movieTheater->setTotalCapacity($p["total_capacity"]);
 
-            /*$cinemaSearch = new Cinema();
-            $cinemaSearch = $this->GetCinemaById($p["id_cinema"]);
-            $movieTheater->setCinema($cinemaSearch);*/
-
             $cinemaSearch = new Cinema();
-            $cinemaSearch->setIdCinema($p["id_cinema"]);
+            $cinemaSearch = $this->GetCinemaById($p["id_cinema"]);
             $movieTheater->setCinema($cinemaSearch);
+
+            /*$cinemaSearch = new Cinema();
+            $cinemaSearch->setIdCinema($p["id_cinema"]);
+            $movieTheater->setCinema($cinemaSearch);*/
 
 		      return $movieTheater;
 		    }, $value);

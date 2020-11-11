@@ -120,6 +120,9 @@
 	<form action="<?php echo FRONT_ROOT ?>Show/BackToMovieTheaterView" method="POST">
 		<?php if (isset($show)) { ?>
 			<input type="hidden" name="id_cinema" value="<?php echo ($show->getMovieTheater()->getCinema()->getIdCinema()); ?>">			
-		<?php } ?>
+		<?php }
+		elseif (isset($idCinema)) { ?>
+		 	<input type="hidden" name="id_cinema" value="<?php echo ($idCinema); ?>">
+		 <?php } ?>
 		<button type="submit" class="btn btn-light d-block" href="">Volver a salas</button>
 	</form>

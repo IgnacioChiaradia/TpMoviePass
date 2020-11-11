@@ -33,11 +33,11 @@
 
         public function ListMovies($message = '')
         {
-            $movieList = $this->movieDAO->GetAll();
-            //$movieList = $this->movieDAO->GetMoviesApi(); // descomentar la primera vez para traer la lista de peliculas
-
             $genreList = $this->genreDAO->GetAll();
             //$genreList = $this->genreDAO->getGenresApi(); // descomentar la primera vez para traer la lista de generos
+
+            $movieList = $this->movieDAO->GetAll();
+            //$movieList = $this->movieDAO->GetMoviesApi(); // descomentar la primera vez para traer la lista de peliculas
 
             $this->MoviesView($movieList, $genreList, $message);
         }
