@@ -266,5 +266,84 @@
 
             require_once(VIEWS_PATH."movie-theater.php");
         }
+
+        public function UpdateShow($id_show, $day, $hour, $id_movie, $id_movie_theater)
+        {
+            $show = new Show();
+
+            $show->setIdShow((int)$id_show);
+            $show->setState(true);
+            $show->setDay($day);
+            $show->setHour($hour);
+
+            $movie = new Movie();
+            $movie = $this->movieDAO->getMovieById($id_movie);
+            
+            $show->setMovie($movie);
+
+            $movieTheater = new MovieTheater();
+            $movieTheater = $this->movieTheaterDAO->getMovieTheaterById($id_movie_theater);
+            $show->setMovieTheater($movieTheater);
+
+            $movieInUse = $this->MovieIsUseInOtherMovieTheater($show);
+
+            if($movieInUse){
+                $message = "La pelicula ya esta siendo utilizada por otra funcion para el dia $day!";
+            }else{
+                $rowCount = $this->showDAO->Update($show);
+                if($rowCount > 0)
+                {
+                    $message = "El show se ha editado correctamente !!!";
+                }
+                else
+                {
+                    $message = "El show no se ha editado correctamente";
+                }
+            }
+            $this->GetAllShowsByIdMovieTheater($id_movie_theater, $message);
+        }
+
+        public function ShowExists($showToSearch, $id_movie_theater)
+        {
+            $showList = $this->showDAO->GetAllShowsByMovieTheater($id_movie_theater);
+             if(!is_array($showList))
+                    $showList = array($showList);
+
+            foreach($showList as $show){
+                if($show->getName() == $showToSearch->getName()){
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        public function ShowExistsUpdate($showToSearch, $id_movie_theater)
+        {
+            $showList = $this->showDAO->GetAllShowsByMovieTheater($id_movie_theater);
+             if(!is_array($showList))
+                    $showList = array($showList);
+
+            foreach($showList as $show){
+                if($show->getIdShow() == $showToSearch->getName() && $show->getIdShow() != $showToSearch->getIdShow()){
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        public function ShowUpdateShowsView()
+        {
+            $idShow = $_GET['id'];
+            $showSearch = $this->showDAO->GetShowById($idShow);
+            $this->SetCompleteShows($showSearch);
+
+            if($showSearch){
+                require_once(VIEWS_PATH."update-shows.php");
+            }else{
+                $message = 'El show que busca no se encuentra, intente de nuevo';
+
+                $this->GetAllShowsByIdMovieTheater($idMovieTheater, $message);
+            }
+        }
     }
 ?>

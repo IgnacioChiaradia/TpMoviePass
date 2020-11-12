@@ -61,9 +61,8 @@
           <form action="<?php echo FRONT_ROOT ?>Show/DisableShow" method="POST" class="mb-1">
           	<button type="submit" name="button_disabled" value="<?php echo $show->getIdShow(); ?>" class="btn btn-danger btn-block">Dar de baja</button>
       	  </form>
-          <a class="btn btn-info" href="<?php// echo FRONT_ROOT ?>MovieTheater/ShowUpdateMovieTheaterView/?id=<?php //echo $movieTheater->getIdMovieTheater(); ?>"> Editar</a>
+          <a class="btn btn-info" href="<?php echo FRONT_ROOT ?>Show/ShowUpdateShowsView/?id=<?php echo $show->getMovieTheater()->getIdMovieTheater(); ?>"> Editar</a>
                                         
-          <!--<a href="#" class="stretched-link">Continue reading</a>-->
         </div>
 
         <div class="col-auto <!--d-none--> d-lg-block">   

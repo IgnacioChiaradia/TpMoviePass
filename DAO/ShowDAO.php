@@ -199,7 +199,7 @@
             return $rowCount;
         }        
 
-        public function Update(Show $show)
+        public function Update(Show $newShow)
         {
             $query = "UPDATE ".$this->tableName." SET state = :state, day = :day, hour = :hour, id_movie = :id_movie, id_movie_theater = :id_movie_theater WHERE id_show = :id_show";
         	try
