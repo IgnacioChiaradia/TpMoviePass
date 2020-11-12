@@ -120,25 +120,7 @@
 
                     $newShow->setMovieTheater($movieTheaterSearch);
 
-                    /*echo $newShow->getHour();
-                    echo '<br>';
-                    $tiempo = strtotime($newShow->getHour());
-                    echo $tiempo;
-                    echo '<br>';
-                    $tiempoformat = date('H:i', $tiempo);
-                    echo '<br>';
-                    echo $tiempoformat;
-                    echo '<br>';*/
-                    //echo ($newShow->getMovie()->getRuntime());
-                    //die();
-
-                    //$date= date('H:i');
-                    /*$newDate = strtotime ( '+'. $newShow->getMovie()->getRuntime() .' minute' , strtotime ($tiempoformat) ) ;
-
-                    $newDate = date ( 'H:i' , $newDate); */
-
-                    //echo '<br>';
-                    //echo $newDate;
+                    $this->CalculateTime($newShow);
                     //die();
 
 
@@ -150,8 +132,7 @@
                     }
                     else
                     {
-                        $message = "La pelicula ". $movieSearch->getTitle() ." ya se encuentra en otra sala para el dia: " . $date;
-
+                        $message = "La pelicula '" . $movieSearch->getTitle() . "' ya se encuentra en otra sala para el dia: $date";
                     }
                 }
                 else
@@ -195,6 +176,10 @@
                     show(funcion)*/
                     $show->setMovie($this->movieDAO->GetMovieById($show->getMovie()->getIdMovie()));
 
+                    $hour = strtotime($show->getHour());
+                    $hour = date('H:i', $hour);
+                    $show->setHour($hour);
+
                     /*mediante el id de la movieTheater que cargue en el mapear busco la movieTheater y la seteo en el show(funcion)*/
                     $show->setMovieTheater($this->movieTheaterDAO->GetMovieTheaterById($show->GetMovieTheater()->getIdMovieTheater()));
 
@@ -236,18 +221,27 @@
         public function CalculateTime(Show $newShow)
         {
             $time = strtotime($newShow->getHour());
-            $timeFormat = date('H:i', $time);
-            $newDate = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($timeFormat));
+            $startTime = date('H:i', $time);
+            $endTime = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($startTime));
+            $endTimePlus = strtotime('+15 minute', strtotime ($endTime));
 
             // esta es la hora de finalizacion de la movie +15 minutos
-            $newDate = date ('H:i', $newDate);
+            $endTimePlus = date ('H:i', $endTimePlus);
 
             $shows = $this->showDAO->GetAllShowsByMovieTheater($newShow->getMovieTheater()->getIdMovieTheater());
 
+            $showHour = strtotime($show->getHour());
+            $endTime = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($startTime));
+            /*if($showHour < $time)
+
             foreach ($shows as $show) {
+              $showHour = strtotime($show->getHour());
 
-            }
 
+
+
+
+            }*/
 
             //echo '<br>';
             //echo $newDate;
@@ -298,7 +292,7 @@
 
             $movie = new Movie();
             $movie = $this->movieDAO->getMovieById($id_movie);
-            
+
             $show->setMovie($movie);
 
             $movieTheater = new MovieTheater();

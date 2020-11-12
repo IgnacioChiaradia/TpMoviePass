@@ -1,4 +1,4 @@
-<?php 
+<?php
 
  //echo '<pre>';
                 //var_dump($showsOfMovieTheater);
@@ -20,22 +20,22 @@
           			<option name="movieId" value="<?php echo($movie->getIdMovie()); ?>"> <?php echo ($movie->getTitle()); ?></option>
         		<?php } ?>
 		   	</select>
-		   	<div id="3" class="mt-3 text-dark row" style="background-color: rgba(0, 0, 0, 0.25);"> 
-		   		<div class="form-group col m-2"> 
-		   			<label for="date" class="text-light"> Añadir fecha: </label> 
-		   			<input type="date" name="day" value="" min="" max="" required> 
-		   		</div> 
-		   		<div class="form-group col m-2"> 
-		   			<label for="time" class="text-light"> Seleccionar horario: </label> 
-		   			<input type="time" name="hour" min="15:00" max="23:00" required> 
-		   		</div> 
+		   	<div id="3" class="mt-3 text-dark row" style="background-color: rgba(0, 0, 0, 0.25);">
+		   		<div class="form-group col m-2">
+		   			<label for="date" class="text-light"> Añadir fecha: </label>
+		   			<input type="date" name="day" value="" min="" max="" required>
+		   		</div>
+		   		<div class="form-group col m-2">
+		   			<label for="time" class="text-light"> Seleccionar horario: </label>
+		   			<input type="time" name="hour" min="15:00" max="23:00" required>
+		   		</div>
 		   		<input type="hidden" name="idMovieTheater" value="<?php echo($movieTheaterSearch->getIdMovieTheater());  ?>">
 			</div>
 
 			<button type="submit" name="button" class="mt-2 btn btn-light ml-auto d-block">Agregar</button>
 	</form>
 </div>
-<?php 
+<?php
 	if (isset($showsOfMovieTheater[0])) { ?>
 		<h3 class="mb-3 mt-2 text-white">Funciones cargadas</h3>
 	<?php } if (!isset($showsOfMovieTheater[0])) { ?>
@@ -43,9 +43,9 @@
 	<?php } ?>
 
 	<div class="row mt-3">
-	<?php if (isset($showsOfMovieTheater)) { 
-	 foreach ($showsOfMovieTheater as $show){ 
-	 	if($show->getMovie()->getIsActive() && $show->getState()){ ?>					
+	<?php if (isset($showsOfMovieTheater)) {
+	 foreach ($showsOfMovieTheater as $show){
+	 	if($show->getMovie()->getIsActive() && $show->getState()){ ?>
 	  <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative color-pelis">
 
@@ -62,11 +62,11 @@
           <form action="<?php echo FRONT_ROOT ?>Show/DisableShow" method="POST" class="mb-1">
           	<button type="submit" name="button_disabled" value="<?php echo $show->getIdShow(); ?>" class="btn btn-danger btn-block">Dar de baja</button>
       	  </form>
-          <a class="btn btn-info" href="<?php echo FRONT_ROOT ?>Show/ShowUpdateShowsView/?id=<?php echo $show->getMovieTheater()->getIdMovieTheater(); ?>"> Editar</a>
-                                        
+          <a class="btn btn-info" href="<?php echo FRONT_ROOT ?>Show/ShowUpdateShowsView/?id=<?php echo $show->getIdShow(); ?>"> Editar</a>
+
         </div>
 
-        <div class="col-auto <!--d-none--> d-lg-block">   
+        <div class="col-auto <!--d-none--> d-lg-block">
         <?php echo ('<img src="https://image.tmdb.org/t/p/w185' . $show->getMovie()->getPosterPath() .  '">'); ?>
         </div>
 
@@ -74,19 +74,19 @@
 
       </div>
     </div>
-    <?php } 
+    <?php }
     }
    }?>
    </div>
 
    <br>
-	<h3 class="col-md-12 pl-0 mb-3 text-white">Funciones inactivas</h3>	
-   <?php 
+	<h3 class="col-md-12 pl-0 mb-3 text-white">Funciones inactivas</h3>
+   <?php
    //aqui se mostraran las funciones dadas de baja ya sea porque la movie se dio de baja o porque se dio de baja la funcion en si?>
 	<div class="row mt-3">
-	<?php if (isset($showsOfMovieTheater)) { 
-	 foreach ($showsOfMovieTheater as $show){ 
-	 	if(!$show->getMovie()->getIsActive() || !$show->getState()){ ?>					
+	<?php if (isset($showsOfMovieTheater)) {
+	 foreach ($showsOfMovieTheater as $show){
+	 	if(!$show->getMovie()->getIsActive() || !$show->getState()){ ?>
 	  <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative color-pelis">
 
@@ -101,11 +101,11 @@
           <p class=""><strong>Hora de la funcion:</strong> <?php echo ($show->getHour()	);?> </p>
           <form action="<?php echo FRONT_ROOT ?>Show/EnableShow" method="POST" class="mb-1">
           	<button type="submit" name="button_enable" value="<?php echo $show->getIdShow(); ?>" class="btn btn-success btn-block">Alta</button>
-      	  </form>                                        
+      	  </form>
           <!--<a href="#" class="stretched-link">Continue reading</a>-->
         </div>
 
-        <div class="col-auto <!--d-none--> d-lg-block">   
+        <div class="col-auto <!--d-none--> d-lg-block">
         <?php echo ('<img src="https://image.tmdb.org/t/p/w185' . $show->getMovie()->getPosterPath() .  '">'); ?>
         </div>
 
@@ -113,16 +113,13 @@
 
       </div>
     </div>
-    <?php } 
+    <?php }
     }
    }?>
   </div>
 	<form action="<?php echo FRONT_ROOT ?>Show/BackToMovieTheaterView" method="POST">
-		<?php if (isset($show)) { ?>
-			<input type="hidden" name="id_cinema" value="<?php echo ($show->getMovieTheater()->getCinema()->getIdCinema()); ?>">			
-		<?php }
-		elseif (isset($idCinema)) { ?>
-		 	<input type="hidden" name="id_cinema" value="<?php echo ($idCinema); ?>">
-		 <?php } ?>
+    <?php if (isset($movieTheaterSearch)){ ?>
+			<input type="hidden" name="id_cinema" value="<?php echo ($movieTheaterSearch->getCinema()->getIdCinema()); ?>">
+		<?php } ?>
 		<button type="submit" class="btn btn-light d-block" href="">Volver a salas</button>
 	</form>

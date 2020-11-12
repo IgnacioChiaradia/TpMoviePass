@@ -44,7 +44,7 @@ CREATE TABLE cinemas
 (
   id_cinema INT AUTO_INCREMENT,
   state BOOLEAN,
-  name VARCHAR (50), 
+  name VARCHAR (50),
   address VARCHAR (50),
 
   CONSTRAINT pk_id_cinema PRIMARY KEY (id_cinema),
@@ -73,16 +73,37 @@ CREATE TABLE shows
         state BOOLEAN,
         day DATE,
         hour TIME,
-        
+
         id_movie INT,
         id_movie_theater INT,
-        
+
         CONSTRAINT pk_id_show PRIMARY KEY (id_show),
         CONSTRAINT fk_id_movie FOREIGN KEY (id_movie) REFERENCES movies (id_movie) ON DELETE CASCADE,
         CONSTRAINT fk_id_movie_theater FOREIGN KEY (id_movie_theater) REFERENCES movie_theaters (id_movie_theater) ON DELETE CASCADE
 );
 
+CREATE TABLE roles
+(
+  idRol INT AUTO_INCREMENT,
+  role varchar (30) not null,
+  constraint pk_idRol primary key (idRol)
+);
+
+CREATE TABLE users
+(
+  idUser INT AUTO_INCREMENT,
+  idRol INT,
+  userName VARCHAR(100),
+  password VARCHAR(100),
+  firstName VARCHAR(300),
+  lastName VARCHAR(100),
+  email VARCHAR(100),
+
+  CONSTRAINT pk_IdUser PRIMARY KEY (idUser),
+  CONSTRAINT pk_idRol FOREIGN KEY (idRol) REFERENCES roles (idRol) ON DELETE CASCADE
+);
+
 INSERT INTO roles (role) VALUES ('administrador'),('cliente');
-INSERT INTO users (userName, password, firstName, lastName, email, idRol) VALUES 
+INSERT INTO users (userName, password, firstName, lastName, email, idRol) VALUES
 ('admin','admin','admin', 'admin','admin@gmail.com',1),
 ('andreslerner', 'andres123','Andres', 'Lerner','andres@gmail.com',2);
