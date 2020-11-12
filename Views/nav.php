@@ -1,22 +1,38 @@
 
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
      <span class="navbar-text">
-          <a href="<?php echo FRONT_ROOT ?>Home/HomeView" style="text-decoration: none;"><strong> Movie </strong> Pass Home</a>
+          <a href="<?php echo FRONT_ROOT ?>" style="text-decoration: none;"><strong> Movie </strong> Pass Home</a>
      </span>
      <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-               <a class="nav-link" href="#">Logout</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT?>Home/logout">Logout</a>
           </li>
      </ul>
 </nav>
 
 <div id="sidebar" class="sidebar">
   <a href="#" class="boton-cerrar" onclick="ocultar()">&times;</a>
-    <ul class="menu">
-      <li><a href="<?php echo FRONT_ROOT ?>Cinema/AddCineView">Agregar cine</a></li>
-      <li><a href="<?php echo FRONT_ROOT ?>Cinema/ListCinema">Listar cines</a></li>
-      <li><a href="<?php echo FRONT_ROOT ?>Movie/ListMovies">Lista de peliculas</a></li>
-      <li><a href="#">Logout</a></li>
+  <ul class="menu">
+    <li class="text-white">Opciones</li>
+    </br>
+    <?php
+          if(isset($_SESSION['loggedUser']))
+          {
+               ?>    
+               <li><a href="<?php echo FRONT_ROOT ?>Cinema/AddCineView">Agregar cine</a></li>
+               <li><a href="<?php echo FRONT_ROOT ?>Cinema/ListCinema">Listar cines</a></li>
+               <?php
+          }
+     ?>
+     <?php
+          if(!isset($_SESSION['loggedUser']))
+          {
+               ?>
+               <li class="text-white">Para las demas opciones se debe registrar o Iniciar sesion</li>
+          <?php
+          }
+          ?>
+          <li><a href="<?php echo FRONT_ROOT ?>Movie/ListMovies">Lista de peliculas</a></li>
     </ul>
   </div>
     <div id="contenido">

@@ -8,7 +8,7 @@
     use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
     use DAO\MovieDAO as MovieDAO;
-    use Models\Movie as Movie;    
+    use Models\Movie as Movie;
 
     class ShowController
     {
@@ -27,33 +27,47 @@
 
         public function DisplayShowView($movieTheaterName, $idCinema)
         {
-
             $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterByName($movieTheaterName);
 
             if($movieTheaterSearch && $movieTheaterSearch->getState())
             {
-                $showsOfMovieTheater = $this->showDAO->GetAllShowsByMovieTheater($movieTheaterSearch);
-                
-                //aqui seteo la funcion por completo
-                $showsOfMovieTheater = $this->SetCompleteShows($showsOfMovieTheater);
-
-                /*if($showsOfMovieTheater)
+                if($this->movieTheaterDAO->IsMovieTheaterInCinema($movieTheaterSearch, $idCinema))
                 {
+                  $showsOfMovieTheater = $this->showDAO->GetAllShowsByMovieTheater($movieTheaterSearch);
 
-                }*/
+                  //aqui seteo la funcion por completo
+                  $showsOfMovieTheater = $this->SetCompleteShows($showsOfMovieTheater);
 
-                /*echo '<pre>';
-                var_dump($showsOfMovieTheater);
-                echo '<pre>';
-                die();*/
-                
-                //$movieList = $this->movieDAO->GetAll();
-                $movieList = $this->movieDAO->GetAllActive();
-                if(!$movieList)
-                {
+                  /*if($showsOfMovieTheater)
+                  {
+
+                  }*/
+
+                  /*echo '<pre>';
+                  var_dump($showsOfMovieTheater);
+                  echo '<pre>';
+                  die();*/
+
+                  //$movieList = $this->movieDAO->GetAll();
+                  $movieList = $this->movieDAO->GetAllActive();
+                  if(!$movieList)
+                  {
                     $message = 'No hay peliculas activas, dirijase a la lista de peliculas para activar las que desee';
+                  }
+                  require_once(VIEWS_PATH."show-view.php");
                 }
-                require_once(VIEWS_PATH."show-view.php");
+                else
+                {
+                  $cinemaSearch = $this->cinemaDAO->GetCinemaById($idCinema);
+                  $movieTheaterList = $this->movieTheaterDAO->GetMovieTheatersByIdCinema($idCinema);
+
+                  $message = 'La sala que busca no se encuentra en este cine';
+
+                  if(!is_array($movieTheaterList))
+                          $movieTheaterList = array($movieTheaterList);
+
+                  require_once(VIEWS_PATH."movie-theater.php");
+                }
             }
             else
             {
@@ -66,7 +80,7 @@
 
                 require_once(VIEWS_PATH."movie-theater.php");
             }
-            
+
         }
 
         public function DisplayShowViewAfterAction($idMovieTheater, $showsOfMovieTheater, $message = "")
@@ -118,8 +132,8 @@
                     //echo ($newShow->getMovie()->getRuntime());
                     //die();
 
-                    //$date= date('H:i'); 
-                    /*$newDate = strtotime ( '+'. $newShow->getMovie()->getRuntime() .' minute' , strtotime ($tiempoformat) ) ; 
+                    //$date= date('H:i');
+                    /*$newDate = strtotime ( '+'. $newShow->getMovie()->getRuntime() .' minute' , strtotime ($tiempoformat) ) ;
 
                     $newDate = date ( 'H:i' , $newDate); */
 
@@ -128,10 +142,8 @@
                     //die();
 
 
-                    $movieInUse = $this->MovieIsUseInOtherMovieTheater($newShow);
-                    echo $movieInUse;
-                    //die();
-                    if(!$movieInUse)
+                    //$movieInUse = $this->MovieIsUseInOtherMovieTheater($newShow);
+                    if(!$this->MovieIsUseInOtherMovieTheater($newShow))
                     {
                         $this->showDAO->Add($newShow);
                         $message = 'Se ha creado una nueva funcion correctamente';
@@ -139,7 +151,7 @@
                     else
                     {
                         $message = "La pelicula ". $movieSearch->getTitle() ." ya se encuentra en otra sala para el dia: " . $date;
-                        
+
                     }
                 }
                 else
@@ -178,8 +190,8 @@
                     $showsOfMovieTheater = array($showsOfMovieTheater);
 
             foreach ($showsOfMovieTheater as $show)
-                {                    
-                    /*mediante el id de la movie que cargue en el mapear busco la movie y la seteo en el 
+                {
+                    /*mediante el id de la movie que cargue en el mapear busco la movie y la seteo en el
                     show(funcion)*/
                     $show->setMovie($this->movieDAO->GetMovieById($show->getMovie()->getIdMovie()));
 
@@ -201,7 +213,7 @@
             /*$allShows = $this->showDAO->GetAll();
             $allShows = $this->SetCompleteShows($allShows);
 
-            foreach ($allShows as $show) 
+            foreach ($allShows as $show)
             {
                 if($show->getMovie()->getIdMovie() == $newShow->getMovie()->getIdMovie() && $show->getDay() == $newShow->getDay())
                 {
@@ -225,9 +237,17 @@
         {
             $time = strtotime($newShow->getHour());
             $timeFormat = date('H:i', $time);
-            $newDate = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($timeFormat)); 
+            $newDate = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($timeFormat));
 
-            $newDate = date ('H:i', $newDate); 
+            // esta es la hora de finalizacion de la movie +15 minutos
+            $newDate = date ('H:i', $newDate);
+
+            $shows = $this->showDAO->GetAllShowsByMovieTheater($newShow->getMovieTheater()->getIdMovieTheater());
+
+            foreach ($shows as $show) {
+
+            }
+
 
             //echo '<br>';
             //echo $newDate;
@@ -258,7 +278,7 @@
 
         public function BackToMovieTheaterView($id_cinema)
         {
-            $cinemaSearch = $this->cinemaDAO->GetCinemaById($id_cinema);            
+            $cinemaSearch = $this->cinemaDAO->GetCinemaById($id_cinema);
             $movieTheaterList = $this->movieTheaterDAO->GetMovieTheatersByIdCinema($id_cinema);
 
             if(!is_array($movieTheaterList))
