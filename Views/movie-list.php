@@ -13,10 +13,6 @@
     </select>
     <button class="btn btn-primary btn-block btn-lg mt-4" name="button" type="submit">Filtrar por genero</button>
 </form>
-  
-
-    
-
   </label>               
   <!--<a class="btn btn-info mb-2" href="<?php echo FRONT_ROOT ?>Movie/RenewMovies">Renovar lista peliculas</a> -->
 
@@ -38,11 +34,14 @@
           <input type="hidden" name="is_active" value="<?php echo $movie->getIsActive(); ?>">
           <!--<a href="#" class="stretched-link">Continue reading</a>--> 
           <div style="width: 25%; float: right"> <?php
-          if ($movie->getIsActive()){ ?>
-            <button class="btn btn-danger btn-block btn-lg mt-1"  name="button" type="submit">Desactivar</button>
-          <?php } else { ?>
-            <button class="btn btn-primary btn-block btn-lg mt-4" name="button" type="submit">Activar</button>
-          <?php } ?> 
+          if (isset($_SESSION["loggedUser"]) && $_SESSION["loggedUser"]->getRole() == 1){
+            if ($movie->getIsActive()){ ?>
+              <button class="btn btn-danger btn-block btn-lg mt-1"  name="button" type="submit">Desactivar</button>
+            <?php } else { ?>
+              <button class="btn btn-primary btn-block btn-lg mt-4" name="button" type="submit">Activar</button>
+            <?php } 
+            }?>
+        
           </div>
 
         </div>

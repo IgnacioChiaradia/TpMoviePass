@@ -3,7 +3,7 @@ require_once(VIEWS_PATH."nav.php");
 ?>
 <div id="contenido2" class="contenido">
 	<article class="">
-		<h1 class="intro">Bienvenido a MoviePass! Parte Administrativa</h1>
+		<h1 class="intro">Bienvenido a la parte administrativa de MoviePass!</h1>
 		<?php if(isset($message)){ ?>
           <div class="text-white ml-3 mb-1" for=""> <strong> <?php echo $message ?> </strong> </div>
   <?php } ?>  

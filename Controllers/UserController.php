@@ -50,7 +50,7 @@ class UserController
             try
             {
                 $this->userDAO->add($user);
-                $message = 'Thank you for joining ' .$user->getUserName();
+                $message = 'Gracias por unirte ' .$user->getUserName();
                 require_once(VIEWS_PATH."client-view.php");
             }
             catch(Exception $e)
@@ -61,7 +61,7 @@ class UserController
         }
         else
         {
-            $message = "The user or email has been previously registered.";
+            $message = "El usuario o email ha sido registrado previamente.";
             require_once(VIEWS_PATH."register.php");
         }
 
@@ -77,6 +77,10 @@ class UserController
                     /*mediante el id de la movie que cargue en el mapear busco la movie y la seteo en el
                     show(funcion)*/
                     $show->setMovie($this->movieDAO->GetMovieById($show->getMovie()->getIdMovie()));
+
+                    $hour = strtotime($show->getHour());
+                    $hour = date('H:i', $hour);
+                    $show->setHour($hour);
 
                     /*mediante el id de la movieTheater que cargue en el mapear busco la movieTheater y la seteo en el show(funcion)*/
                     $show->setMovieTheater($this->movieTheaterDAO->GetMovieTheaterById($show->GetMovieTheater()->getIdMovieTheater()));
@@ -142,7 +146,7 @@ class UserController
 						if ($password == $search->getPassword())
 						{
                             $this->setSession($search);
-                            $message = 'Welcome '.$userName.'!';
+                            $message = 'Bienvenido '.$userName.'!';
                             $this->loginView($message);
                         }
 
