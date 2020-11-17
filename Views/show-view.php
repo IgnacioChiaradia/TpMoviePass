@@ -39,7 +39,7 @@
 	if (isset($showsOfMovieTheater[0])) { ?>
 		<h3 class="mb-3 mt-2 text-white">Funciones cargadas</h3>
 	<?php } if (!isset($showsOfMovieTheater[0])) { ?>
-		<h3 class="mb-3 mt-2 text-white">Ninguna funcion cargada aqui</h3>
+		<h3 class="mb-3 mt-2 text-white">Ninguna función cargada aqui</h3>
 	<?php } ?>
 
 	<div class="row mt-3">
