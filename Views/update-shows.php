@@ -7,13 +7,13 @@
                <div class="col-lg-3">
                     <div class="form-group">
                          <label for="">Día de la función</label>
-                         <input type="date" name="day" value="<?php echo $showSearch->getDay(); ?>" class="form-control" placeholder="Día" required>
+                         <input type="date" name="day" value="<?php echo $showSearch->getDay(); ?>" min="<?php echo date("Y-m-d"); ?>" class="form-control" placeholder="Día" required>
                     </div>
                </div>
                <div class="col-lg-3">
                     <div class="form-group">
                          <label for="">Hora de la función</label>
-                         <input type="time" name="hour" value="<?php echo $showSearch->getHour(); ?>" class="form-control" placeholder="Horario" required>
+                         <input type="time" name="hour" value="<?php echo $showSearch->getHour(); ?>" class="form-control" placeholder="Horario" min="13:00" max="21:30" required>
                     </div>
                </div>
 

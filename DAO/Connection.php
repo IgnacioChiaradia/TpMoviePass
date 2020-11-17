@@ -59,7 +59,7 @@
         }
 
     public function ExecuteNonQuery($query, $parameters = array())
-    { 
+    {
           try
           {
                // Creo una sentencia llamando a prepare. Esto devuelve un objeto statement
@@ -69,7 +69,7 @@
                     $this->pdoStatement->bindParam(":$parameterName", $parameters[$parameterName]);
                }
                $this->pdoStatement->execute();
-               
+
                return $this->pdoStatement->rowCount();
           }
           catch(\PDOException $ex)

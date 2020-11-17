@@ -101,7 +101,6 @@
 
         public function AddShow($idMovie, $date, $hour, $idMovieTheater)
         {
-
             $movieSearch = $this->movieDAO->GetMovieById($idMovie);
             $movieTheaterSearch = $this->movieTheaterDAO->GetMovieTheaterById($idMovieTheater);
 
@@ -120,19 +119,23 @@
 
                     $newShow->setMovieTheater($movieTheaterSearch);
 
-                    $this->CalculateTime($newShow);
                     //die();
-
 
                     //$movieInUse = $this->MovieIsUseInOtherMovieTheater($newShow);
                     if(!$this->MovieIsUseInOtherMovieTheater($newShow))
                     {
+                      if($this->CalculateTime($newShow))
+                      {
                         $this->showDAO->Add($newShow);
                         $message = 'Se ha creado una nueva funcion correctamente';
+                      }
+                      else {
+                        $message = "Superposicion de horarios entre funciones al intentar crear una para el dia: $date";
+                      }
                     }
                     else
                     {
-                        $message = "La pelicula '" . $movieSearch->getTitle() . "' ya se encuentra en otra sala para el dia: $date";
+                        $message = "La pelicula '" . $movieSearch->getTitle() . "' ya se encuentra dada de alta en una sala para el dia: $date";
                     }
                 }
                 else
@@ -211,40 +214,113 @@
             $showSearch = $this->showDAO->findShowByDayAndMovie($newShow);
             if($showSearch)
             {
-                $showSearch = $this->SetCompleteShows($showSearch);
+                //$showSearch = $this->SetCompleteShows($showSearch);
                 $movieInUse = 1; // la peli se esta utilizando
             }
 
             return $movieInUse;
         }
 
+        public function ReturnShowIfMovieIsUseInOtherMovieTheater(Show $newShow)
+        {
+          $showSearch = $this->showDAO->findShowByDayAndMovie($newShow);
+          if($showSearch)
+          {
+              $showSearch = $this->SetCompleteShows($showSearch);
+          }
+
+          return $showSearch;
+        }
+
         public function CalculateTime(Show $newShow)
         {
-            $time = strtotime($newShow->getHour());
-            $startTime = date('H:i', $time);
-            $endTime = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($startTime));
-            $endTimePlus = strtotime('+15 minute', strtotime ($endTime));
+            $shows = $this->showDAO->GetAllShowsActiveByMovieTheaterAndDayOrderByHour($newShow);
+            $this->SetCompleteShows($shows);
 
-            // esta es la hora de finalizacion de la movie +15 minutos
-            $endTimePlus = date ('H:i', $endTimePlus);
+            /*PELICULA NUEVAAAAAAAAAAA*/
+            $newShowStartHour = strtotime($newShow->getHour());
+            $newShowStartHour = date ('H:i', $newShowStartHour);
 
-            $shows = $this->showDAO->GetAllShowsByMovieTheater($newShow->getMovieTheater()->getIdMovieTheater());
+            $newShowEndTime = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime($newShowStartHour));
+            $newShowEndTime = date ('H:i', $newShowEndTime);
 
-            $showHour = strtotime($show->getHour());
-            $endTime = strtotime('+'. $newShow->getMovie()->getRuntime() .' minute', strtotime ($startTime));
-            /*if($showHour < $time)
+            $newShowEndTime = strtotime('+15 minute', strtotime($newShowEndTime));
+            $newShowEndTime = date ('H:i', $newShowEndTime);
+            /*PELICULA NUEVAAAAAAAAAA*/
 
-            foreach ($shows as $show) {
-              $showHour = strtotime($show->getHour());
+            if(count($shows) == 0)
+            {
+              return 1;
+            }
+            elseif (count($shows) == 1) {
+                $showStartHour = strtotime($shows[0]->getHour());
+                $showStartHour = date ('H:i', $showStartHour);
 
+                $showEndTime = strtotime('+'. $shows[0]->getMovie()->getRuntime() .' minute', strtotime($showStartHour));
+                $showEndTime = date ('H:i', $showEndTime);
 
+                $showEndTime = strtotime('+15 minute', strtotime($showEndTime));
+                $showEndTime = date ('H:i', $showEndTime);
 
+                //echo "<br>El horario de comienzo de la nueva pelicula $newShowStartHour debera ser mayor o igual al horario de fin $showEndTime
+                //O el horario de fin de la nueva pelicula $newShowEndTime debera ser menor o igual al horario de inicio $showStartHour";
 
+                if($newShowStartHour >= $showEndTime || $newShowEndTime <= $showStartHour)
+                {
+                  return 1;
+                }
+                else
+                {
+                  return 0;
+                }
+            }
+            elseif (count($shows) > 1) {
+              $showStartHour = strtotime($shows[0]->getHour());
+              $showStartHour = date ('H:i', $showStartHour);
 
-            }*/
+              $showEndTime = strtotime('+'. $shows[0]->getMovie()->getRuntime() .' minute', strtotime($showStartHour));
+              $showEndTime = date ('H:i', $showEndTime);
 
-            //echo '<br>';
-            //echo $newDate;
+              $showEndTime = strtotime('+15 minute', strtotime($showEndTime));
+              $showEndTime = date ('H:i', $showEndTime);
+
+              // si el horario de fin de la peli nueva es menor al horario de comienzo de la primera pelicula retorna 1
+              if ($newShowEndTime <= $showStartHour) {
+                  return 1;
+              }
+              else {
+                $flag = 0;
+                for ($i=0; $i < count($shows); $i++) {
+                  $showStartHour = strtotime($shows[$i]->getHour());
+                  $showStartHour = date ('H:i', $showStartHour);
+
+                  $showEndTime = strtotime('+'. $shows[$i]->getMovie()->getRuntime() .' minute', strtotime($showStartHour));
+                  $showEndTime = strtotime('+15 minute', $showEndTime);
+                  $showEndTime = date ('H:i', $showEndTime);
+
+                  $t = $i+1;
+                  if(!empty($shows[$t]))
+                  {
+                    if($newShowStartHour >= $showEndTime && $newShowEndTime <= $shows[$t]->getHour())
+                    {
+                      return 1;
+                    }
+                  }
+                  else
+                  {
+                    /* si es el ultimo show en la lista y el horario de inicio de la nueva pelicula es mayor al horario de
+                    fin de la pelicula comparada que se inserte*/
+                    if ($newShowStartHour >= $showEndTime) {
+                        return 1;
+                    }
+                  }
+                }
+                if($flag == 0)
+                {
+                  return $flag;
+                }
+              }
+            }
         }
 
         public function DisableShow($idShow)
@@ -257,16 +333,31 @@
             $this->GetAllShowsByIdMovieTheater($showSearch->getMovieTheater()->getIdMovieTheater(), $message = "Se ha dado de baja la funcion correctamente");
         }
 
-        // agregar verificaciones necesarias
         public function EnableShow($idShow)
         {
             //buscar sala y pasarla
             $showSearch = $this->showDAO->GetShowById($idShow);
             $this->SetCompleteShows($showSearch);
 
-            $this->showDAO->Enable($showSearch);
+            if($showSearch->getDay() >= date("Y-m-d"))
+            {
+              if($this->CalculateTime($showSearch))
+              {
+                $this->showDAO->Enable($showSearch);
+                $message = "Se ha dado de alta la funcion, si su funcion sigue dada de baja intente activar la pelicula";
+              }
+              else
+              {
+                $message = 'Superposicion de horarios al dar de alta la funcion';
+              }
+            }
+            else
+            {
+                $message = "La pelicula que quiere dar de alta ya expiró, se eliminara en una siguiente actualizacion !";
+            }
 
-            $this->GetAllShowsByIdMovieTheater($showSearch->getMovieTheater()->getIdMovieTheater(), $message = "Se ha dado de alta la funcion, si su funcion sigue dada de baja intente activar la pelicula");
+
+            $this->GetAllShowsByIdMovieTheater($showSearch->getMovieTheater()->getIdMovieTheater(), $message);
         }
 
 
@@ -284,7 +375,6 @@
         public function UpdateShow($id_show, $day, $hour, $id_movie, $id_movie_theater)
         {
             $show = new Show();
-
             $show->setIdShow((int)$id_show);
             $show->setState(true);
             $show->setDay($day);
@@ -299,20 +389,49 @@
             $movieTheater = $this->movieTheaterDAO->getMovieTheaterById($id_movie_theater);
             $show->setMovieTheater($movieTheater);
 
-            $movieInUse = $this->MovieIsUseInOtherMovieTheater($show);
 
-            if($movieInUse){
-                $message = "La pelicula ya esta siendo utilizada por otra funcion para el dia $day!";
-            }else{
-                $rowCount = $this->showDAO->Update($show);
-                if($rowCount > 0)
-                {
-                    $message = "El show se ha editado correctamente !!!";
-                }
-                else
-                {
-                    $message = "El show no se ha editado correctamente";
-                }
+            $movieInUse = $this->MovieIsUseInOtherMovieTheater($show);
+            $showSearch = $this->ReturnShowIfMovieIsUseInOtherMovieTheater($show);
+            //echo "$movieInUse uno o cero ?<br>";
+
+            if($showSearch)
+            {
+              //echo "trae el show ?,". $showSearch[0]->getIdShow() ." <br>";
+              //echo "trae el show<br>";
+              $this->showDAO->Disable($showSearch[0]);
+            }
+
+            //se encontro la movie en otro show
+            //if($showSearch[0])
+            //{
+              //si trae la pelicula y el dia es distinto al del show
+              if($movieInUse && $showSearch[0]->getDay() != $day){
+                  $message = "La pelicula ya esta siendo utilizada por otra funcion para el dia $day!";
+              }else{
+                if($this->CalculateTime($show)){
+                    $rowCount = $this->showDAO->Update($show);
+                    if($rowCount > 0)
+                    {
+                        $message = "El show se ha editado correctamente !!!";
+                    }
+                    else
+                    {
+                        $message = "El show no se ha editado correctamente";
+                    }
+                 }
+                 else
+                 {
+                   $message = 'Superposicion de horarios al editar la funcion';
+                 }
+              }
+            //}
+            //else
+            //{
+            //  $message = 'No se encontro el show a modificar';
+            //}
+            if($showSearch)
+            {
+              $this->showDAO->Enable($showSearch[0]);
             }
             $this->GetAllShowsByIdMovieTheater($id_movie_theater, $message);
         }

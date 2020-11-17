@@ -55,7 +55,7 @@
                 $result = $this->mapear($resultSet);
 
                 if(!is_array($result))
-                    $result = array($result); 
+                    $result = array($result);
               }
             }
             catch(Exception $ex){
@@ -66,11 +66,7 @@
 
         public function GetAllActive()
         {
-            $sql = "SELECT * FROM " .$this->tableName." 
-            INNER JOIN 
-            WHERE ".$this->tableName.".is_active = 1";
-
-            //$sql = "SELECT * FROM " .$this->tableName." WHERE ".$this->tableName.".is_active = 1";
+            $sql = "SELECT * FROM " .$this->tableName." WHERE ".$this->tableName.".state = 1";
 
             $result = array();
 
@@ -81,7 +77,7 @@
               if(!empty($resultSet))
               {
                 $result = $this->mapear($resultSet);
-                
+
                 if(!is_array($result))
                     $result = array($result);
               }
@@ -90,7 +86,33 @@
                throw $ex;
             }
             return $result;
-        }       
+        }
+
+				public function GetAllActiveOrderByName()
+        {
+            $sql = "SELECT shows.* FROM " .$this->tableName."
+						INNER JOIN movies ON movies.id_movie = " .$this->tableName.".id_movie
+						WHERE ".$this->tableName.".state = 1 ORDER BY movies.title";
+
+            $result = array();
+
+            try {
+              $this->connection = Connection::getInstance();
+              $resultSet = $this->connection->execute($sql);
+
+              if(!empty($resultSet))
+              {
+                $result = $this->mapear($resultSet);
+
+                if(!is_array($result))
+                    $result = array($result);
+              }
+            }
+            catch(Exception $ex){
+               throw $ex;
+            }
+            return $result;
+        }
 
         public function GetAllShowsByMovieTheater(MovieTheater $movieTheater)
         {
@@ -105,7 +127,7 @@
 
                 $parameters['id_movie_theater'] = $movieTheater->getIdMovieTheater();
 
-                $resultSet = $this->connection->execute($query, $parameters);       
+                $resultSet = $this->connection->execute($query, $parameters);
 
                 if(!empty($resultSet))
                 {
@@ -119,14 +141,46 @@
             return $result;
         }
 
+				public function GetAllShowsActiveByMovieTheaterAndDayOrderByHour(Show $show)
+        {
+            $query ="select shows.*
+                    from shows
+										inner join movie_theaters mt ON shows.id_movie_theater = :id_movie_theater
+                    where shows.state = :state and shows.day = :day
+										group by shows.id_show
+										order by shows.hour";
+            $result = array();
+
+            try{
+
+                $this->connection = Connection::GetInstance();
+
+								$parameters['state'] = TRUE;
+								$parameters['day'] = $show->getDay();
+								$parameters['id_movie_theater'] = $show->getMovieTheater()->getIdMovieTheater();
+
+                $resultSet = $this->connection->execute($query, $parameters);
+
+                if(!empty($resultSet))
+                {
+                    $result = $this->mapear($resultSet);
+
+		                if(!is_array($result))
+		                    $result = array($result);
+                }
+
+            }catch(Exception $e) {
+                throw $e;
+            }
+
+            return $result;
+        }
+
         //si me devuelve el registro debere elejir otro dia para esa pelicula
         public function findShowByDayAndMovie($newShow)
         {
-
-            //$query = "select shows.* from shows where shows.id_movie = :id_movie AND shows.day = :day;";
-
             $query = "select *
-                     from shows 
+                     from shows
                      where day = :day and id_movie = :id";
 
             $result = null;
@@ -135,12 +189,38 @@
                 $this->connection = Connection::GetInstance();
 
                 $parameters = array();
-                
+
                 $parameters['id'] = intval($newShow->getMovie()->getIdMovie());
+                $parameters['day'] = $newShow->getDay();
 
-                //$time = strtotime($newShow->getDay());
-                //$newformat = date('Y-m-d',$time);
+                $resultSet = $this->connection->execute($query, $parameters);
 
+                if(!empty($resultSet))
+                {
+                    $result = $this->mapear($resultSet);
+                }
+
+            }catch(Exception $e) {
+                throw $e;
+            }
+
+            return $result;
+        }
+
+				public function findShowByDayAndMovieForUpdate($newShow)
+        {
+            $query = "select *
+                     from shows
+                     where day = :day and id_movie = :id";
+
+            $result = null;
+
+            try{
+                $this->connection = Connection::GetInstance();
+
+                $parameters = array();
+
+                $parameters['id'] = intval($newShow->getMovie()->getIdMovie());
                 $parameters['day'] = $newShow->getDay();
 
                 $resultSet = $this->connection->execute($query, $parameters);
@@ -160,7 +240,7 @@
         public function Disable(Show $show)
         {
             $query = "UPDATE ".$this->tableName." SET state = :state WHERE id_show = :id_show";
-            
+
             try
             {
                 $parameters["id_show"] = $show->getIdShow();
@@ -181,7 +261,7 @@
         public function Enable(Show $show)
         {
             $query = "UPDATE ".$this->tableName." SET state = :state WHERE id_show = :id_show";
-            
+
             try
             {
                 $parameters["id_show"] = $show->getIdShow();
@@ -197,14 +277,14 @@
             }
 
             return $rowCount;
-        }        
+        }
 
         public function Update(Show $newShow)
         {
             $query = "UPDATE ".$this->tableName." SET state = :state, day = :day, hour = :hour, id_movie = :id_movie, id_movie_theater = :id_movie_theater WHERE id_show = :id_show";
         	try
             {
-            	$parameters["id_show"] = $newShow->getIdShow();  
+            	$parameters["id_show"] = $newShow->getIdShow();
                 $parameters["state"] = $newShow->getState();
                 $parameters["day"] = $newShow->getDay();
                 $parameters["hour"] = $newShow->getHour();
@@ -263,7 +343,7 @@
 
             //solo cargo el id para luego buscarlo en la controladora y conformar el objeto como es debido y no tener que hacer repeticion de codigo ya que no puedo acceder a otros daos
             $movieSearch = new Movie();
-            $movieSearch->setIdMovie($p["id_movie"]); 
+            $movieSearch->setIdMovie($p["id_movie"]);
             $show->setMovie($movieSearch);
 
             /*$movieTheaterSearch = new MovieTheater();
@@ -281,7 +361,7 @@
               return $show;
             }, $value);
             return count($resp) > 1 ? $resp : $resp[0];
-          }        
+          }
     }
 
 ?>

@@ -23,11 +23,11 @@
 		   	<div id="3" class="mt-3 text-dark row" style="background-color: rgba(0, 0, 0, 0.25);">
 		   		<div class="form-group col m-2">
 		   			<label for="date" class="text-light"> Añadir fecha: </label>
-		   			<input type="date" name="day" value="" min="" max="" required>
+		   			<input type="date" name="day" value="" min="<?php echo date("Y-m-d"); ?>" max="" required>
 		   		</div>
 		   		<div class="form-group col m-2">
 		   			<label for="time" class="text-light"> Seleccionar horario: </label>
-		   			<input type="time" name="hour" min="15:00" max="23:00" required>
+		   			<input type="time" name="hour" min="13:00" max="21:30" required>
 		   		</div>
 		   		<input type="hidden" name="idMovieTheater" value="<?php echo($movieTheaterSearch->getIdMovieTheater());  ?>">
 			</div>
@@ -45,7 +45,7 @@
 	<div class="row mt-3">
 	<?php if (isset($showsOfMovieTheater)) {
 	 foreach ($showsOfMovieTheater as $show){
-	 	if($show->getMovie()->getIsActive() && $show->getState()){ ?>
+	 	if($show->getMovie()->getIsActive() && $show->getState() && $show->getDay() >= date("Y-m-d")){ ?>
 	  <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative color-pelis">
 
@@ -57,7 +57,12 @@
           <p class="card-text mb-auto"><strong>Popularidad:</strong> <?php echo ($show->getMovie()->getPopularity());?></p>
           <p class="card-text mb-auto"><strong>Duracion:</strong> <?php echo ($show->getMovie()->getRuntime());?> minutos </p>
           <p class="card-text mb-auto"><strong>Dia de la funcion:</strong> <?php echo ($show->getDay());?></p>
-          <p class=""><strong>Hora de la funcion:</strong> <?php echo ($show->getHour()	);?> </p>
+          <?php
+          $showEndTime = strtotime('+'. $show->getMovie()->getRuntime() .' minute', strtotime($show->getHour()));
+          $showEndTime = strtotime('+15 minute', $showEndTime);
+          $showEndTime = date ('H:i', $showEndTime);
+           ?>
+           <p class=""><strong>Hora de la funcion:</strong> <?php echo ($show->getHour() ." - ".	$showEndTime);?> </p>
 
           <form action="<?php echo FRONT_ROOT ?>Show/DisableShow" method="POST" class="mb-1">
           	<button type="submit" name="button_disabled" value="<?php echo $show->getIdShow(); ?>" class="btn btn-danger btn-block">Dar de baja</button>
@@ -86,7 +91,7 @@
 	<div class="row mt-3">
 	<?php if (isset($showsOfMovieTheater)) {
 	 foreach ($showsOfMovieTheater as $show){
-	 	if(!$show->getMovie()->getIsActive() || !$show->getState()){ ?>
+	 	if(!$show->getMovie()->getIsActive() || !$show->getState() || $show->getDay() < date("Y-m-d")){ ?>
 	  <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative color-pelis">
 
@@ -98,7 +103,12 @@
           <p class="card-text mb-auto"><strong>Popularidad:</strong> <?php echo ($show->getMovie()->getPopularity());?></p>
           <p class="card-text mb-auto"><strong>Duracion:</strong> <?php echo ($show->getMovie()->getRuntime());?> minutos </p>
           <p class="card-text mb-auto"><strong>Dia de la funcion:</strong> <?php echo ($show->getDay());?></p>
-          <p class=""><strong>Hora de la funcion:</strong> <?php echo ($show->getHour()	);?> </p>
+          <?php
+          $showEndTime = strtotime('+'. $show->getMovie()->getRuntime() .' minute', strtotime($show->getHour()));
+          $showEndTime = strtotime('+15 minute', $showEndTime);
+          $showEndTime = date ('H:i', $showEndTime);
+           ?>
+           <p class=""><strong>Hora de la funcion:</strong> <?php echo ($show->getHour() ." - ".	$showEndTime);?> </p>
           <form action="<?php echo FRONT_ROOT ?>Show/EnableShow" method="POST" class="mb-1">
           	<button type="submit" name="button_enable" value="<?php echo $show->getIdShow(); ?>" class="btn btn-success btn-block">Alta</button>
       	  </form>

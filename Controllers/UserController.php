@@ -51,7 +51,7 @@ class UserController
             {
                 $this->userDAO->add($user);
                 $message = 'Thank you for joining ' .$user->getUserName();
-                require_once(VIEWS_PATH."client-view.php");
+                require_once(VIEWS_PATH."introMoviePass.php");
             }
             catch(Exception $e)
             {
@@ -97,14 +97,15 @@ class UserController
 
                 if($_SESSION['loggedUser']->getRole() == 1)
                 {
-                    //require(ROOT.'/Views/admin-view.php');
+                    $showsActive = $this->showDAO->GetAllActiveOrderByName();
+                    $showsActive = $this->SetCompleteShows($showsActive);
                     require_once(VIEWS_PATH."admin-view.php");
                 }
                 if($_SESSION['loggedUser']->getRole() == 2)
                 {
-                    $showsActive = $this->showDAO->GetAll();
+                    $showsActive = $this->showDAO->GetAllActiveOrderByName();
                     $showsActive = $this->SetCompleteShows($showsActive);
-                    require_once(VIEWS_PATH."client-view.php");
+                    require(ROOT.'/Views/client-view.php');
                 }
             }
             else
