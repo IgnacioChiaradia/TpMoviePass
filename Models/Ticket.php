@@ -6,7 +6,7 @@ use Models\Show as Show;
 
 
 class Ticket
-{   
+{
         private $id;
         private $ticket_number;
         private $qr;
@@ -25,45 +25,44 @@ class Ticket
             return $this;
         }
 
-        public function getTicketNumber() 
+        public function getTicketNumber()
         {
             return $this->ticket_number;
         }
 
-        public function setTicketNumber($ticket_number) 
+        public function setTicketNumber($ticket_number)
         {
             $this->ticket_number = $ticket_number;
             return $this;
         }
 
-        public function getQr() 
+        public function getQr()
         {
             return $this->qr;
         }
 
-        public function setQr($qr) 
+        public function setQr($qr)
         {
             $this->qr = $qr;
             return $this;
         }
 
-        public function getIdPurchase() 
+        public function getPurchase()
         {
-            return $this->id_purchase;
+            return $this->purchase;
         }
 
-        public function setIdPurchase($id_purchase)
+        public function setPurchase($purchase)
          {
-            $this->id_purchase = $id_purchase;
-            return $this;
+            $this->purchase = $purchase;
         }
 
-        public function getShow() 
+        public function getShow()
         {
             return $this->show;
         }
 
-        public function setShow(Show $show) 
+        public function setShow(Show $show)
         {
             $this->show = $show;
             return $this;

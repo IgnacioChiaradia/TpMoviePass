@@ -15,22 +15,24 @@ class PurchaseDAO
         
         public function add(Purchase $purchase) 
         {
-            $query = "INSERT INTO ".$this->tableName." (ticket_quantity, discount, date_purchase, total) VALUES (:ticket_quantity, :discount, :date_purchase, :total);";
+            $query = "INSERT INTO ".$this->tableName." (ticket_quantity, discount, date_purchase, total,idUser) VALUES (:ticket_quantity, :discount, :date_purchase, :total,:idUser);";
         	try
             {
                 $parameters["ticket_quantity"] = $purchase->getTicketQuantity();
                 $parameters["discount"] = $purchase->getDiscount();
                 $parameters["date_purchase"] = $purchase->getDate();
                 $parameters["total"] = $purchase->getTotal();
+                $parameters["idUser"] = $purchase->getUser()->getIdUser();
         
                 $this->connection = Connection::GetInstance();
 
-                $this->connection->ExecuteNonQuery($query, $parameters);
+                $rowCount = $this->connection->ExecuteNonQuery($query, $parameters);
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }          
+            return $rowCount; 
         }
         
         public function getAll()
@@ -89,6 +91,7 @@ class PurchaseDAO
             $purchase->setDiscount($p["password"]);
             $purchase->setDate($p["firstName"]);
             $purchase->setTotal($p["lastName"]);
+            $purchase->setIdUser($p["idUser"]);
 
 		      return $purchase; 
 		    }, $value);

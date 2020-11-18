@@ -55,6 +55,27 @@
                 return false;
         }
 
+        public function getUserById($idUser)
+        {
+            $sql = "SELECT * FROM users WHERE idUser = :idUser";
+            $parameters["idUser"] = $idUser;
+
+            try
+            {
+                $this->connection = Connection::getInstance();
+                $resultSet = $this->connection->execute($sql, $parameters);
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+            }
+
+            if(!empty($resultSet))
+                return $this->mapear($resultSet);
+            else
+                return false;
+        }
+
         public function getAll()
         {
             $sql = "SELECT * FROM users";

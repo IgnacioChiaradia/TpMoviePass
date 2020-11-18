@@ -110,7 +110,10 @@ CREATE TABLE purchases
   discount boolean,
   date_purchase varchar (30),
   total float,
-  constraint pk_idPurchase primary key (idPurchase) 
+  idUser INT,
+
+  constraint pk_idPurchase primary key (idPurchase),
+  CONSTRAINT pk_idUser FOREIGN KEY (idUser) REFERENCES users (idUser) ON DELETE CASCADE
 );
 
 CREATE TABLE tickets
@@ -118,7 +121,7 @@ CREATE TABLE tickets
   idTicket INT auto_increment,
   ticket_number int,
   qr varchar(30),
-  id_show int, 
+  id_show int,
   idPurchase int,
   constraint pk_idTicket primary key (idTicket),
   constraint fk_id_show foreign key (id_show) references shows (id_show) on delete cascade,

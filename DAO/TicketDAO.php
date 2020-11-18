@@ -18,19 +18,18 @@
         {
             try 
             {                
-                $query = "INSERT INTO ".$this->tableName." (ticket_number,qr, purchase, show) VALUES (:ticket_number,:qr, :idPurchase, :idShow);";
+                $query = "INSERT INTO ".$this->tableName." (ticket_number,qr, idPurchase, id_show) VALUES (:ticket_number,:qr, :idPurchase, :id_show);";
                 $parameters["ticket_number"] = $ticket->getTicketNumber();
                 $parameters["qr"] = $ticket->getQr();
-                $parameters["id_purchase"] = $ticket->getIdPurchase();
-                $parameters["id_show"] = $ticket->getShow();
-
+                $parameters["idPurchase"] = $ticket->getPurchase()->getId();
+                $parameters["id_show"] = $ticket->getShow()->getIdShow();
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 return true;
             } 
             catch(Exception $e) 
             {
-                throw $ex;
+                throw $e;
                 return false;
             }
         }
@@ -153,7 +152,7 @@
             $ticket->setTicketNumber($p["ticket_number"]);
             $ticket->setQr($p["qr"]);
             $ticket->setShow($p["id_show"]);
-            $ticket->setIdPurchase($p["idPurchase"]);
+            $ticket->setPurchase($p["idPurchase"]);
 
 		      return $ticket; 
 		    }, $value);

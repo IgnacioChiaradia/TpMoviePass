@@ -25,7 +25,9 @@
                <li><a href="<?php echo FRONT_ROOT ?>Ticket/ticketSoldReminderView">Tickets Vendidos</a></li>
                <li><a href="<?php echo FRONT_ROOT ?>User/AdminView">Funciones</a></li>
                <?php
-               }
+             }else { ?>
+               <a href="<?php echo FRONT_ROOT?>Show/userView">Funciones</a>
+            <?php  }
           }
      ?>
      <?php
