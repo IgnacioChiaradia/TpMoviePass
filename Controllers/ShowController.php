@@ -91,13 +91,13 @@
             require_once(VIEWS_PATH."show-view.php");
         }
 
-        public function GetAllActiveShows()
+        /*public function GetAllActiveShows()
         {
             $showsActive = $this->showDAO->GetAllActive();
             $showsActive = $this->SetCompleteShows($showsActive);
 
             require_once(VIEWS_PATH."intro-moviepass.php");
-        }
+        }*/
 
         public function AddShow($idMovie, $date, $hour, $idMovieTheater)
         {
@@ -477,6 +477,29 @@
 
                 $this->GetAllShowsByIdMovieTheater($idMovieTheater, $message);
             }
+        }
+
+        public function GetAllActiveShows()
+        {
+            $showsActive = $this->showDAO->GetAllActive();
+            $showsActive = $this->SetCompleteShows($showsActive);
+        }
+
+        public function userView($message = "")
+        {
+            $showsActive = $this->showDAO->GetAllActive();
+            $showsActive = $this->SetCompleteShows($showsActive);
+            require_once(VIEWS_PATH."client-view.php");
+        }
+
+        public function buyTicketView()
+        {
+            $id_show = $_GET['id_show'];
+            $show = $this->showDAO->getShowById($id_show);
+            $show = $this->SetCompleteShows($show);
+            $show = $show[0];
+
+            require_once(VIEWS_PATH."purchase-view.php");
         }
     }
 ?>

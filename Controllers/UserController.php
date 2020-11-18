@@ -45,12 +45,15 @@ class UserController
          $user->setFirstName($firstName);
          $user->setLastName($lastName);
          $user->setEmail($email);
+         $user->setRole(2); // por defecto es un cliente
         if(!$this->userExist($user))
         {
             try
             {
                 $this->userDAO->add($user);
                 $message = 'Gracias por unirte ' .$user->getUserName();
+                $showsActive = $this->showDAO->GetAllActiveOrderByName();
+                $showsActive = $this->SetCompleteShows($showsActive);
                 require_once(VIEWS_PATH."client-view.php");
             }
             catch(Exception $e)
@@ -214,6 +217,13 @@ class UserController
         {
 
         }
+    }
+
+    public function AdminView()
+    {
+      $showsActive = $this->showDAO->GetAllActiveOrderByName();
+      $showsActive = $this->SetCompleteShows($showsActive);
+      require_once(VIEWS_PATH."admin-view.php");
     }
 
     public function userExist($userToSearch)

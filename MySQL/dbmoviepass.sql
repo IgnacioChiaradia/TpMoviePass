@@ -103,6 +103,28 @@ CREATE TABLE users
   CONSTRAINT pk_idRol FOREIGN KEY (idRol) REFERENCES roles (idRol) ON DELETE CASCADE
 );
 
+CREATE TABLE purchases
+(
+  idPurchase int auto_increment,
+  ticket_quantity int,
+  discount boolean,
+  date_purchase varchar (30),
+  total float,
+  constraint pk_idPurchase primary key (idPurchase) 
+);
+
+CREATE TABLE tickets
+(
+  idTicket INT auto_increment,
+  ticket_number int,
+  qr varchar(30),
+  id_show int, 
+  idPurchase int,
+  constraint pk_idTicket primary key (idTicket),
+  constraint fk_id_show foreign key (id_show) references shows (id_show) on delete cascade,
+  constraint fk_idPurchase foreign key (idPurchase) references purchases (idPurchase) on delete cascade
+);
+
 INSERT INTO roles (role) VALUES ('administrador'),('cliente');
 INSERT INTO users (userName, password, firstName, lastName, email, idRol) VALUES
 ('admin','admin','admin', 'admin','admin@gmail.com',1),

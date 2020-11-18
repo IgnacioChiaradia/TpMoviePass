@@ -18,10 +18,14 @@
     <?php
           if(isset($_SESSION['loggedUser']))
           {
-               ?>    
+            if($_SESSION['loggedUser']->getRole() == 1){
+               ?>
                <li><a href="<?php echo FRONT_ROOT ?>Cinema/AddCineView">Agregar cine</a></li>
                <li><a href="<?php echo FRONT_ROOT ?>Cinema/ListCinema">Listar cines</a></li>
+               <li><a href="<?php echo FRONT_ROOT ?>Ticket/ticketSoldReminderView">Tickets Vendidos</a></li>
+               <li><a href="<?php echo FRONT_ROOT ?>User/AdminView">Funciones</a></li>
                <?php
+               }
           }
      ?>
      <?php
@@ -39,5 +43,3 @@
     <h1 class="intro">Menu MoviePass</h1>
         <a id="abrir" class="abrir-cerrar" href="javascript:void(0)" onclick="mostrar()">Abrir menu</a><a id="cerrar" class="abrir-cerrar" href="#" onclick="ocultar()">Cerrar menu</a>
   </div>
-
-
