@@ -1,3 +1,4 @@
+<?php require_once(VIEWS_PATH."nav.php"); ?>
 <div class="container">
     <h2 class="mb-4 mt-4 text-white">Tickets vendidos y remanentes</h2>
 					<div class="filter-search">
@@ -18,7 +19,6 @@
         <table class="table bg-light-alpha">
                 <thead>
                     <tr>
-                        <th>Id Show</th>
                         <th>Cine</th>
                         <th>Sala</th>
                         <th>Dia</th>
@@ -29,18 +29,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($tickets as $ticket): ?>
+                    <?php foreach ($tickets as $ticket){ ?>
                         <tr>
-                            <td><?php $ticket->getShow()->getIdShow(); ?></td>
-                            <td><?php $ticket->getShow()->getMovieTheater()->getCinema()->getName(); ?></td>
-                            <td><?php $ticket->getShow()->getMovieTheater()->getName(); ?></td>
-                            <td><?php $ticket->getShow()->getDay(); ?></td>
-                            <td><?php $ticket->getShow()->getHour(); ?></td>
-                            <td><?php $ticket->getShow()->getMovie()->getTitle(); ?></td>
-                            <td><?php $this->getTicketsSold($ticket->getShow()->getIdShow()); ?></td>
-                            <td><?php $this->getTickesRemainder($ticket->getShow()->getIdShow()); ?></td>
+                            <td><?php echo ($ticket->getShow()->getMovieTheater()->getCinema()->getName()); ?></td>
+                            <td><?php echo ($ticket->getShow()->getMovieTheater()->getName()); ?></td>
+                            <td><?php echo ($ticket->getShow()->getDay()); ?></td>
+                            <td><?php echo ($ticket->getShow()->getHour()); ?></td>
+                            <td><?php echo ($ticket->getShow()->getMovie()->getTitle()); ?></td>
+                            <td><?php //$this->getTicketsSold($ticket->getShow()->getIdShow()); ?></td>
+                            <td><?php //$this->getTickesRemainder($ticket->getShow()->getIdShow()); ?></td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </tbody>
          </table>
          <h3 class="mt-5 text-white text-center">Informe de ventas</h3>
@@ -53,11 +52,11 @@
                      </tr>
                  </thead>
                  <tbody>
-                     <?php foreach ($tickets as $ticket): ?>
+                     <?php foreach ($cinemas as $cine): ?>
                          <tr>
-                             <td><?php $ticket->getShow()->getMovieTheater()->getCinema()->getName(); ?></td>
-                             <td><?php $this->getTicketsSold($ticket->getShow()->getIdShow()); ?></td>
-                             <td><?php $this->getTickesRemainder($ticket->getShow()->getIdShow()); ?></td>
+                             <td><?php echo($cine->getName()); ?></td>
+                             <td><?php //$this->getTicketsSold($ticket->getShow()->getIdShow()); ?></td>
+                             <td><?php //$this->getTickesRemainder($ticket->getShow()->getIdShow()); ?></td>
                          </tr>
                      <?php endforeach; ?>
                  </tbody>
@@ -71,11 +70,11 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <?php foreach ($tickets as $ticket): ?>
+                      <?php foreach ($movies as $movie): ?>
                           <tr>
-                              <td><?php $ticket->getShow()->getMovieTheater()->getName(); ?></td>
-                              <td><?php $this->getTicketsSold($ticket->getShow()->getIdShow()); ?></td>
-                              <td><?php $this->getTickesRemainder($ticket->getShow()->getIdShow()); ?></td>
+                              <td><?php echo ($movie->getTitle()); ?></td>
+                              <td><?php //$this->getTicketsSold($ticket->getShow()->getIdShow()); ?></td>
+                              <td><?php //$this->getTickesRemainder($ticket->getShow()->getIdShow()); ?></td>
                           </tr>
                       <?php endforeach; ?>
                   </tbody>

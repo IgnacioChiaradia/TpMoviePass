@@ -18,6 +18,15 @@ require_once(VIEWS_PATH."nav.php");
                <?php if(isset($showsActive))
                {
                ?>
+							 <form action="<?php echo FRONT_ROOT ?>User/FilterShowsByGenre" method="POST">
+	               <select name="career" class="form-control form-control-ml">
+		               <option selected="" value="" disabled="">Seleccione el genero</option>
+		               <?php foreach ($genreList as $genre){ ?>
+		               	<option name="movieGenre" value="<?php echo($genre->getIDGenre()); ?>"> <?php echo ($genre->getName()); ?></option>
+		               <?php } ?>
+	               </select>
+               <button class="btn btn-primary btn-block btn-lg mt-4" name="button" type="submit">Filtrar por genero</button>
+               </form>
                <div class="row mt-3">
                  <?php   foreach ($showsActive as $show) { ?>
                  <div class="col-md-6">

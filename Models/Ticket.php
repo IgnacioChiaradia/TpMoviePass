@@ -62,10 +62,9 @@ class Ticket
             return $this->show;
         }
 
-        public function setShow(Show $show)
+        public function setShow($show)
         {
             $this->show = $show;
-            return $this;
         }
 }
 

@@ -73,10 +73,10 @@
             {
                 if($this->purchaseDAO->add($purchase))
                 {
-
+                    //$this->getById();
                     for($i = 0; $i<$ticket_quantity;$i++)
                     {
-                        echo ("i" . $i . "");
+                        //echo ("i" . $i . "");
                         $numRam = random_int(0,999);
 
                         $ticket = new Ticket();
@@ -100,14 +100,14 @@
                 $message = "No se puede realizar la compra correctamente.";
                 $this->buyTicketView($message, $id_show);
             }
-            echo '<pre>';
+            /*echo '<pre>';
             var_dump($purchase);
-            echo '<pre>';
+            echo '<pre>';*/
         }
 
         private function applyDiscount($ticket_quantity)
         {
-            $date= getdate();
+            $date = getdate();
             $today = $date['wday'];
             if ($ticket_quantity >= 2)
             {
@@ -115,10 +115,10 @@
                 $wednesday = 3; // 3 - Miercoles
                 if ($today == $tuesday || $today == $wednesday )
                 {
-                    return true;
+                    return 1;
                 }
             }
-            return false;
+            return 0;
         }
 
         public function buyTicketPath($idShow)

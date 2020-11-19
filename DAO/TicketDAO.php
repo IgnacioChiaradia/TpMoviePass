@@ -7,17 +7,20 @@
     use DAO\Connection as Connection;
     use \Exception as Exception;
     use \PDOException as PDOException;
-    
-    class TicketDAO 
+    use Models\Show as Show;
+    use Models\Purchase as Purchase;
+    use Models\Movie as Movie;
+
+    class TicketDAO
     {
-        
+
         private $tableName = "tickets";
         private $connection;
 
-        public function add(Ticket $ticket) 
+        public function add(Ticket $ticket)
         {
-            try 
-            {                
+            try
+            {
                 $query = "INSERT INTO ".$this->tableName." (ticket_number,qr, idPurchase, id_show) VALUES (:ticket_number,:qr, :idPurchase, :id_show);";
                 $parameters["ticket_number"] = $ticket->getTicketNumber();
                 $parameters["qr"] = $ticket->getQr();
@@ -26,15 +29,15 @@
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 return true;
-            } 
-            catch(Exception $e) 
+            }
+            catch(Exception $e)
             {
                 throw $e;
                 return false;
             }
         }
-        
-        public function getByNumber($ticket_number) 
+
+        public function getByNumber($ticket_number)
         {
             $sql = "SELECT * FROM tickets WHERE ticket_number = :ticket_number";
             $parameters["ticket_number"] = $ticket_number;
@@ -55,40 +58,41 @@
                 return false;
         }
 
-        public function getAll() 
+        public function getAll()
         {
-            $sql = "SELECT * FROM tickets";
-		    $result = array();
-            try 
-            {
-		      $this->connection = Connection::getInstance();
-		      $resultSet = $this->connection->execute($sql);
-		    
-		      if(!empty($resultSet))
-		      {
-		        $result = $this->mapear($resultSet);
-		      }
-		  	}
-            catch(Exception $e)
-            {
-		       throw $ex;
-		    }
-		    return $result;
+              $sql = "SELECT * FROM tickets";
+  		    $result = array();
+
+              try
+              {
+  		      $this->connection = Connection::getInstance();
+  		      $resultSet = $this->connection->execute($sql);
+
+  		      if(!empty($resultSet))
+  		      {
+  		        $result = $this->mapear($resultSet);
+  		      }
+  		  	}
+              catch(Exception $e)
+              {
+  		       throw $ex;
+  		    }
+  		    return $result;
         }
 
-        public function getInfoShowTickets() 
+        public function getInfoShowTickets()
         {
             $sql = "";
             $result = array();
-            try 
-            {           
+            try
+            {
                 $this->connection = Connection::getInstance();
                 $resultSet = $this->connection->execute($sql,array());
                 $ticketList = array();
-                foreach ($resultSet as $row) 
+                foreach ($resultSet as $row)
                 {
                     $ticket = new Ticket();
-                    
+
                     $cinema = new Cinema();
                     $cinema->setId($row["id_cinema"]);
                     $cinema->setName($row["name"]);
@@ -113,17 +117,17 @@
                 }
 
                 return $ticketList;
-                
-            } 
-            catch(Exception $e) 
+
+            }
+            catch(Exception $e)
             {
                 return false;
             }
         }
 
-        public function getTicketsOfShows(Show $show) 
+        public function getTicketsOfShows(Show $show)
         {
-            try 
+            try
             {
                 $query = "SELECT * FROM tickets WHERE id_show = :id_show";
                 $parameters['id_show'] = $show->getIdShow();
@@ -132,15 +136,29 @@
                 $results = $results[0];
 
                 return $results["count(FK_id_show)"];
-                
-            } 
-            catch(Exception $e) 
+
+            }
+            catch(Exception $e)
             {
                 return false;
             }
         }
-        
-        protected function mapear($value) 
+
+        /*private function GetNextTicketNumber()
+        {
+                $id = 0;
+
+                $ticketList = $this->getAll();
+
+                foreach($ticketList as $ticket)
+                {
+                    $id = ($ticket->getIdTicket() > $id) ? $ticket->getIdTicket() : $id;
+                }
+
+                return $id + 1;
+        }*/
+
+        protected function mapear($value)
         {
 		    $value = is_array($value) ? $value : [];
 
@@ -151,12 +169,30 @@
             $ticket->setId($p["idTicket"]);
             $ticket->setTicketNumber($p["ticket_number"]);
             $ticket->setQr($p["qr"]);
-            $ticket->setShow($p["id_show"]);
-            $ticket->setPurchase($p["idPurchase"]);
 
-		      return $ticket; 
+            $show = new Show();
+            $show->setIdShow($p["id_show"]);
+            $ticket->setShow($show);
+
+            /*echo "<pre>";
+            var_dump($ticket);
+            echo "<pre>";
+
+            $movie = new Movie();
+            $movie->setIdMovie($ticket->getShow()->getMovie()->getIdMovie());
+            $show->setMovie($movie);
+
+            $movieTheater = new MovieTheater();
+            $movieTheater->setIdMovieTheater($ticket->getShow()->getMovieTheater()->getIdMovieTheater());
+            $show->setMovieTheater($movieTheater);*/
+
+            $purchase = new Purchase();
+            $purchase->setId($p["idPurchase"]);
+            $ticket->setPurchase($purchase);
+
+		      return $ticket;
 		    }, $value);
-		    return count($resp) > 1 ? $resp : $resp[0]; 
+		    return count($resp) > 1 ? $resp : $resp[0];
 		  }
 
     }

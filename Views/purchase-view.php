@@ -42,7 +42,7 @@
                             <div class="ticket-information">
                                 <h4 class="text-white">Tipo de Ticket: General</h4>
                                 <h4 class="text-white">Tickets: <span id="ticket-quantity">0</span> </h4>
-                                <h4 class="text-white">Descuento: <span id="discount">N/A</span></h4>
+                                <!--<h4 class="text-white">Descuento: <span id="discount">N/A</span></h4>-->
                                 <h4 class="text-white"  id="total"></h4>
                             </div>
                         </h3>

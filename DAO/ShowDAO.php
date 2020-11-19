@@ -326,6 +326,38 @@
             return $result;
         }
 
+				public function getShowsByIdGenre($genre)
+        {
+            try
+            {
+                $result = null;
+
+                $query = "SELECT shows.* FROM shows
+                INNER JOIN movies ON shows.id_movie = movies.id_movie
+                INNER JOIN movies_x_genres ON movies.id_movie = movies_x_genres.id_movie
+                WHERE :id_genre  = movies_x_genres.id_genre AND :show_active = shows.state
+                group by shows.id_show;";
+
+                $parameters["id_genre"] = $genre->getIDGenre();
+                $parameters["show_active"] = true;
+
+                $this->connection = Connection::getInstance();
+
+                $resultSet= $this->connection->execute($query, $parameters);
+
+                if(!empty($resultSet))
+                    {
+                      $result = $this->mapear($resultSet);
+                      if(!is_array($result))
+                        $result = array($result);
+                    }
+              }
+            catch(Exception $ex){
+               throw $ex;
+            }
+            return $result;
+        }
+
         protected function mapear($value) {
             $value = is_array($value) ? $value : [];
 

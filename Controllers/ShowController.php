@@ -9,6 +9,8 @@
     use Models\Cinema as Cinema;
     use DAO\MovieDAO as MovieDAO;
     use Models\Movie as Movie;
+    use DAO\GenreDAO as GenreDAO;
+    use Models\Genre as Genre;
 
     class ShowController
     {
@@ -16,6 +18,7 @@
         private $movieTheaterDAO;
         private $cinemaDAO;
         private $movieDAO;
+        private $genreDAO;
 
         public function __construct()
         {
@@ -23,6 +26,7 @@
             $this->cinemaDAO = new CinemaDAO();
             $this->movieTheaterDAO = new MovieTheaterDAO();
             $this->movieDAO = new MovieDAO();
+            $this->genreDAO = new GenreDAO();
         }
 
         public function DisplayShowView($movieTheaterName, $idCinema)
@@ -37,16 +41,6 @@
 
                   //aqui seteo la funcion por completo
                   $showsOfMovieTheater = $this->SetCompleteShows($showsOfMovieTheater);
-
-                  /*if($showsOfMovieTheater)
-                  {
-
-                  }*/
-
-                  /*echo '<pre>';
-                  var_dump($showsOfMovieTheater);
-                  echo '<pre>';
-                  die();*/
 
                   //$movieList = $this->movieDAO->GetAll();
                   $movieList = $this->movieDAO->GetAllActive();
@@ -487,8 +481,9 @@
 
         public function userView($message = "")
         {
-            $showsActive = $this->showDAO->GetAllActive();
+            $showsActive = $this->showDAO->GetAllActiveOrderByName();
             $showsActive = $this->SetCompleteShows($showsActive);
+            $genreList = $this->genreDAO->GetAll();
             require_once(VIEWS_PATH."client-view.php");
         }
 

@@ -11,6 +11,8 @@ use DAO\MovieTheaterDAO as MovieTheaterDAO;
 use DAO\MovieDAO as MovieDAO;
 use DAO\ShowDAO as ShowDAO;
 use Models\User as User;
+use Models\Genre as Genre;
+use DAO\GenreDAO as GenreDAO;
 use Controllers\HomeController as HomeController;
 
 class UserController
@@ -22,6 +24,7 @@ class UserController
     private $showDAO;
     private $movieDAO;
     private $movieTheaterDAO;
+    private $genreDAO;
 
     public function __construct()
     {
@@ -32,6 +35,7 @@ class UserController
         $this->movieTheaterDAO = new MovieTheaterDAO();
         $this->movieDAO = new MovieDAO();
         //$this->userDAOJson = new UserDAOJson();
+        $this->genreDAO = new GenreDAO();
     }
 
 
@@ -106,12 +110,14 @@ class UserController
                 {
                     $showsActive = $this->showDAO->GetAllActiveOrderByName();
                     $showsActive = $this->SetCompleteShows($showsActive);
+                    $genreList = $this->genreDAO->GetAll();
                     require_once(VIEWS_PATH."admin-view.php");
                 }
                 if($_SESSION['loggedUser']->getRole() == 2)
                 {
                     $showsActive = $this->showDAO->GetAllActiveOrderByName();
                     $showsActive = $this->SetCompleteShows($showsActive);
+                    $genreList = $this->genreDAO->GetAll();
                     require(ROOT.'/Views/client-view.php');
                 }
             }
@@ -223,7 +229,18 @@ class UserController
     {
       $showsActive = $this->showDAO->GetAllActiveOrderByName();
       $showsActive = $this->SetCompleteShows($showsActive);
+      $genreList = $this->genreDAO->GetAll();
       require_once(VIEWS_PATH."admin-view.php");
+    }
+
+    public function FilterShowsByGenre($idGenre)
+    {
+        $genre = $this->genreDAO->getGenreById($idGenre);
+        $showsActive = $this->showDAO->getShowsByIdGenre($genre);
+        $showsActive = $this->SetCompleteShows($showsActive);
+
+        $genreList = $this->genreDAO->GetAll();
+        require_once(VIEWS_PATH."admin-view.php");
     }
 
     public function userExist($userToSearch)
