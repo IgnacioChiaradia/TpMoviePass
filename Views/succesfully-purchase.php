@@ -1,4 +1,4 @@
-<?php require_once(VIEWS_PATH."nav-client.php"); ?>
+<?php require_once(VIEWS_PATH."nav.php"); ?>
 <body>
     <header>
         <div class="movie-h account-head">

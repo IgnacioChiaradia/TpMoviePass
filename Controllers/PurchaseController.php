@@ -41,6 +41,8 @@
 
         public function add($ticket_quantity, $id_show)
         {
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+
             $date = date('Y-m-d');
             $user = $_SESSION["loggedUser"];
             $discount = 0;
@@ -49,56 +51,64 @@
             $showSearch = $this->SetCompleteShows($showSearch);
             $price = $showSearch[0]->getMovieTheater()->getPrice();
 
-            // Descuento: 25%
-            if ($this->applyDiscount($ticket_quantity))
+            if($this->ticketsAvailable($id_show, $ticket_quantity))
             {
-                $totalWithoutDiscount = $ticket_quantity * $price;
-                $discountValue = ($price * .25);
-                $newPriceTicket = $price - $discountValue;
-                $total = $ticket_quantity * $newPriceTicket;
-                $discount = $totalWithoutDiscount - $total;
+              // Descuento: 25%
+              if ($this->applyDiscount($ticket_quantity))
+              {
+                  $totalWithoutDiscount = $ticket_quantity * $price;
+                  $discountValue = ($price * .25);
+                  $newPriceTicket = $price - $discountValue;
+                  $total = $ticket_quantity * $newPriceTicket;
+                  $discount = $totalWithoutDiscount - $total;
+              }
+              else
+              {
+                  $total = $ticket_quantity * $price;
+              }
+
+              $purchase = new Purchase();
+              $purchase->setTicketQuantity($ticket_quantity);
+              $purchase->setDiscount($discount);
+              $purchase->setDate($date);
+              $purchase->setTotal($total);
+              $purchase->setUser($user);
+              if($purchase)
+              {
+                  if($this->purchaseDAO->add($purchase))
+                  {
+                      //$this->getById();
+                      for($i = 0; $i<$ticket_quantity;$i++)
+                      {
+                          //echo ("i" . $i . "");
+                          $numRam = random_int(0,999);
+
+                          $ticket = new Ticket();
+                          $ticket->setTicketNumber($numRam);
+                          $ticket->setQr(null);
+                          $ticket->setPurchase($purchase);
+                          $ticket->setShow($showSearch[0]);
+                          $this->ticketDAO->add($ticket);
+                      }
+                      $message = 'Gracias por su compra, esperamos su pronto regreso '.$user->getUserName().'.<br>';
+                      require_once(VIEWS_PATH."succesfully-purchase.php");
+                  }
+                  else
+                  {
+                      $message = "No se puede realizar la compra correctamente.";
+                      $this->buyTicketView($message, $id_show);
+                  }
+              }
+              else
+              {
+                  $message = "No se puede realizar la compra correctamente.";
+                  $this->buyTicketView($message, $id_show);
+              }
             }
             else
             {
-                $total = $ticket_quantity * $price;
-            }
-
-            $purchase = new Purchase();
-            $purchase->setTicketQuantity($ticket_quantity);
-            $purchase->setDiscount($discount);
-            $purchase->setDate($date);
-            $purchase->setTotal($total);
-            $purchase->setUser($user);
-            if($purchase)
-            {
-                if($this->purchaseDAO->add($purchase))
-                {
-                    //$this->getById();
-                    for($i = 0; $i<$ticket_quantity;$i++)
-                    {
-                        //echo ("i" . $i . "");
-                        $numRam = random_int(0,999);
-
-                        $ticket = new Ticket();
-                        $ticket->setTicketNumber($numRam);
-                        $ticket->setQr(null);
-                        $ticket->setPurchase($purchase);
-                        $ticket->setShow($showSearch[0]);
-                        $this->ticketDAO->add($ticket);
-                    }
-                    $message = 'Gracias por su compra, esperamos su pronto regreso '.$user->getUserName().'.<br>';
-                    require_once(VIEWS_PATH."succesfully-purchase.php");
-                }
-                else
-                {
-                    $message = "No se puede realizar la compra correctamente.";
-                    $this->buyTicketView($message, $id_show);
-                }
-            }
-            else
-            {
-                $message = "No se puede realizar la compra correctamente.";
-                $this->buyTicketView($message, $id_show);
+              $message = "Lo sentimos, la cantidad de tickets ingresada es mayor a la capacidad actual, intente comprar otra funcion";
+              $this->buyTicketView($message, $id_show);
             }
             /*echo '<pre>';
             var_dump($purchase);
@@ -130,7 +140,7 @@
                 {
                     $title = 'Buy ticket - ' . $show->getMovie()->getTitle();
                     $img = IMG_PATH_TMDB . $show->getMovie()->getPosterPath();
-                    $available = $this->numberOfTicketsAvailable($idShow);
+                    //$available = $this->numberOfTicketsAvailable($idShow, $ticket_quantity);
                     require_once(VIEWS_PATH . "purchase-view.php");
                 }
                 else
@@ -166,20 +176,23 @@
             }
         }
 
-        public function numberOfTicketsAvailable($id_show)
+        public function ticketsAvailable($id_show, $ticket_quantity)
         {
-            $tickets =
+          $quantity = $this->numberOfTicketsAvailable($id_show, $ticket_quantity);
+          return ($quantity > 0) ? true : false;
+        }
+
+        public function numberOfTicketsAvailable($id_show, $ticket_quantity)
+        {
+            //$tickets =
             //$tickets = $ticketController->ticketsNumber($id_show);
-            $capacity = $showDAO->getShowById($id_show)->getMovieTheater()->getTotalCapacity();
+            $showSearch = $this->showDAO->getShowById($id_show);
+            $showSearch = $this->SetCompleteShows($showSearch);
+            $capacity = $showSearch[0]->getMovieTheater()->getCurrentCapacity();
 
-            return $capacity - $tickets;
+            return $capacity - $ticket_quantity;
         }
 
-        public function ticketsAvailable($id_show)
-        {
-            $quantity = $this->numberOfTicketsAvailable($id_show);
-            return ($quantity > 0) ? true : false;
-        }
 
         public function getPurchases()
         {
