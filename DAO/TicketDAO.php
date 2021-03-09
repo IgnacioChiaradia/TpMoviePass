@@ -158,6 +158,15 @@
                 return $id + 1;
         }*/
 
+        public function calcCantMoneyForMovie()
+        {
+          /*SELECT COUNT(tickets.idTicket) * movie_theaters.price as cant_pesos_recaudados_por_peli FROM tickets
+            INNER JOIN shows ON tickets.id_show = shows.id_show
+            INNER JOIN movie_theaters ON movie_theaters.id_movie_theater = shows.id_movie_theater
+            INNER JOIN movies on shows.id_movie = movies.id_movie
+            WHERE 446893 = movies.id_movie;*/
+        }
+
         protected function mapear($value)
         {
 		    $value = is_array($value) ? $value : [];

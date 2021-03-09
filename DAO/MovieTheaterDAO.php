@@ -105,7 +105,7 @@
 
         public function Update(MovieTheater $movieTheater)
         {
-            $query = "UPDATE ".$this->tableName." SET state = :state, name = :name, current_capacity = :current_capacity, price = :price, total_capacity = :total_capacity, id_cinema = :id_cinema  WHERE id_movie_theater = :id_movie_theater";
+            $query = "UPDATE ".$this->tableName." SET :state = state, name = :name, current_capacity = :current_capacity, price = :price, total_capacity = :total_capacity, id_cinema = :id_cinema  WHERE id_movie_theater = :id_movie_theater";
 
             $parameters = array();
 

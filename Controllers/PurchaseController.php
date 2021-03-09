@@ -123,7 +123,9 @@
             {
                 $tuesday = 2;   // 2 - Martes
                 $wednesday = 3; // 3 - Miercoles
-                if ($today == $tuesday || $today == $wednesday )
+
+                $friday = 5; // 5 Viernes
+                if ($today == $tuesday || $today == $wednesday || $today == $friday)
                 {
                     return 1;
                 }

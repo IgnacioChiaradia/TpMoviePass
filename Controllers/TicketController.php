@@ -110,6 +110,7 @@ class TicketController
     public function ticketSoldReminderView()
     {
         $tickets = $this->ticketDAO->getAll();
+        //$ticketDAO = $this->ticketDAO;
         $tickets = $this->SetCompleteTickets($tickets);
         $cinemas = $this->cinemaDAO->getAll();
         $movies = $this->movieDAO->getAll();
